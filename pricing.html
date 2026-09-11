@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Pricing temporarily hidden: keep this page out of search while it's unlinked from the site -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="PartFive pricing — flight training and safety management for flight schools and individual instructors. 30-day free trial, no credit card required.">
+  <title>Pricing — PartFive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #0B1829;
+      color: #F1F5F9;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    :root {
+      --amber: #d97706;
+      --amber-light: #f0b429;
+      --amber-dim: rgba(217,119,6,0.10);
+      --amber-border: rgba(217,119,6,0.20);
+      --navy: #0B1829;
+      --navy-surface: #0F2040;
+      --navy-card: #142040;
+      --navy-elevated: #1a2d52;
+      --border: #1E3252;
+      --border-mid: #253D62;
+      --text-primary: #F1F5F9;
+      --text-secondary: #94A3B8;
+      --text-muted: #4E6383;
+      --radius: 14px;
+    }
+
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Nav (matches index.html) ────────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(11, 24, 41, 0.90);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 24px; max-width: 1080px; margin: 0 auto;
+    }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-link { color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-link:hover { color: var(--text-primary); }
+    .nav-link.active { color: var(--text-primary); }
+    .btn-nav {
+      background: var(--amber); color: #0B1829;
+      padding: 8px 20px; border-radius: 8px; border: none;
+      font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none;
+      font-family: 'Inter', sans-serif; letter-spacing: -0.01em;
+      transition: background 0.2s;
+    }
+    .btn-nav:hover { background: var(--amber-light); }
+
+    /* ── Buttons (matches index.html) ────────────────────────────────────── */
+    .btn-primary {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      background: var(--amber); color: #0B1829;
+      padding: 14px 28px; border-radius: 10px; border: none;
+      font-weight: 700; font-size: 1rem; cursor: pointer;
+      text-decoration: none; font-family: 'Inter', sans-serif;
+      letter-spacing: -0.01em; transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--amber-light); transform: translateY(-1px); }
+    /* Apple's official badge — supplied artwork, unaltered, aspect ratio kept, with the
+       clear space Apple's guidelines require. White variant, for the navy background. */
+    .appstore-badge { display: inline-block; line-height: 0; padding: 10px; }
+    .appstore-badge img { height: 54px; width: auto; display: block; }
+    .appstore-badge:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; border-radius: 10px; }
+    @media (max-width: 600px) { .appstore-badge img { height: 46px; } }
+    .btn-ghost {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      background: transparent; color: var(--text-secondary);
+      padding: 13px 24px; border-radius: 10px;
+      border: 1px solid var(--border-mid);
+      font-weight: 600; font-size: 1rem; cursor: pointer;
+      text-decoration: none; font-family: 'Inter', sans-serif;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--text-primary); border-color: var(--text-muted); }
+
+    /* ── Sections (matches index.html) ───────────────────────────────────── */
+    section { padding: 96px 0; }
+    .section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 12px;
+    }
+    h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 800; letter-spacing: -0.03em; color: var(--text-primary);
+      margin-bottom: 16px; line-height: 1.15;
+    }
+    .section-sub {
+      font-size: 1.05rem; color: var(--text-secondary);
+      line-height: 1.7; margin-bottom: 0;
+    }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+    /* ── Pricing header ──────────────────────────────────────────────────── */
+    #pricing {
+      background: linear-gradient(160deg, #0B1829 0%, #0F2040 60%, #0B1829 100%);
+      padding: 80px 0 96px;
+    }
+    .pricing-head { text-align: center; max-width: 640px; margin: 0 auto; }
+    .pricing-head .section-sub { max-width: 560px; margin: 0 auto; }
+    .trial-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 16px; border-radius: 100px;
+      border: 1px solid var(--amber-border); background: var(--amber-dim);
+      color: var(--amber); font-size: 13px; font-weight: 600;
+      letter-spacing: 0.01em; margin-top: 24px;
+    }
+    .trial-badge svg { flex-shrink: 0; }
+
+    /* ── Monthly / annual toggle ─────────────────────────────────────────── */
+    .bill-toggle {
+      display: inline-flex; gap: 4px; margin: 32px auto 0;
+      background: var(--navy-card); border: 1px solid var(--border);
+      border-radius: 100px; padding: 5px;
+    }
+    .bt-opt {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: none; border: none; color: var(--text-secondary);
+      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
+      padding: 8px 20px; border-radius: 100px; cursor: pointer; transition: all 0.2s;
+    }
+    .bt-opt.active { background: var(--amber); color: #0B1829; }
+    .bt-opt .save { font-size: 11px; font-weight: 700; color: var(--amber); }
+    .bt-opt.active .save { color: #0B1829; }
+
+    /* ── Tier cards ──────────────────────────────────────────────────────── */
+    .tiers {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+      margin-top: 52px; align-items: start;
+    }
+    .tier {
+      background: var(--navy-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 32px 26px;
+      display: flex; flex-direction: column; position: relative;
+    }
+    .tier.featured {
+      border-color: var(--amber);
+      box-shadow: 0 0 0 1px var(--amber-border), 0 10px 44px rgba(217,119,6,0.12);
+    }
+    .tier-pop {
+      align-self: flex-start; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.07em; text-transform: uppercase; color: var(--amber);
+      background: var(--amber-dim); border: 1px solid var(--amber-border);
+      padding: 4px 10px; border-radius: 100px; margin-bottom: 14px;
+    }
+    .tier-name { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.02em; color: var(--text-primary); margin-bottom: 6px; }
+    .tier-tag { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 22px; min-height: 40px; }
+    .tier-price { display: flex; align-items: baseline; gap: 2px; margin-bottom: 4px; }
+    .tier-price .amt { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; color: var(--text-primary); }
+    .tier-price .per { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
+    .price-note { font-size: 0.8rem; color: var(--text-muted); min-height: 18px; margin-bottom: 16px; }
+    .tier-students { font-size: 0.9rem; color: var(--text-secondary); border-top: 1px solid var(--border); padding-top: 16px; margin-bottom: 18px; }
+    .tier-students strong { color: var(--amber); font-weight: 700; }
+    .tier .btn-primary, .tier .btn-ghost { width: 100%; }
+    .cta-note { font-size: 0.75rem; color: var(--text-muted); text-align: center; margin-top: 10px; min-height: 14px; }
+    .contact-line { font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 12px; line-height: 1.5; }
+    .contact-line a { color: var(--amber); text-decoration: none; }
+    .contact-line a:hover { text-decoration: underline; }
+    .feat-list { list-style: none; margin-top: 22px; border-top: 1px solid var(--border); padding-top: 20px; }
+    .feat-list li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 11px; }
+    .feat-list li:last-child { margin-bottom: 0; }
+    .feat-list li svg { flex-shrink: 0; color: var(--amber); margin-top: 3px; }
+    .feat-list li.feat-head { color: var(--text-primary); font-weight: 600; }
+
+    /* monthly ⇄ annual swap (vanilla, body.annual) */
+    .price-annual, .price-annual-note { display: none; }
+    body.annual .price-monthly { display: none; }
+    body.annual .price-annual { display: flex; }
+    body.annual .price-monthly-note { display: none; }
+    body.annual .price-annual-note { display: inline; }
+
+    /* ── Final CTA ───────────────────────────────────────────────────────── */
+    #cta {
+      background: linear-gradient(135deg, #0F2040 0%, #142040 100%);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      text-align: center; padding: 96px 24px;
+    }
+    #cta h2 { max-width: 600px; margin: 0 auto 28px; }
+    #cta .cta-sub { font-size: 13px; color: var(--text-muted); margin-top: 18px; }
+
+    /* ── Footer (matches index.html) ─────────────────────────────────────── */
+    footer { background: var(--navy); border-top: 1px solid var(--border); padding: 40px 0; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-links a, .footer-copy { font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text-secondary); }
+
+    /* ── Scroll animations (matches index.html) ──────────────────────────── */
+    .fade-up { opacity: 0; transform: translateY(22px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .fade-up.visible { opacity: 1; transform: none; }
+    .fade-up-d1 { transition-delay: 0.08s; }
+    .fade-up-d2 { transition-delay: 0.16s; }
+    .fade-up-d3 { transition-delay: 0.24s; }
+
+    /* ── Responsive ──────────────────────────────────────────────────────── */
+    @media (max-width: 880px) {
+      .tiers { grid-template-columns: 1fr; max-width: 440px; margin-left: auto; margin-right: auto; }
+      .tier-tag { min-height: 0; }
+    }
+    @media (max-width: 680px) {
+      section { padding: 64px 0; }
+      #pricing { padding: 56px 0 64px; }
+      .nav-right .nav-link { display: none; }
+    }
+    @media (max-width: 480px) { h2 { font-size: 1.7rem; } }
+  </style>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "17c756de20b44d2ea51de05502e4ab75"}'></script><!-- End Cloudflare Web Analytics -->
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+window.PF_PIXEL_ID='1319421116295927';
+window.PF_PIXEL_ON=!!(window.PF_PIXEL_ID&&window.PF_PIXEL_ID.indexOf('__')===-1);
+if(window.PF_PIXEL_ON){fbq('init',window.PF_PIXEL_ID);fbq('track','PageView');}
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href^="https://app.partfive.app"]');if(a&&window.PF_PIXEL_ON){try{fbq('trackCustom','GetStartedClick');}catch(_){}}},true);
+</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1319421116295927&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════ NAV ══════════ -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html" aria-label="PartFive — home">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 72" width="169" height="50" aria-hidden="true">
+        <text x="4" y="52" font-family="Inter, -apple-system, sans-serif" font-size="40" font-weight="700" fill="#F1F5F9" letter-spacing="-1">PartFive</text>
+        <g transform="translate(159.5 3.2) scale(0.48)">
+          <g transform="translate(2 60) rotate(-30) scale(0.92)">
+            <path d="M117.97,40 L4.03,4 L40,40 Z" fill="#3B5C86"/>
+            <path d="M117.97,40 L40,40 L4.03,76 Z" fill="#22405F"/>
+          </g>
+          <g transform="translate(45 79) rotate(-30) scale(0.58)">
+            <path d="M117.97,40 L4.03,4 L40,40 Z" fill="#F09A1E"/>
+            <path d="M117.97,40 L40,40 L4.03,76 Z" fill="#BF5E12"/>
+          </g>
+        </g>
+
+      </svg>
+    </a>
+    <div class="nav-right">
+      <a class="nav-link" href="index.html#features">Features</a>
+      <a class="nav-link" href="index.html#who">Who it's for</a>
+      <a class="nav-link active" href="pricing.html">Pricing</a>
+      <a class="btn-nav" href="https://app.partfive.app">Sign in →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════ PRICING ═══════ -->
+<section id="pricing">
+  <div class="container">
+    <div class="pricing-head">
+      <div class="section-label fade-up">Pricing</div>
+      <h2 class="fade-up fade-up-d1">Pricing that scales with your operation</h2>
+      <p class="section-sub fade-up fade-up-d2">From a solo Part 61 instructor to a Part 141 academy — pay for what you run, nothing you don't. Same platform, scaled to fit.</p>
+      <div class="trial-badge fade-up fade-up-d2">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        30-day free trial — no credit card required
+      </div>
+      <div class="bill-toggle fade-up fade-up-d2" role="group" aria-label="Billing period">
+        <button id="tg-monthly" class="bt-opt active" type="button" onclick="setBilling(false)">Monthly</button>
+        <button id="tg-annual" class="bt-opt" type="button" onclick="setBilling(true)">Annual <span class="save">2 months free</span></button>
+      </div>
+    </div>
+
+    <div class="tiers">
+
+      <!-- Independent CFI -->
+      <div class="tier fade-up">
+        <div class="tier-name">Independent CFI</div>
+        <div class="tier-tag">For solo Part 61 instructors.</div>
+        <div class="tier-price">
+          <span class="price-monthly"><span class="amt">$4.99</span><span class="per">/mo</span></span>
+          <span class="price-annual"><span class="amt">$49.99</span><span class="per">/yr</span></span>
+        </div>
+        <div class="price-note"><span class="price-monthly-note">per instructor, billed monthly</span><span class="price-annual-note">per instructor — ~2 months free</span></div>
+        <div class="tier-students">Students: <strong>Unlimited</strong></div>
+        <a class="btn-primary" href="https://app.partfive.app">Start free trial</a>
+        <div class="cta-note">30 days free · no credit card · also on iPhone &amp; iPad</div>
+        <ul class="feat-list">
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Unlimited students — roster, progress &amp; sign-off queue</li>
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>AC 61-65K endorsements + §61.51 logbook reminders</li>
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Pre-flight risk assessment (PAVE) with sign-off</li>
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Personal flight log &amp; schedule</li>
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Lightweight SMS manual &amp; SOPs</li>
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Live weather — METAR / TAF / PIREP</li>
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>20 AI generations / month</li>
+        </ul>
+      </div>
+
+      <!-- Flight School (featured) -->
+      <div class="tier featured fade-up fade-up-d1">
+        <div class="tier-pop">In development</div>
+        <div class="tier-name">Flight School</div>
+        <div class="tier-tag">For Part 141 schools and academies.</div>
+        <div class="tier-price">
+          <span class="amt">Early access</span>
+        </div>
+        <div class="price-note">Onboarding schools one at a time · pricing set with you</div>
+        <div class="tier-students">Students: <strong>Up to 30</strong></div>
+        <a class="btn-primary" href="mailto:hello@partfive.app?subject=PartFive%20for%20our%20flight%20school&body=Tell%20us%20about%20your%20operation%20—%20school%20name,%20Part%20141%20or%2061,%20roughly%20how%20many%20instructors%20and%20students%20—%20and%20we%27ll%20be%20in%20touch.">Talk to us</a>
+        <div class="cta-note">We'll walk your team through it</div>
+        <ul class="feat-list">
+          <li class="feat-head">Everything in Independent CFI, plus:</li>
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Full SMS manual (ICAO Annex 19) with AI authoring</li>
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>SOP library — versioning &amp; acknowledgements</li>
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Safety reports, investigations &amp; corrective actions</li>
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Safety bulletins &amp; meeting records</li>
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Roles &amp; authority — SO, Admin, Chief &amp; Asst Chief, Dispatcher</li>
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Curriculum at scale — syllabi, stage checks, graduation</li>
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Fleet management &amp; squawks</li>
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Audit-ready records &amp; exports</li>
+        </ul>
+        <div class="contact-line">Need more than 30 students? <a href="mailto:hello@partfive.app?subject=PartFive%20School%20%E2%80%94%20more%20than%2030%20students">Contact us</a></div>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="tier fade-up fade-up-d2">
+        <div class="tier-name">Enterprise</div>
+        <div class="tier-tag">Collegiate programs, SSO, volume pricing.</div>
+        <div class="tier-price"><span class="amt">Custom</span></div>
+        <div class="price-note">Tailored to your program</div>
+        <div class="tier-students">Students: <strong>More than 30</strong></div>
+        <a class="btn-ghost" href="mailto:hello@partfive.app?subject=PartFive%20Enterprise%20inquiry">Contact us</a>
+        <div class="cta-note">We'll tailor a plan for you</div>
+        <ul class="feat-list">
+          <li class="feat-head">Everything in Flight School, plus:</li>
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>More than 30 students</li>
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Volume seat pricing</li>
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>SSO / SAML sign-in</li>
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Priority support &amp; onboarding</li>
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Custom data retention &amp; DPA</li>
+          <li><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Multi-campus / collegiate program support</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ FINAL CTA ═════ -->
+<section id="cta">
+  <div class="section-label" style="text-align:center">Get started</div>
+  <h2 class="fade-up">Start your 30-day free trial</h2>
+  <div class="fade-up fade-up-d1" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+    <a class="btn-primary" href="https://app.partfive.app" style="font-size:1.05rem;padding:16px 36px">Start free trial →</a>
+    <a class="appstore-badge" href="https://apps.apple.com/us/app/partfive/id6787193149" target="_blank" rel="noopener">
+      <img src="img/download-on-the-app-store.svg" alt="Download PartFive on the App Store" width="162" height="54">
+    </a>
+  </div>
+  <p class="cta-sub fade-up fade-up-d2">No credit card required. Questions? <a href="mailto:hello@partfive.app" style="color:#4E6383;text-decoration:underline">hello@partfive.app</a></p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ FOOTER ════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="index.html" class="nav-logo" aria-label="PartFive">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 72" width="126" height="37" aria-hidden="true">
+          <text x="4" y="52" font-family="Inter, -apple-system, sans-serif" font-size="40" font-weight="700" fill="#475569" letter-spacing="-1">PartFive</text>
+          <g transform="translate(159.5 3.2) scale(0.48)" opacity="0.85">
+            <g transform="translate(2 60) rotate(-30) scale(0.92)">
+              <path d="M117.97,40 L4.03,4 L40,40 Z" fill="#3B5C86"/>
+              <path d="M117.97,40 L40,40 L4.03,76 Z" fill="#22405F"/>
+            </g>
+            <g transform="translate(45 79) rotate(-30) scale(0.58)">
+              <path d="M117.97,40 L4.03,4 L40,40 Z" fill="#F09A1E"/>
+              <path d="M117.97,40 L40,40 L4.03,76 Z" fill="#BF5E12"/>
+            </g>
+          </g>
+
+        </svg>
+      </a>
+      <div class="footer-links">
+        <a href="index.html#why">About</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="mailto:hello@partfive.app">Contact</a>
+      </div>
+      <span class="footer-copy">© 2026 PartFive LLC. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Monthly ⇄ annual toggle
+  window.setBilling = function (annual) {
+    document.body.classList.toggle('annual', !!annual);
+    var m = document.getElementById('tg-monthly'), a = document.getElementById('tg-annual');
+    if (m) m.classList.toggle('active', !annual);
+    if (a) a.classList.toggle('active', !!annual);
+  };
+
+  // Fade-up reveal (matches index.html)
+  var els = document.querySelectorAll('.fade-up');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(function (el) { el.classList.add('visible'); });
+  } else {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(function (el) { obs.observe(el); });
+    setTimeout(function () { document.querySelectorAll('#pricing .fade-up').forEach(function (el) { el.classList.add('visible'); }); }, 80);
+  }
+})();
+</script>
+
+</body>
+</html>

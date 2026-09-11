@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PartFive Privacy Policy — flight training & safety management for flight schools and individual instructors.">
+  <title>Privacy Policy — PartFive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #0B1829;
+      color: #F1F5F9;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    :root {
+      --amber: #d97706;
+      --amber-light: #f0b429;
+      --amber-dim: rgba(217,119,6,0.10);
+      --amber-border: rgba(217,119,6,0.25);
+      --navy: #0B1829;
+      --navy-surface: #0F2040;
+      --navy-card: #142040;
+      --navy-elevated: #1a2d52;
+      --border: #1E3252;
+      --border-mid: #253D62;
+      --text-primary: #F1F5F9;
+      --text-secondary: #94A3B8;
+      --text-muted: #4E6383;
+      --radius: 14px;
+    }
+
+    /* ── Nav ─────────────────────────────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(11, 24, 41, 0.90);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 24px; max-width: 1080px; margin: 0 auto;
+    }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-link { color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-link:hover { color: var(--text-primary); }
+    .btn-nav {
+      background: var(--amber); color: #0B1829;
+      padding: 8px 20px; border-radius: 8px; border: none;
+      font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none;
+      font-family: 'Inter', sans-serif; letter-spacing: -0.01em;
+      transition: background 0.2s;
+    }
+    .btn-nav:hover { background: var(--amber-light); }
+
+    /* ── Page layout ───────────────────────────────────────────────────────── */
+    .page-wrap {
+      max-width: 1080px; margin: 0 auto; padding: 56px 24px 80px;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+
+    /* ── TOC sidebar ───────────────────────────────────────────────────────── */
+    .toc {
+      position: sticky; top: 80px;
+      background: var(--navy-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px;
+    }
+    .toc-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 14px;
+    }
+    .toc ol { list-style: none; padding: 0; }
+    .toc li { margin-bottom: 1px; }
+    .toc a {
+      display: block; font-size: 12px; font-weight: 500; color: var(--text-muted);
+      text-decoration: none; padding: 5px 8px; border-radius: 6px;
+      transition: color 0.15s, background 0.15s; line-height: 1.4;
+    }
+    .toc a:hover { color: var(--text-primary); background: rgba(255,255,255,0.04); }
+
+    /* ── Main content ──────────────────────────────────────────────────────── */
+    .legal-content { max-width: 800px; }
+    .legal-content h1 {
+      font-size: 2.2rem; font-weight: 800; letter-spacing: -0.035em;
+      color: var(--text-primary); margin-bottom: 10px; line-height: 1.15;
+    }
+    .legal-meta {
+      font-size: 13px; color: var(--text-muted); margin-bottom: 40px;
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    .legal-content h2 {
+      font-size: 1.2rem; font-weight: 700; color: var(--text-primary);
+      margin-top: 52px; margin-bottom: 14px; letter-spacing: -0.02em;
+      padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    }
+    .legal-content h2:first-of-type { margin-top: 0; }
+    .legal-content h3 {
+      font-size: 0.9375rem; font-weight: 700; color: var(--text-secondary);
+      margin-top: 24px; margin-bottom: 8px; letter-spacing: -0.01em;
+    }
+    .legal-content p {
+      font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.8;
+      margin-bottom: 14px;
+    }
+    .legal-content p:last-child { margin-bottom: 0; }
+    .legal-content ul, .legal-content ol {
+      margin: 12px 0 14px 20px; color: var(--text-secondary); font-size: 0.9375rem;
+    }
+    .legal-content li { line-height: 1.8; margin-bottom: 6px; }
+    .legal-content strong { color: var(--text-primary); font-weight: 600; }
+    .legal-content a { color: var(--amber); text-decoration: none; }
+    .legal-content a:hover { text-decoration: underline; }
+
+    .callout {
+      background: rgba(217,119,6,0.08); border: 1px solid var(--amber-border);
+      border-radius: 10px; padding: 16px 18px; margin: 20px 0;
+    }
+    .callout p { color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0; }
+    .callout strong { color: var(--amber); }
+
+    .callout-blue {
+      background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.2);
+    }
+    .callout-blue strong { color: #93C5FD; }
+
+    /* ── Footer ──────────────────────────────────────────────────────────── */
+    footer {
+      background: var(--navy); border-top: 1px solid var(--border);
+      padding: 40px 0;
+    }
+    .footer-inner {
+      max-width: 1080px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-links a, .footer-copy {
+      font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: #94A3B8; }
+
+    /* ── Responsive ──────────────────────────────────────────────────────── */
+    @media (max-width: 800px) {
+      .page-wrap {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 32px 20px 60px;
+      }
+      .toc { position: static; }
+      .legal-content h1 { font-size: 1.7rem; }
+    }
+    @media (max-width: 480px) {
+      .legal-meta { flex-direction: column; gap: 4px; }
+    }
+  </style>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "17c756de20b44d2ea51de05502e4ab75"}'></script><!-- End Cloudflare Web Analytics -->
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+window.PF_PIXEL_ID='1319421116295927';
+window.PF_PIXEL_ON=!!(window.PF_PIXEL_ID&&window.PF_PIXEL_ID.indexOf('__')===-1);
+if(window.PF_PIXEL_ON){fbq('init',window.PF_PIXEL_ID);fbq('track','PageView');}
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href^="https://app.partfive.app"]');if(a&&window.PF_PIXEL_ON){try{fbq('trackCustom','GetStartedClick');}catch(_){}}},true);
+</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1319421116295927&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════ NAV ══════════ -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html" aria-label="PartFive — back to home">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 72" width="169" height="50" aria-hidden="true">
+        <text x="4" y="52" font-family="Inter, -apple-system, sans-serif" font-size="40" font-weight="700" fill="#F1F5F9" letter-spacing="-1">PartFive</text>
+        <g transform="translate(159.5 3.2) scale(0.48)">
+          <g transform="translate(2 60) rotate(-30) scale(0.92)">
+            <path d="M117.97,40 L4.03,4 L40,40 Z" fill="#3B5C86"/>
+            <path d="M117.97,40 L40,40 L4.03,76 Z" fill="#22405F"/>
+          </g>
+          <g transform="translate(45 79) rotate(-30) scale(0.58)">
+            <path d="M117.97,40 L4.03,4 L40,40 Z" fill="#F09A1E"/>
+            <path d="M117.97,40 L40,40 L4.03,76 Z" fill="#BF5E12"/>
+          </g>
+        </g>
+
+      </svg>
+    </a>
+    <div class="nav-right">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="terms.html">Terms</a>
+      <a class="btn-nav" href="https://app.partfive.app">Sign in →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════ CONTENT ════ -->
+<div class="page-wrap">
+
+  <!-- Table of contents -->
+  <aside class="toc" aria-label="Table of contents">
+    <div class="toc-label">Contents</div>
+    <ol>
+      <li><a href="#introduction">1. Introduction</a></li>
+      <li><a href="#data-we-collect">2. Data We Collect</a></li>
+      <li><a href="#how-we-use-it">3. How We Use It</a></li>
+      <li><a href="#legal-basis">4. Legal Basis</a></li>
+      <li><a href="#data-sharing">5. Data Sharing</a></li>
+      <li><a href="#aviation-note">6. Aviation-Specific Note</a></li>
+      <li><a href="#student-records">7. Student Records &amp; FERPA</a></li>
+      <li><a href="#data-retention">8. Data Retention</a></li>
+      <li><a href="#your-rights">9. Your Rights</a></li>
+      <li><a href="#children">10. Children's Data</a></li>
+      <li><a href="#security">11. Security</a></li>
+      <li><a href="#cookies">12. Cookies &amp; Tracking</a></li>
+      <li><a href="#international">13. International Users</a></li>
+      <li><a href="#changes">14. Changes to This Policy</a></li>
+      <li><a href="#contact">15. Contact Us</a></li>
+    </ol>
+  </aside>
+
+  <!-- Main content -->
+  <main class="legal-content">
+    <h1>Privacy Policy</h1>
+    <div class="legal-meta">
+      <span>Version 1.2</span>
+      <span>Effective date: July 28, 2026</span>
+    </div>
+
+    <!-- 1 -->
+    <h2 id="introduction">1. Introduction</h2>
+    <p>PartFive LLC ("we," "us," or "our") provides flight training and safety management for flight schools and individual instructors. This Privacy Policy describes how we collect, use, share, and protect personal information about users of our web application at <strong>app.partfive.app</strong>, our <strong>PartFive iOS application</strong> distributed through the Apple App Store, and our marketing site at <strong>partfive.app</strong> (collectively, the "Service").</p>
+    <p>The PartFive iOS application provides the same Service as the web application. This Policy applies equally regardless of whether you access PartFive through a web browser or the iOS application, and the iOS application does not collect any categories of personal information beyond those described in this Policy.</p>
+    <p>We take privacy seriously. Aviation training records are sensitive — they may contain personally identifying information, professional certifications, and information relevant to regulatory oversight. We have designed our data practices accordingly.</p>
+    <p>By using the Service, you agree to the collection and use of information as described in this Policy. This Policy is incorporated into and subject to our <a href="terms.html">Terms of Service</a>. Capitalized terms not defined here have the meaning given in our Terms of Service.</p>
+
+    <!-- 2 -->
+    <h2 id="data-we-collect">2. Data We Collect</h2>
+    <p>We collect the following categories of personal information:</p>
+
+    <h3>Account Data</h3>
+    <ul>
+      <li><strong>Identity:</strong> Full name, email address, telephone number (optional), role (Safety Officer, Admin, CFI, Dispatcher, Student), and organization affiliation.</li>
+      <li><strong>Profile photo (optional):</strong> An avatar image, if you choose to upload one, shown to the instructors and students you train with.</li>
+      <li><strong>Authentication:</strong> Hashed password (we never store plaintext passwords), authentication tokens, session identifiers.</li>
+      <li><strong>Organization profile:</strong> Organization name, type (Part 141 school, independent CFI, etc.), base airport identifier, and organizational configuration.</li>
+      <li><strong>Professional information (where provided):</strong> FAA certificate number, certificate type, ratings, and expiration dates. This information is entered voluntarily to support endorsement and sign-off workflows.</li>
+      <li><strong>Sign in with Apple or Google (optional):</strong> If you choose to sign in using Apple or Google, we receive your name and email address from that provider in order to create or match your account. We never receive your password. Apple's Hide My Email is supported; if you use it, we only ever see the relay address.</li>
+    </ul>
+
+    <h3>Training Data</h3>
+    <p>When users interact with training features, we collect and store:</p>
+    <ul>
+      <li>Lesson progress records: completed lessons, lesson dates, instructor sign-offs, maneuver evaluations, and notes.</li>
+      <li>Pre-flight risk assessments (PAVE model): risk scores, aircraft tail number, lesson identifier, weather conditions at time of assessment, CFI approval status and timestamp.</li>
+      <li>Endorsements: the full text of each endorsement issued (per AC 61-65K or custom), issuance date, endorsing CFI identity, student identity, and any revocation records.</li>
+      <li>Stage check and end-of-course records: check type, date, examiner identity, outcome, and student progress snapshots.</li>
+      <li>Flight logs: aircraft tail number, flight date, duration, lesson, departure and destination airport identifiers, and companion pilot information.</li>
+      <li>Safety reports: report type, severity, description, involved parties (if provided), status, investigation records, and corrective actions.</li>
+      <li>Safety Management System (SMS) content: SMS manual sections, SOP documents, safety bulletins, safety meeting records, and hazard reports authored within the platform.</li>
+      <li>Graduation records: graduation certificate data, EOC endorsements, and program completion records.</li>
+    </ul>
+
+    <h3>Payment Data</h3>
+    <p>PartFive uses <strong>Stripe, Inc.</strong> to process payments. There are two cases:</p>
+    <ul>
+      <li><strong>Paying your instructor:</strong> When a student pays their instructor for flight or ground instruction already delivered, card details are entered into Stripe's payment sheet and transmitted directly to Stripe. <strong>PartFive never receives or stores full card numbers.</strong> We retain a record of the payment: amount, currency, date, a description of the instruction paid for, the brand and last four digits of the card, and Stripe's identifiers for the payment.</li>
+      <li><strong>Receiving payments as an instructor:</strong> Instructors who collect payments onboard to Stripe Connect and provide their identity and bank details <em>directly to Stripe</em>. We receive only the resulting account status and identifiers, never the underlying bank or identity documents.</li>
+    </ul>
+    <p>Stripe's handling of this data is governed by <a href="https://stripe.com/privacy" rel="noopener">Stripe's Privacy Policy</a>. Subscriptions to PartFive itself are purchased and managed on our website and are likewise processed by Stripe.</p>
+
+    <h3>Operational Data</h3>
+    <ul>
+      <li>Timestamps on all significant actions (record creation, modification, sign-off, revocation).</li>
+      <li>IP address and browser/device type at login, for security, diagnostics, and fraud prevention. We do not use IP data for advertising targeting.</li>
+      <li>Supabase authentication logs (session creation/expiry events).</li>
+      <li><strong>Push notification tokens:</strong> If you enable notifications in the iOS application, we store the device token issued by Apple so that we can deliver lesson, endorsement, and message alerts to your device. The token identifies the device, not you personally. We delete it when you sign out of the application; turning notifications off in iOS Settings stops delivery to the device at the operating-system level.</li>
+    </ul>
+
+    <h3>Communications</h3>
+    <ul>
+      <li>Emails sent to or received from our support address (hello@partfive.app).</li>
+      <li>In-platform notification content where applicable.</li>
+      <li><strong>In-app messages:</strong> Direct messages between an instructor and their student, including the message text and any photos or files attached to them.</li>
+      <li><strong>Shared documents:</strong> Files and photos uploaded within a training relationship (for example, a syllabus, a medical certificate scan, or a lesson handout), together with who they were shared with.</li>
+    </ul>
+
+    <h3>Data You Do Not Provide Directly</h3>
+    <p>We do not purchase data about you from third-party data brokers. We do not collect social media profile data. Within the PartFive application, we do not conduct behavioral advertising or cross-site tracking of your training or safety data. Our public marketing website (partfive.app) does use advertising and analytics tools, including the Meta Pixel &mdash; see Section 12, Cookies and Tracking.</p>
+
+    <!-- 3 -->
+    <h2 id="how-we-use-it">3. How We Use It</h2>
+    <p>We use the information we collect for the following purposes:</p>
+    <ul>
+      <li><strong>Service delivery:</strong> Operating the platform, authenticating users, displaying the correct data to the correct role, processing training records, and supporting endorsement and sign-off workflows.</li>
+      <li><strong>Account management:</strong> Managing user accounts and organizational relationships, processing role assignments and invitations, and enabling user-initiated account changes.</li>
+      <li><strong>Record retention for regulatory purposes:</strong> Aviation training records have regulatory retention requirements (see Section 8). We retain records as required to support organizational compliance with applicable regulations.</li>
+      <li><strong>Safety and security:</strong> Detecting and investigating fraudulent activity, unauthorized access, and security incidents. Enforcing our Terms of Service.</li>
+      <li><strong>Service improvement:</strong> Understanding how the platform is used (in aggregate, not at the individual user level) to prioritize features and fix issues.</li>
+      <li><strong>Communications:</strong> Responding to support requests and sending service-related communications (not marketing without explicit opt-in).</li>
+    </ul>
+    <p>We do not use your data to train external artificial intelligence models. AI-assisted features within PartFive (SMS manual authoring, syllabus generation) use models accessed via API; user content passed to those APIs is subject to the terms of the relevant AI provider as disclosed in our terms.</p>
+
+    <!-- 4 -->
+    <h2 id="legal-basis">4. Legal Basis (GDPR and Similar Frameworks)</h2>
+    <p>For users in jurisdictions where a legal basis for processing is required — including the European Economic Area (EEA) and the United Kingdom — our legal bases for processing personal data are:</p>
+    <ul>
+      <li><strong>Contract performance:</strong> Processing necessary to provide the Service you have signed up for, including maintaining your account, storing your training records, and operating endorsement and sign-off workflows.</li>
+      <li><strong>Legitimate interests:</strong> Processing for security, fraud prevention, service improvement, and operational analytics, where these interests are not overridden by your rights and freedoms.</li>
+      <li><strong>Legal obligation:</strong> Where we are required to retain or disclose data by applicable law (see Section 6).</li>
+      <li><strong>Consent:</strong> Where we rely on consent (e.g., for optional communications), you may withdraw it at any time without affecting the lawfulness of prior processing.</li>
+    </ul>
+
+    <!-- 5 -->
+    <h2 id="data-sharing">5. Data Sharing</h2>
+    <p><strong>We do not sell your personal data.</strong> We do not share your account, training, safety, or other in-application data with advertising networks, data brokers, or any party for marketing purposes. Our public marketing website (partfive.app) does share limited, hashed visitor identifiers with Meta Platforms through the Meta Pixel to measure advertising and show PartFive ads on Facebook and Instagram; this is described in Section 12 and applies only to the marketing website, not to the PartFive application or your training records.</p>
+    <p>We share data in the following limited circumstances:</p>
+
+    <h3>Service Providers</h3>
+    <p>We use third-party vendors to operate the Service. These vendors process data only on our behalf and under our instructions:</p>
+    <ul>
+      <li><strong>Supabase:</strong> Our database, authentication, and storage provider. User data — including account information, training records, and files — is stored on Supabase infrastructure. Supabase is subject to its own privacy and security practices.</li>
+      <li><strong>Stripe:</strong> Our payment processor, for PartFive subscriptions and for student-to-instructor payments for instruction. Stripe receives the payment details entered into its payment sheet and, for instructors receiving payments, the identity and bank details they provide to it directly. Stripe acts as an independent controller of that payment data under <a href="https://stripe.com/privacy" rel="noopener">its own privacy policy</a>.</li>
+      <li><strong>Apple:</strong> The Apple Push Notification service delivers notifications to iOS devices. Apple receives the device token and the notification payload in order to deliver it.</li>
+      <li><strong>Hosting and infrastructure providers:</strong> Web hosting and CDN services used to deliver the platform.</li>
+      <li><strong>AI API providers:</strong> Where you use AI-assisted features (e.g., SMS manual generation, syllabus drafting), text you submit to those features may be transmitted to a third-party AI API provider, which processes it to generate the requested output subject to that provider's applicable terms. We do not authorize the use of your content to train third-party models.</li>
+    </ul>
+
+    <h3>Legal Requirements</h3>
+    <p>We may disclose your data if required to do so by law, court order, subpoena, or other legal process, or when we believe in good faith that disclosure is necessary to protect our rights, protect your safety or the safety of others, investigate fraud, or respond to a government request.</p>
+
+    <h3>Business Transfers</h3>
+    <p>In the event of a merger, acquisition, or sale of substantially all assets, your data may be transferred to the acquiring entity, which will be bound by this Privacy Policy or will notify you of any material changes before your data is subject to a different policy.</p>
+
+    <h3>With Your Consent</h3>
+    <p>We may share data in other circumstances with your explicit consent.</p>
+
+    <!-- 6 -->
+    <h2 id="aviation-note">6. Aviation-Specific Data Disclosure Note</h2>
+    <div class="callout">
+      <p><strong>Important for flight training organizations.</strong> Aviation training records may be subject to federal regulatory inspection. Read this section carefully.</p>
+    </div>
+    <p>Training records maintained by FAA-certificated flight training organizations are subject to inspection by the FAA under 14 CFR §141.95(d) and related provisions. PartFive will comply with any lawful FAA request for records pertaining to the organization that owns those records. We will make reasonable efforts to notify the affected organization prior to disclosure, unless prohibited by law or court order.</p>
+    <p>Individual pilot training records may also be subject to inspection under applicable regulations. CFIs are required to maintain their own endorsement records under 14 CFR §61.189. PartFive's records supplement but do not replace a CFI's obligation to maintain their own logbook endorsement entries as required by regulation.</p>
+    <p>We are not a law enforcement agency and will not proactively share data with the FAA or other authorities except as required by law or lawful process.</p>
+
+    <!-- 7 -->
+    <h2 id="student-records">7. Student Records and FERPA</h2>
+    <p>When PartFive is used by educational institutions (such as colleges and universities operating Part 141 flight training programs), student training records maintained within PartFive may be subject to the Family Educational Rights and Privacy Act (FERPA), 20 U.S.C. § 1232g.</p>
+    <p>In such cases:</p>
+    <ul>
+      <li>The educational institution is the data controller and "school official" responsible for FERPA compliance.</li>
+      <li>PartFive operates as a service provider to the institution, with access to student records limited to what is necessary to fulfill our contractual obligations.</li>
+      <li>Students at FERPA-covered institutions may have rights to inspect and request correction of their education records. Those rights are exercised through the institution, not directly through PartFive.</li>
+      <li>PartFive will not disclose student education records to third parties except as permitted under FERPA and as described in this Policy.</li>
+    </ul>
+    <p>Organizations using PartFive in a FERPA-covered context should ensure their use of the Service is consistent with their own FERPA obligations, including appropriate data use agreements where required.</p>
+
+    <!-- 8 -->
+    <h2 id="data-retention">8. Data Retention</h2>
+    <p>We retain personal data for as long as your account is active, plus additional periods required by law, regulation, or legitimate business need. Specific retention guidelines:</p>
+    <ul>
+      <li><strong>Active accounts:</strong> Data is retained for the lifetime of the account. Soft-deleted records (e.g., deactivated users, revoked endorsements) are retained in a non-active state for record integrity and audit purposes.</li>
+      <li><strong>Training records — Part 141 organizations:</strong> Per 14 CFR §141.101, training records for students who have completed or discontinued training must be retained for a minimum of one year following graduation or discontinuation. PartFive will retain records consistent with this requirement regardless of account status.</li>
+      <li><strong>Endorsement records:</strong> Per 14 CFR §61.189, CFIs must retain endorsement records for three years. PartFive retains endorsement records for at least this period.</li>
+      <li><strong>Safety reports and investigation records:</strong> Retained for a minimum of three years from the date of resolution, or longer as required by the organization's SMS program.</li>
+      <li><strong>Individual account deletion:</strong> When an individual deletes their account, we remove their personal identifying information and replace their name with an anonymized marker on the organization's regulated records (which remain the organization's, as it is the custodian and is itself bound by §141.101/§61.189). <strong>Three years after anonymization</strong> — the longest applicable FAA retention minimum — we automatically redact the residual name references and delete transient personal data, leaving no personal identifiers.</li>
+      <li><strong>Organization deletion:</strong> When an organization is deleted by its owner, we permanently purge the organization and all of its associated records — every member's training records, endorsements, flight logs, and safety records — from active systems, and those records age out of routine encrypted backups within 30 days. We do not retain a departed organization's records. Owners can export a complete copy before deleting; the obligation to retain records required by regulation rests with the organization, not with PartFive.</li>
+      <li><strong>Legal holds:</strong> We may retain data where required by law or active legal process (e.g., subpoena, litigation hold, or an open accident investigation), notwithstanding a deletion request.</li>
+    </ul>
+    <p>Retention periods are aligned with applicable federal and state requirements. Where regulations require longer retention than described above, those requirements control.</p>
+
+    <!-- 9 -->
+    <h2 id="your-rights">9. Your Rights</h2>
+    <p>Depending on your jurisdiction, you may have the following rights regarding your personal data:</p>
+    <ul>
+      <li><strong>Access:</strong> Request a copy of the personal data we hold about you.</li>
+      <li><strong>Correction:</strong> Request correction of inaccurate data. Note that certain regulated records (such as completed endorsements) may not be editable after issuance to maintain their integrity as legal records.</li>
+      <li><strong>Deletion:</strong> Request deletion of your personal data, subject to our legal retention obligations described in Section 8.</li>
+      <li><strong>Export / Portability:</strong> Request a machine-readable export of your account data.</li>
+      <li><strong>Objection / Restriction:</strong> Object to or request restriction of certain processing, where applicable law permits.</li>
+      <li><strong>Withdrawal of consent:</strong> Where processing is based on consent, withdraw it at any time without affecting the lawfulness of prior processing.</li>
+    </ul>
+    <p>To exercise any of these rights, contact us at <a href="mailto:hello@partfive.app">hello@partfive.app</a>. We will respond within 30 days. We may need to verify your identity before fulfilling your request. Where your rights are limited by regulatory retention obligations, we will explain the specific basis for the limitation.</p>
+    <p>If you are in the EEA or UK and believe we have not handled your data in accordance with applicable law, you have the right to lodge a complaint with your local supervisory authority.</p>
+
+    <!-- 10 -->
+    <h2 id="children">10. Children's Data</h2>
+    <p>The Service is not directed at children under 13 years of age, and we do not knowingly collect personal information from children under 13. If we learn that we have collected personal information from a child under 13 without verifiable parental consent, we will delete that information as promptly as possible.</p>
+    <p>Flight training students are frequently minors (ages 14–17, as private pilot training may begin at age 16 and sport/recreational at age 16). For students under 18:</p>
+    <ul>
+      <li>Organization administrators are responsible for ensuring appropriate parental notice and consent has been obtained before adding minor students to the platform.</li>
+      <li>Where student records are subject to FERPA (see Section 7), FERPA's provisions regarding rights of parents of students under 18 apply.</li>
+      <li>We do not use data about minors for any purpose beyond delivery of the Service.</li>
+    </ul>
+
+    <!-- 11 -->
+    <h2 id="security">11. Security</h2>
+    <p>We implement security measures appropriate to the sensitivity of the data we process:</p>
+    <ul>
+      <li><strong>Encryption in transit:</strong> All data transmitted between your browser or device and our servers is encrypted using TLS (HTTPS). We do not transmit personal data over unencrypted connections.</li>
+      <li><strong>Encryption at rest:</strong> Data stored in our Supabase database is encrypted at rest using industry-standard encryption.</li>
+      <li><strong>Row-level security (RLS):</strong> We use Supabase's row-level security to enforce data isolation between organizations and between users within an organization. Users can only access data they are authorized to see based on their assigned role.</li>
+      <li><strong>No plaintext passwords:</strong> Passwords are hashed using industry-standard algorithms. We never store plaintext passwords.</li>
+      <li><strong>Access controls:</strong> Administrative access to production systems is limited to authorized personnel on a need-to-know basis.</li>
+    </ul>
+    <p>No security system is impenetrable. While we use commercially reasonable measures to protect your data, we cannot guarantee absolute security. In the event of a data breach affecting your information, we will notify affected users as required by applicable law.</p>
+
+    <!-- 12 -->
+    <h2 id="cookies">12. Cookies and Tracking</h2>
+
+    <h3>Inside the PartFive application</h3>
+    <p>Within the logged-in product we use minimal tracking technologies:</p>
+    <ul>
+      <li><strong>Session cookies:</strong> Required for authentication. These cookies maintain your logged-in state during a session. They are not used for advertising and expire when you log out or close your browser.</li>
+      <li><strong>Local storage:</strong> The application may use browser local storage to persist UI preferences (such as dark/light mode) on your device. This data does not leave your device.</li>
+    </ul>
+    <p>Within the application, we do not use third-party advertising pixels, cross-site tracking technologies, or analytics that build individual behavioral profiles of your training activity. We do not use your training records, endorsements, or safety reports for advertising.</p>
+
+    <h3>On our public marketing website (partfive.app)</h3>
+    <p>Our marketing website &mdash; the public pages at partfive.app, which are separate from the logged-in application &mdash; uses the following to understand traffic and run advertising:</p>
+    <ul>
+      <li><strong>Meta Pixel (Facebook/Instagram), with automatic advanced matching:</strong> Provided by Meta Platforms, the pixel sets cookies and sends event and device data to Meta to measure our advertising and to show PartFive ads to website visitors on Facebook and Instagram (retargeting). With advanced matching, if you submit your email address through a form on the marketing website, the pixel hashes that email in your browser (SHA-256) before sending it to Meta to improve ad matching &mdash; Meta does not receive the raw value through this feature. Meta processes this data under its own data policy.</li>
+      <li><strong>Cloudflare Web Analytics:</strong> Privacy-focused, aggregate traffic analytics that do not use cookies and do not build individual profiles.</li>
+    </ul>
+    <p>You can limit or opt out of pixel-based advertising through your Meta ad preferences (Facebook Settings &rarr; Ads), your browser's cookie controls, or an ad blocker. These advertising tools run on the marketing website only &mdash; not inside the PartFive application, and never on your training records, endorsements, or safety reports.</p>
+    <p>If we add or change analytics or advertising tools, we will update this Policy.</p>
+
+    <!-- 13 -->
+    <h2 id="international">13. International Users</h2>
+    <p>PartFive is operated in the United States, and our servers and service infrastructure are located in the United States. If you access the Service from outside the United States, your data will be transferred to, processed, and stored in the United States, which may have different data protection laws than your home country.</p>
+    <p>For users in the European Economic Area (EEA) or United Kingdom, any such transfer is made subject to appropriate safeguards consistent with applicable data protection law.</p>
+    <p>By using the Service from outside the United States, you acknowledge and consent to the transfer of your data to the United States as described in this Policy.</p>
+
+    <!-- 14 -->
+    <h2 id="changes">14. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. When we make material changes, we will post the updated Policy to this page with a revised effective date and, where appropriate, provide notice by email to registered users.</p>
+    <p>Your continued use of the Service after the effective date of any updated Policy constitutes your acceptance of the new Policy. If you do not agree to the updated Policy, you must stop using the Service and may request account deletion as described in Section 9.</p>
+    <p>We encourage you to review this Policy periodically. For users who have opted into email notifications, we will send notice of material changes to the email address associated with your account.</p>
+
+    <!-- 15 -->
+    <h2 id="contact">15. Contact Us</h2>
+    <p>If you have questions, concerns, or requests regarding this Privacy Policy or your personal data, please contact us:</p>
+    <ul>
+      <li><strong>PartFive LLC</strong></li>
+      <li><strong>Email:</strong> <a href="mailto:hello@partfive.app">hello@partfive.app</a></li>
+    </ul>
+    <p>For data subject rights requests (access, correction, deletion, export), please email us with "Privacy Request" in the subject line. Include your full name, account email address, and a description of your request. We will acknowledge receipt within 5 business days and respond substantively within 30 days.</p>
+
+    <h3>Effective Date</h3>
+    <p>This Privacy Policy (version 1.2) is effective as of July 28, 2026. Version 1.0 was originally published with an effective date of June 8, 2026; version 1.1 (July 3, 2026) added coverage of the PartFive iOS application; version 1.2 adds payment processing through Stripe, sign in with Apple and Google, profile photos, in-app messages and shared documents, push notification tokens, and the airport identifiers recorded on flight logs.</p>
+  </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ FOOTER ══════════ -->
+<footer>
+  <div class="footer-inner">
+    <a href="index.html" class="nav-logo" aria-label="PartFive">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 72" width="126" height="37" aria-hidden="true">
+        <text x="4" y="52" font-family="Inter, -apple-system, sans-serif" font-size="40" font-weight="700" fill="#475569" letter-spacing="-1">PartFive</text>
+        <g transform="translate(159.5 3.2) scale(0.48)" opacity="0.85">
+            <g transform="translate(2 60) rotate(-30) scale(0.92)">
+              <path d="M117.97,40 L4.03,4 L40,40 Z" fill="#3B5C86"/>
+              <path d="M117.97,40 L40,40 L4.03,76 Z" fill="#22405F"/>
+            </g>
+            <g transform="translate(45 79) rotate(-30) scale(0.58)">
+              <path d="M117.97,40 L4.03,4 L40,40 Z" fill="#F09A1E"/>
+              <path d="M117.97,40 L40,40 L4.03,76 Z" fill="#BF5E12"/>
+            </g>
+          </g>
+
+      </svg>
+    </a>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="privacy.html" style="color:#94A3B8">Privacy Policy</a>
+      <a href="mailto:hello@partfive.app">Contact</a>
+    </div>
+    <span class="footer-copy">© 2026 PartFive LLC. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>

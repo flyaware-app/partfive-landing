@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PartFive Terms of Service — flight training & safety management for flight schools and individual instructors.">
+  <title>Terms of Service — PartFive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #0B1829;
+      color: #F1F5F9;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    :root {
+      --amber: #d97706;
+      --amber-light: #f0b429;
+      --amber-dim: rgba(217,119,6,0.10);
+      --amber-border: rgba(217,119,6,0.25);
+      --navy: #0B1829;
+      --navy-surface: #0F2040;
+      --navy-card: #142040;
+      --navy-elevated: #1a2d52;
+      --border: #1E3252;
+      --border-mid: #253D62;
+      --text-primary: #F1F5F9;
+      --text-secondary: #94A3B8;
+      --text-muted: #4E6383;
+      --radius: 14px;
+    }
+
+    /* ── Nav ─────────────────────────────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(11, 24, 41, 0.90);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 24px; max-width: 1080px; margin: 0 auto;
+    }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-link { color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-link:hover { color: var(--text-primary); }
+    .btn-nav {
+      background: var(--amber); color: #0B1829;
+      padding: 8px 20px; border-radius: 8px; border: none;
+      font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none;
+      font-family: 'Inter', sans-serif; letter-spacing: -0.01em;
+      transition: background 0.2s;
+    }
+    .btn-nav:hover { background: var(--amber-light); }
+
+    /* ── Page layout ───────────────────────────────────────────────────────── */
+    .page-wrap {
+      max-width: 1080px; margin: 0 auto; padding: 56px 24px 80px;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+
+    /* ── TOC sidebar ───────────────────────────────────────────────────────── */
+    .toc {
+      position: sticky; top: 80px;
+      background: var(--navy-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px;
+    }
+    .toc-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 14px;
+    }
+    .toc ol { list-style: none; padding: 0; }
+    .toc li { margin-bottom: 1px; }
+    .toc a {
+      display: block; font-size: 12px; font-weight: 500; color: var(--text-muted);
+      text-decoration: none; padding: 5px 8px; border-radius: 6px;
+      transition: color 0.15s, background 0.15s; line-height: 1.4;
+    }
+    .toc a:hover { color: var(--text-primary); background: rgba(255,255,255,0.04); }
+
+    /* ── Main content ──────────────────────────────────────────────────────── */
+    .legal-content { max-width: 800px; }
+    .legal-content h1 {
+      font-size: 2.2rem; font-weight: 800; letter-spacing: -0.035em;
+      color: var(--text-primary); margin-bottom: 10px; line-height: 1.15;
+    }
+    .legal-meta {
+      font-size: 13px; color: var(--text-muted); margin-bottom: 40px;
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    .legal-meta span { display: flex; align-items: center; gap: 5px; }
+    .legal-content h2 {
+      font-size: 1.2rem; font-weight: 700; color: var(--text-primary);
+      margin-top: 52px; margin-bottom: 14px; letter-spacing: -0.02em;
+      padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    }
+    .legal-content h2:first-of-type { margin-top: 0; }
+    .legal-content h3 {
+      font-size: 0.9375rem; font-weight: 700; color: var(--text-secondary);
+      margin-top: 24px; margin-bottom: 8px; letter-spacing: -0.01em;
+    }
+    .legal-content p {
+      font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.8;
+      margin-bottom: 14px;
+    }
+    .legal-content p:last-child { margin-bottom: 0; }
+    .legal-content ul, .legal-content ol {
+      margin: 12px 0 14px 20px; color: var(--text-secondary); font-size: 0.9375rem;
+    }
+    .legal-content li { line-height: 1.8; margin-bottom: 6px; }
+    .legal-content strong { color: var(--text-primary); font-weight: 600; }
+    .legal-content a { color: var(--amber); text-decoration: none; }
+    .legal-content a:hover { text-decoration: underline; }
+
+    .callout {
+      background: rgba(217,119,6,0.08); border: 1px solid var(--amber-border);
+      border-radius: 10px; padding: 16px 18px; margin: 20px 0;
+    }
+    .callout p { color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0; }
+    .callout strong { color: var(--amber); }
+
+    .callout-blue {
+      background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.2);
+    }
+    .callout-blue strong { color: #93C5FD; }
+
+    /* ── Footer ──────────────────────────────────────────────────────────── */
+    footer {
+      background: var(--navy); border-top: 1px solid var(--border);
+      padding: 40px 0;
+    }
+    .footer-inner {
+      max-width: 1080px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-links a, .footer-copy {
+      font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: #94A3B8; }
+
+    /* ── Responsive ──────────────────────────────────────────────────────── */
+    @media (max-width: 800px) {
+      .page-wrap {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 32px 20px 60px;
+      }
+      .toc { position: static; }
+      .legal-content h1 { font-size: 1.7rem; }
+    }
+    @media (max-width: 480px) {
+      .legal-meta { flex-direction: column; gap: 4px; }
+    }
+  </style>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "17c756de20b44d2ea51de05502e4ab75"}'></script><!-- End Cloudflare Web Analytics -->
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+window.PF_PIXEL_ID='1319421116295927';
+window.PF_PIXEL_ON=!!(window.PF_PIXEL_ID&&window.PF_PIXEL_ID.indexOf('__')===-1);
+if(window.PF_PIXEL_ON){fbq('init',window.PF_PIXEL_ID);fbq('track','PageView');}
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href^="https://app.partfive.app"]');if(a&&window.PF_PIXEL_ON){try{fbq('trackCustom','GetStartedClick');}catch(_){}}},true);
+</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1319421116295927&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════ NAV ══════════ -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html" aria-label="PartFive — back to home">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 72" width="169" height="50" aria-hidden="true">
+        <text x="4" y="52" font-family="Inter, -apple-system, sans-serif" font-size="40" font-weight="700" fill="#F1F5F9" letter-spacing="-1">PartFive</text>
+        <g transform="translate(159.5 3.2) scale(0.48)">
+          <g transform="translate(2 60) rotate(-30) scale(0.92)">
+            <path d="M117.97,40 L4.03,4 L40,40 Z" fill="#3B5C86"/>
+            <path d="M117.97,40 L40,40 L4.03,76 Z" fill="#22405F"/>
+          </g>
+          <g transform="translate(45 79) rotate(-30) scale(0.58)">
+            <path d="M117.97,40 L4.03,4 L40,40 Z" fill="#F09A1E"/>
+            <path d="M117.97,40 L40,40 L4.03,76 Z" fill="#BF5E12"/>
+          </g>
+        </g>
+
+      </svg>
+    </a>
+    <div class="nav-right">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="privacy.html">Privacy</a>
+      <a class="btn-nav" href="https://app.partfive.app">Sign in →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════ CONTENT ════ -->
+<div class="page-wrap">
+
+  <!-- Table of contents -->
+  <aside class="toc" aria-label="Table of contents">
+    <div class="toc-label">Contents</div>
+    <ol>
+      <li><a href="#introduction">1. Introduction &amp; Acceptance</a></li>
+      <li><a href="#eligibility">2. Eligibility</a></li>
+      <li><a href="#account-types">3. Account Types</a></li>
+      <li><a href="#user-responsibilities">4. User Responsibilities</a></li>
+      <li><a href="#aviation-disclaimers">5. Aviation-Specific Disclaimers</a></li>
+      <li><a href="#no-legal-advice">6. No Legal or Regulatory Advice</a></li>
+      <li><a href="#data-and-content">7. Data and Content</a></li>
+      <li><a href="#service-availability">8. Service Availability</a></li>
+      <li><a href="#modification-termination">9. Modification and Termination</a></li>
+      <li><a href="#disclaimer-warranties">10. Disclaimer of Warranties</a></li>
+      <li><a href="#limitation-liability">11. Limitation of Liability</a></li>
+      <li><a href="#indemnification">12. Indemnification</a></li>
+      <li><a href="#intellectual-property">13. Intellectual Property</a></li>
+      <li><a href="#governing-law">14. Governing Law</a></li>
+      <li><a href="#dispute-resolution">15. Dispute Resolution</a></li>
+      <li><a href="#changes-to-terms">16. Changes to Terms</a></li>
+      <li><a href="#general">17. General Provisions</a></li>
+    </ol>
+  </aside>
+
+  <!-- Main content -->
+  <main class="legal-content">
+    <h1>Terms of Service</h1>
+    <div class="legal-meta">
+      <span>Version 1.1</span>
+      <span>Effective date: July 3, 2026</span>
+    </div>
+
+    <!-- 1 -->
+    <h2 id="introduction">1. Introduction &amp; Acceptance</h2>
+    <p>Welcome to PartFive — flight training and safety management for flight schools and individual instructors. These Terms of Service ("Terms") govern your access to and use of the PartFive platform, including the web application available at <strong>app.partfive.app</strong>, the <strong>PartFive iOS application</strong> distributed through the Apple App Store, the marketing site at <strong>partfive.app</strong>, and any related services, APIs, or content we make available (collectively, the "Service"). These Terms apply equally regardless of whether you access PartFive through a web browser or the iOS application.</p>
+    <p>The Service is operated by <strong>PartFive LLC</strong>, a Utah limited liability company ("PartFive," "we," "us," or "our").</p>
+    <p>By creating an account, accessing the Service, or clicking a button indicating acceptance, you ("User," "you," or "your") agree to be bound by these Terms and our <a href="privacy.html">Privacy Policy</a>, which is incorporated herein by reference. If you do not agree, you must not use the Service.</p>
+    <p>If you are accessing the Service on behalf of a flight school, flight training organization, or other legal entity ("Organization"), you represent that you have authority to bind that Organization to these Terms. In that case, "you" refers to both you individually and the Organization.</p>
+
+    <!-- 2 -->
+    <h2 id="eligibility">2. Eligibility</h2>
+    <p>To use the Service, you must:</p>
+    <ul>
+      <li>Be at least 13 years of age. If you are under 18, your parent or legal guardian must be informed of and consent to your use. See Section 10 of our <a href="privacy.html">Privacy Policy</a> for additional information about minors.</li>
+      <li>Provide accurate, current, and complete registration information, and keep that information updated.</li>
+      <li>Not be prohibited from receiving or using the Service under applicable law, including U.S. export control laws and sanctions regulations.</li>
+      <li>Not have had a prior PartFive account terminated for cause, unless we have expressly authorized you to re-register.</li>
+    </ul>
+    <p>The Service is intended primarily for use by individuals and organizations within the United States. Users outside the United States may access the Service but are responsible for compliance with their local laws. We make no representation that the Service is appropriate or available in locations outside the US.</p>
+    <p>Flight training organizations using PartFive as part of an FAA-approved training program remain solely responsible for ensuring that their use of the Service is consistent with their letter of authorization, training course outline, and applicable FAA regulations, regardless of the accuracy or completeness of data within the platform.</p>
+
+    <!-- 3 -->
+    <h2 id="account-types">3. Account Types</h2>
+    <p>PartFive supports several types of accounts, each with different levels of access and responsibility:</p>
+
+    <h3>Organization Accounts</h3>
+    <p><strong>Flight Training Organization (Part 141 or Part 61):</strong> Accounts created by or for flight schools and training organizations — whether certificated under FAA Part 141 or operating under Part 61. These accounts include administrative access, full SMS workflow, student and instructor management, and audit-ready record retention features. Organizations are responsible for ensuring their use of the Service is consistent with whichever regulatory framework they operate under.</p>
+    <p><strong>Independent CFI / Small Operator:</strong> Accounts for individual certificated flight instructors operating under Part 61, flight clubs, and small aviation businesses. These accounts provide training record management, endorsement workflow, and safety reporting tools scaled to individual-instructor operations.</p>
+
+    <h3>Individual User Accounts</h3>
+    <p>Within an organization, the following role-based account types exist:</p>
+    <ul>
+      <li><strong>Safety Officer:</strong> Full visibility of all safety management content — reports, investigations, SMS manual, bulletins — with authoring and administrative authority over safety documentation.</li>
+      <li><strong>Admin:</strong> Same data visibility as Safety Officer, plus organizational administration, user management, and configuration authority.</li>
+      <li><strong>CFI (Certified Flight Instructor):</strong> Access limited to their assigned students' training records, their own flight logs, endorsement workflow, and sign-off queues.</li>
+      <li><strong>Dispatcher:</strong> Operations-focused access — flight scheduling and calendar, daily flight oversight, and base weather — plus read-only access to safety documentation (SMS manual, SOPs, and bulletins). Dispatchers do not have access to student training records, endorsements, or sign-off authority.</li>
+      <li><strong>Student:</strong> Access limited to their own assigned syllabus, lesson progress, pre-flight assessments, training records, and personal safety reports.</li>
+    </ul>
+    <p>Account roles are assigned by organization administrators and may be changed at any time by authorized personnel. PartFive is not responsible for incorrect role assignments made within an organization's account.</p>
+
+    <!-- 4 -->
+    <h2 id="user-responsibilities">4. User Responsibilities</h2>
+    <p>By using the Service, you agree to the following:</p>
+
+    <h3>Accurate Data</h3>
+    <p>You will enter only accurate, truthful, and current data into the Service. You understand that PartFive records — including endorsements, pre-flight assessments, stage check records, and safety reports — may be used as operational records by your organization, may be subject to FAA inspection, and may have legal or regulatory significance. Falsification of any such record is a violation of these Terms and may violate federal law.</p>
+
+    <h3>Lawful Use</h3>
+    <p>You will use the Service only for lawful purposes and in compliance with all applicable federal, state, and local laws and regulations. You will not use the Service to commit fraud, misrepresent qualifications, circumvent FAA regulatory requirements, or harm other users.</p>
+
+    <h3>Account Security</h3>
+    <p>You are responsible for maintaining the confidentiality of your account credentials and for all activity that occurs under your account. You will notify us immediately at <a href="mailto:hello@partfive.app">hello@partfive.app</a> if you believe your account has been compromised. PartFive is not liable for losses resulting from unauthorized account access that occurred because you failed to maintain credential security.</p>
+
+    <h3>No Unauthorized Sharing</h3>
+    <p>You will not share your account credentials with others, allow others to access the Service through your account, or create accounts on behalf of others without authorization. Organizations may invite multiple authorized users through the platform's invitation system.</p>
+
+    <h3>Responsibility for Actions</h3>
+    <p>You accept full responsibility for all actions taken under your account, including endorsements issued, reports filed, assessments signed, and content uploaded. Role-based access controls within the platform are a convenience feature — they do not relieve you of your individual professional and regulatory responsibilities.</p>
+
+    <!-- 5 -->
+    <h2 id="aviation-disclaimers">5. Aviation-Specific Use Disclaimers</h2>
+    <div class="callout">
+      <p><strong>Read carefully.</strong> These disclaimers are central to how the Service is intended to be used. Aviation is a safety-critical activity. Misunderstanding the role of this software could have serious consequences.</p>
+    </div>
+
+    <h3>PartFive Is a Record-Keeping and Workflow Tool</h3>
+    <p>PartFive is designed to support the administrative and operational workflows of flight training organizations and individual instructors. It is a <strong>record-keeping and workflow management platform</strong>. It is not a substitute for pilot judgment, instructor qualifications, regulatory compliance programs, or the professional duties owed by certificated airmen and aviation organizations.</p>
+
+    <h3>Regulatory Responsibility Remains with You</h3>
+    <p>Use of PartFive does not satisfy, reduce, or alter any regulatory obligation under 14 CFR Part 61, Part 91, Part 141, Part 142, or any other applicable FAA regulation, ICAO standard, or aviation authority requirement. All regulatory responsibilities remain solely and exclusively with the user, the certificated instructor, the organization, and the relevant certificate holder — not with PartFive.</p>
+
+    <h3>Endorsements Are the CFI's Responsibility</h3>
+    <p>PartFive provides endorsement templates based on FAA Advisory Circular AC 61-65K for informational convenience. <strong>Certificated flight instructors (CFIs) are solely and exclusively responsible for the accuracy, validity, and appropriateness of any endorsement they issue</strong> — whether issued through PartFive or by any other means. PartFive does not verify CFI certificates, ratings, or authority. The issuance of an endorsement through this platform does not constitute validation by PartFive that the endorsement is legally correct or that the student meets the underlying regulatory requirements.</p>
+
+    <h3>Training Program Compliance</h3>
+    <p>Flight schools operating under FAA-approved training course outlines (TCOs) remain solely responsible for the content, administration, and compliance of their training programs. PartFive's curriculum and syllabus tools are aids to organization — they do not constitute FAA-approved materials, and they do not relieve the organization of its obligation to operate within its approved TCO.</p>
+
+    <h3>Pilot-in-Command Responsibility</h3>
+    <p>Pilots are solely responsible for currency, certification, aeronautical experience, and all operational decisions, including go/no-go decisions. PartFive's pre-flight risk assessment tool (PAVE model) is a structured self-assessment aid. It does not replace the pilot-in-command's responsibility under 14 CFR §91.3. A favorable risk score in PartFive does not authorize any flight.</p>
+
+    <h3>Weather Data</h3>
+    <p>Weather information displayed in PartFive (METARs, TAFs, PIREPs) is sourced from public aviation weather services and is provided for situational awareness only. PartFive does not guarantee the accuracy, currency, or completeness of weather data. Pilots must obtain official weather briefings from authorized sources (e.g., 1800wxbrief.com, an FAA AFSS, or other authorized weather service) before flight.</p>
+
+    <!-- 6 -->
+    <h2 id="no-legal-advice">6. No Legal or Regulatory Advice</h2>
+    <p>Nothing in the Service — including AI-generated text, templates, SMS manual content, SOP suggestions, endorsement language, or any other content — constitutes legal advice, regulatory advice, or a determination of compliance. All such content is informational only.</p>
+    <p>PartFive does not practice law. We are not your attorney. Regulatory determinations, legal interpretations, and compliance decisions require consultation with qualified legal counsel, FAA legal staff, the FAA's Flight Standards District Office (FSDO), or other appropriate authorities depending on the nature of the question.</p>
+    <p>AC 61-65K endorsement templates included in the platform reproduce FAA-published language for convenience. The FAA may amend or replace this advisory circular; users are responsible for verifying that any endorsement they issue references current and applicable guidance.</p>
+
+    <!-- 7 -->
+    <h2 id="data-and-content">7. Data and Content</h2>
+
+    <h3>Your Content</h3>
+    <p>You retain ownership of the data and content you submit to the Service ("User Content"), including training records, safety reports, endorsements, flight logs, and organizational documentation. By submitting User Content, you grant PartFive a limited, non-exclusive, royalty-free license to store, process, and display your User Content solely for the purpose of operating and improving the Service.</p>
+
+    <h3>Authority to Upload</h3>
+    <p>You represent and warrant that you have all necessary rights and authority to upload any User Content you submit, including data pertaining to other individuals (such as student records) that you upload or create on their behalf. You will not upload data about identifiable individuals without appropriate consent, organizational authority, or other legal basis.</p>
+
+    <h3>No Ownership Claimed</h3>
+    <p>PartFive does not claim ownership of your User Content. We do not sell your User Content to third parties. Our use of your data is governed by our <a href="privacy.html">Privacy Policy</a>.</p>
+
+    <h3>Accuracy</h3>
+    <p>You are responsible for the accuracy of all User Content you submit. PartFive does not independently verify the accuracy of training records, endorsements, or other operational data entered by users.</p>
+
+    <!-- 8 -->
+    <h2 id="service-availability">8. Service Availability</h2>
+    <p>The Service is provided on an "as available" basis. PartFive does not guarantee uninterrupted availability. The Service may be unavailable during planned maintenance windows, due to infrastructure outages, third-party service failures (including Supabase, hosting providers, and external data sources), or other events beyond our reasonable control.</p>
+    <p>We will make reasonable efforts to notify users of planned maintenance in advance. We are not liable for any loss, damage, or inconvenience resulting from Service unavailability, including inability to access training records, file reports, or issue endorsements during an outage.</p>
+    <p><strong>Critical operations should not depend solely on PartFive's availability.</strong> Organizations should maintain backup record-keeping procedures consistent with regulatory requirements.</p>
+
+    <div class="callout callout-blue">
+      <p><strong>Note:</strong> PartFive does not currently offer a formal uptime service-level agreement (SLA). Organizations with critical record-keeping needs should maintain independent backups consistent with their regulatory obligations.</p>
+    </div>
+
+    <!-- 9 -->
+    <h2 id="modification-termination">9. Modification and Termination</h2>
+
+    <h3>Modification of the Service</h3>
+    <p>PartFive may modify, suspend, or discontinue any part of the Service at any time. Where reasonable, we will provide advance notice of material changes. We are not liable for any modification, suspension, or discontinuation of the Service.</p>
+
+    <h3>Termination by PartFive</h3>
+    <p>PartFive may suspend or terminate your access to the Service, with or without notice, for any violation of these Terms, any suspected fraudulent or illegal activity, or for any other reason at our discretion. Upon termination, your right to access the Service ceases. We will retain User Content as required by applicable law and as described in our <a href="privacy.html">Privacy Policy</a>.</p>
+
+    <h3>Termination by You</h3>
+    <p>You may stop using the Service at any time. What happens to data on deletion depends on whether you are an individual user within an organization, or the organization itself.</p>
+    <p><strong>Deleting an individual account.</strong> You can delete your account from Settings. Because your organization remains the controller and custodian of its training records — and is itself subject to FAA recordkeeping duties under 14 CFR §141.101 and §61.189 — deleting your account removes your personal identifying information and replaces your name with an anonymized marker on the organization's regulated records, which remain part of the organization's account. Three years after anonymization (the longest applicable FAA retention minimum), PartFive automatically redacts the residual name references and deletes transient personal data, so no personal identifiers remain.</p>
+    <p><strong>Closing an organization.</strong> An organization's owner — a flight school Admin or Safety Officer, or an independent CFI — can export a complete copy of all organization data and then permanently delete the organization from Settings. On deletion, PartFive purges the organization and all associated records (every member's training records, endorsements, flight logs, and safety records) from its active systems, and those records age out of routine encrypted backups within 30 days. <strong>PartFive does not retain a departed organization's records.</strong> Because the FAA recordkeeping obligation rests with the certificate holder — the school or the instructor — and not with PartFive, you are responsible for exporting and retaining any records you are required to keep before deleting.</p>
+    <p>We strongly recommend exporting your data before any deletion. Deletion may be delayed or limited only where retention is required by law or active legal process (for example, a subpoena, litigation hold, or open accident investigation). To request assistance, contact us at <a href="mailto:hello@partfive.app">hello@partfive.app</a>.</p>
+
+    <!-- 10 -->
+    <h2 id="disclaimer-warranties">10. Disclaimer of Warranties</h2>
+    <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE," WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. PARTFIVE SPECIFICALLY DISCLAIMS ALL WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, ACCURACY, RELIABILITY, COMPLETENESS, TITLE, QUIET ENJOYMENT, AND ANY WARRANTIES ARISING FROM COURSE OF DEALING OR USAGE OF TRADE.</p>
+    <p>PARTFIVE DOES NOT WARRANT THAT: (A) THE SERVICE WILL MEET YOUR REQUIREMENTS; (B) THE SERVICE WILL BE UNINTERRUPTED, TIMELY, SECURE, OR ERROR-FREE; (C) THE RESULTS OBTAINED FROM USE OF THE SERVICE WILL BE ACCURATE OR RELIABLE; (D) ANY DEFECTS IN THE SERVICE WILL BE CORRECTED; OR (E) THE SERVICE IS FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS.</p>
+    <p>NO ADVICE OR INFORMATION, WHETHER ORAL OR WRITTEN, OBTAINED BY YOU FROM PARTFIVE OR THROUGH THE SERVICE WILL CREATE ANY WARRANTY NOT EXPRESSLY STATED IN THESE TERMS.</p>
+
+    <!-- 11 -->
+    <h2 id="limitation-liability">11. Limitation of Liability</h2>
+    <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL PARTFIVE LLC, ITS MEMBERS, MANAGERS, EMPLOYEES, CONTRACTORS, OR AGENTS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES, INCLUDING LOST PROFITS, LOST DATA, LOSS OF GOODWILL, SERVICE INTERRUPTION, COMPUTER DAMAGE, SYSTEM FAILURE, AVIATION INCIDENT, REGULATORY ENFORCEMENT ACTION, OR THE COST OF SUBSTITUTE SERVICES, ARISING OUT OF OR RELATING TO YOUR USE OF OR INABILITY TO USE THE SERVICE, WHETHER BASED ON WARRANTY, CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT LIABILITY, OR ANY OTHER LEGAL THEORY, EVEN IF PARTFIVE HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</p>
+    <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, PARTFIVE'S TOTAL CUMULATIVE LIABILITY TO YOU FOR ANY CLAIMS ARISING OUT OF OR RELATING TO THESE TERMS OR THE SERVICE SHALL NOT EXCEED THE GREATER OF: (A) THE AMOUNTS YOU PAID TO PARTFIVE IN THE TWELVE (12) MONTHS IMMEDIATELY PRECEDING THE EVENT GIVING RISE TO THE CLAIM; OR (B) ONE HUNDRED DOLLARS ($100.00) IF YOU ARE ON A FREE TIER OR HAVE MADE NO PAYMENTS.</p>
+    <p>SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF CERTAIN WARRANTIES OR THE LIMITATION OF LIABILITY FOR CONSEQUENTIAL OR INCIDENTAL DAMAGES. IN SUCH JURISDICTIONS, PARTFIVE'S LIABILITY SHALL BE LIMITED TO THE MAXIMUM EXTENT PERMITTED BY LAW.</p>
+
+    <!-- 12 -->
+    <h2 id="indemnification">12. Indemnification</h2>
+    <p>You agree to defend, indemnify, and hold harmless PartFive LLC, its members, managers, employees, contractors, and agents from and against any claims, liabilities, damages, losses, and expenses, including reasonable attorneys' fees and legal costs, arising out of or in any way connected with:</p>
+    <ul>
+      <li>Your access to or use of the Service;</li>
+      <li>Your User Content, including any endorsement you issue, any report you file, or any record you create or modify through the Service;</li>
+      <li>Your violation of these Terms;</li>
+      <li>Your violation of any third-party right, including any intellectual property right or privacy right;</li>
+      <li>Your violation of any applicable law or regulation, including FAA regulations; or</li>
+      <li>Any negligent or wrongful conduct by you in connection with the Service.</li>
+    </ul>
+    <p>PartFive reserves the right to assume exclusive control of the defense of any matter subject to indemnification by you, in which case you will cooperate with PartFive in asserting any available defenses.</p>
+
+    <!-- 13 -->
+    <h2 id="intellectual-property">13. Intellectual Property</h2>
+
+    <h3>PartFive's Property</h3>
+    <p>The Service, including all software, design, code, databases, user interface, trademarks, logos, trade names, and content created by PartFive, is the intellectual property of PartFive LLC and is protected by applicable copyright, trademark, trade secret, and other intellectual property laws. The "PartFive" name, wordmark, and airplane-needle logo are trademarks of PartFive LLC.</p>
+    <p>These Terms do not grant you any ownership interest in the Service. You may use the Service solely as permitted under these Terms and may not copy, reproduce, distribute, create derivative works of, or reverse engineer any part of the Service without our express written consent.</p>
+
+    <h3>FAA Advisory Circular Content</h3>
+    <p>Endorsement text templates based on FAA Advisory Circular AC 61-65K are reproduced from FAA public domain materials. The templates themselves are government-authored and not subject to PartFive's copyright. However, PartFive's presentation, formatting, integration, and editorial organization of those templates within the platform is proprietary.</p>
+
+    <h3>Feedback</h3>
+    <p>If you submit feedback, suggestions, or ideas about the Service, you grant PartFive an irrevocable, perpetual, royalty-free license to use and incorporate that feedback without obligation or compensation to you.</p>
+
+    <!-- 14 -->
+    <h2 id="governing-law">14. Governing Law</h2>
+    <p>These Terms shall be governed by and construed in accordance with the laws of the State of Utah, without regard to its conflict of law provisions. Any dispute not resolved through the dispute resolution process described in Section 15 shall be subject to the exclusive jurisdiction of the state courts of Utah County, Utah, or the United States District Court for the District of Utah, and you consent to personal jurisdiction in those courts.</p>
+
+    <!-- 15 -->
+    <h2 id="dispute-resolution">15. Dispute Resolution</h2>
+
+    <h3>Informal Resolution First</h3>
+    <p>Before initiating any formal dispute, you agree to contact PartFive at <a href="mailto:hello@partfive.app">hello@partfive.app</a> and attempt to resolve the dispute informally. We will make good-faith efforts to resolve disputes promptly. If a dispute is not resolved within thirty (30) days of informal notice, either party may proceed to the process described below.</p>
+
+    <h3>Resolution in Court</h3>
+    <p>If a dispute is not resolved informally within thirty (30) days of informal notice, either party may bring the dispute before the courts identified in Section 14 (Governing Law), which shall have exclusive jurisdiction over the matter. Each party consents to personal jurisdiction and venue in those courts.</p>
+
+    <h3>Exceptions</h3>
+    <p>Notwithstanding the informal-resolution requirement above, either party may seek injunctive or other equitable relief in any court of competent jurisdiction to prevent irreparable harm pending resolution of a dispute, and either party may bring claims in small claims court if the claim qualifies.</p>
+
+    <!-- 16 -->
+    <h2 id="changes-to-terms">16. Changes to Terms</h2>
+    <p>PartFive may update these Terms at any time. When we make material changes, we will provide notice by posting the updated Terms to this page with a revised effective date, and where appropriate, by email notification to registered users. The date of the most recent revision will always be shown at the top of this page.</p>
+    <p>Your continued use of the Service after notice of changes constitutes your acceptance of the updated Terms. If you do not agree to updated Terms, you must stop using the Service and may request account deletion as described in Section 9.</p>
+
+    <!-- 17 -->
+    <h2 id="general">17. General Provisions</h2>
+
+    <h3>Severability</h3>
+    <p>If any provision of these Terms is held by a court of competent jurisdiction to be invalid, illegal, or unenforceable, that provision shall be modified to the minimum extent necessary to make it enforceable, or severed if modification is not possible, and the remaining provisions shall continue in full force and effect.</p>
+
+    <h3>Entire Agreement</h3>
+    <p>These Terms, together with the <a href="privacy.html">Privacy Policy</a> and any additional terms applicable to specific features, constitute the entire agreement between you and PartFive with respect to the Service and supersede all prior agreements, representations, and understandings.</p>
+
+    <h3>No Waiver</h3>
+    <p>Failure by PartFive to enforce any right or provision of these Terms shall not constitute a waiver of future enforcement of that right or provision.</p>
+
+    <h3>Assignment</h3>
+    <p>You may not assign these Terms or any rights hereunder without PartFive's prior written consent. PartFive may assign these Terms in connection with a merger, acquisition, or sale of assets without your consent.</p>
+
+    <h3>Contact Information</h3>
+    <p>Questions about these Terms should be directed to:</p>
+    <ul>
+      <li>PartFive LLC</li>
+      <li>Email: <a href="mailto:hello@partfive.app">hello@partfive.app</a></li>
+    </ul>
+
+    <h3>Effective Date</h3>
+    <p>These Terms (version 1.1) are effective as of July 3, 2026. Version 1.0 was originally published with an effective date of June 1, 2026; version 1.1 adds coverage of the PartFive iOS application.</p>
+  </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ FOOTER ══════════ -->
+<footer>
+  <div class="footer-inner">
+    <a href="index.html" class="nav-logo" aria-label="PartFive">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 72" width="126" height="37" aria-hidden="true">
+        <text x="4" y="52" font-family="Inter, -apple-system, sans-serif" font-size="40" font-weight="700" fill="#475569" letter-spacing="-1">PartFive</text>
+        <g transform="translate(159.5 3.2) scale(0.48)" opacity="0.85">
+            <g transform="translate(2 60) rotate(-30) scale(0.92)">
+              <path d="M117.97,40 L4.03,4 L40,40 Z" fill="#3B5C86"/>
+              <path d="M117.97,40 L40,40 L4.03,76 Z" fill="#22405F"/>
+            </g>
+            <g transform="translate(45 79) rotate(-30) scale(0.58)">
+              <path d="M117.97,40 L4.03,4 L40,40 Z" fill="#F09A1E"/>
+              <path d="M117.97,40 L40,40 L4.03,76 Z" fill="#BF5E12"/>
+            </g>
+          </g>
+
+      </svg>
+    </a>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html" style="color:#94A3B8">Terms of Service</a>
+      <a href="mailto:hello@partfive.app">Contact</a>
+    </div>
+    <span class="footer-copy">© 2026 PartFive LLC. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>

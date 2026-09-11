@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Smart App Banner: a native bar at the top of the page on iPhone/iPad Safari. It reads OPEN
+       when PartFive is already installed and VIEW (to the App Store) when it isn't — the installed
+       check is why this is Apple's tag rather than a hand-rolled bar, which cannot know. Safari only;
+       other iOS browsers and desktop simply don't render it. app-id is the App Store id. -->
+  <meta name="apple-itunes-app" content="app-id=6787193149, app-argument=https://app.partfive.app/open">
+  <meta name="description" content="PartFive — flight training and safety management for flight schools and individual instructors.">
+  <title>PartFive — Flight Training &amp; Safety Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #0B1829;
+      color: #F1F5F9;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    :root {
+      --amber: #d97706;
+      --amber-light: #f0b429;
+      --amber-dim: rgba(217,119,6,0.10);
+      --amber-border: rgba(217,119,6,0.20);
+      --navy: #0B1829;
+      --navy-surface: #0F2040;
+      --navy-card: #142040;
+      --navy-elevated: #1a2d52;
+      --border: #1E3252;
+      --border-mid: #253D62;
+      --text-primary: #F1F5F9;
+      --text-secondary: #94A3B8;
+      --text-muted: #4E6383;
+      --radius: 14px;
+    }
+
+    /* ── Layout ──────────────────────────────────────────────────────────── */
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Nav ─────────────────────────────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(11, 24, 41, 0.90);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 24px; max-width: 1080px; margin: 0 auto;
+    }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-link { color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-link:hover { color: var(--text-primary); }
+    .btn-nav {
+      background: var(--amber); color: #0B1829;
+      padding: 8px 20px; border-radius: 8px; border: none;
+      font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none;
+      font-family: 'Inter', sans-serif; letter-spacing: -0.01em;
+      transition: background 0.2s;
+    }
+    .btn-nav:hover { background: var(--amber-light); }
+
+    /* ── Hero ────────────────────────────────────────────────────────────── */
+    #hero {
+      position: relative; overflow: hidden;
+      min-height: 100vh; display: flex; align-items: center;
+      background: linear-gradient(160deg, #0B1829 0%, #0F2040 60%, #0B1829 100%);
+      padding: 80px 0 100px;
+    }
+    .hero-ornament {
+      position: absolute; right: -60px; top: 50%; transform: translateY(-58%);
+      width: min(520px, 60vw); height: auto; opacity: 0.55;
+      pointer-events: none; user-select: none;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 700px; }
+    .ios-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px; border-radius: 100px;
+      border: 1px solid var(--amber-border);
+      background: var(--amber-dim);
+      color: var(--amber); font-size: 12px; font-weight: 600;
+      letter-spacing: 0.02em; margin-bottom: 36px;
+    }
+    .ios-badge svg { flex-shrink: 0; }
+    /* Apple's official "Download on the App Store" badge.
+       Guidelines: use the supplied artwork unaltered, keep the aspect ratio, and leave clear
+       space around it of at least a quarter of the badge's height. Do not recolour it, add
+       effects, or rebuild it from type — hence an <img> of Apple's own SVG rather than markup
+       that imitates it. The white variant is the one that belongs on this navy background. */
+    .appstore-badge { display: inline-block; line-height: 0; padding: 10px; }
+    .store-cta .appstore-badge { margin-left: -10px; }
+    .store-cta .store-cta-note { padding-left: 2px; }
+    .appstore-badge img { height: 54px; width: auto; display: block; }
+    .appstore-badge:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; border-radius: 10px; }
+    /* Hero copy is left-aligned, so the badge is too — centring it above a left-aligned
+       headline reads as a stray element. The final CTA centres its own row, so this only
+       ever describes the hero. */
+    .store-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+    .store-cta-note { font-size: 13px; color: var(--text-secondary, #94A3B8); }
+    @media (max-width: 600px) { .appstore-badge img { height: 46px; } }
+    h1 {
+      font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+      font-weight: 800; letter-spacing: -0.04em; line-height: 1.08;
+      color: var(--text-primary); margin-bottom: 24px;
+    }
+    h1 span { color: var(--amber); }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: var(--text-secondary); line-height: 1.7; max-width: 560px;
+      margin-bottom: 44px;
+    }
+    .hero-ctas { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--amber); color: #0B1829;
+      padding: 14px 28px; border-radius: 10px; border: none;
+      font-weight: 700; font-size: 1rem; cursor: pointer;
+      text-decoration: none; font-family: 'Inter', sans-serif;
+      letter-spacing: -0.01em; transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--amber-light); transform: translateY(-1px); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: transparent; color: var(--text-secondary);
+      padding: 13px 24px; border-radius: 10px;
+      border: 1px solid var(--border-mid);
+      font-weight: 600; font-size: 1rem; cursor: pointer;
+      text-decoration: none; font-family: 'Inter', sans-serif;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--text-primary); border-color: var(--text-muted); }
+
+    /* ── Sections ────────────────────────────────────────────────────────── */
+    section { padding: 96px 0; }
+    .section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 12px;
+    }
+    h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 800; letter-spacing: -0.03em; color: var(--text-primary);
+      margin-bottom: 16px; line-height: 1.15;
+    }
+    .section-sub {
+      font-size: 1.05rem; color: var(--text-secondary); max-width: 520px;
+      line-height: 1.7; margin-bottom: 56px;
+    }
+    .divider {
+      border: none; border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ── Why PartFive ────────────────────────────────────────────────────── */
+    #why { background: var(--navy); }
+    .why-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+      margin-top: 56px;
+    }
+    .why-card {
+      background: var(--navy-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 36px 32px;
+    }
+    .why-card h3 {
+      font-size: 1.15rem; font-weight: 700; color: var(--text-primary);
+      margin-bottom: 16px; letter-spacing: -0.02em;
+    }
+    .why-card p {
+      font-size: 0.9rem; color: var(--text-secondary); line-height: 1.8;
+    }
+    .why-card p + p { margin-top: 12px; }
+    .why-accent-bar {
+      width: 32px; height: 3px; background: var(--amber);
+      border-radius: 2px; margin-bottom: 20px;
+    }
+
+    /* ── Who it's for ────────────────────────────────────────────────────── */
+    #who { background: var(--navy-surface); }
+    .who-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+      margin-top: 56px;
+    }
+    .who-card {
+      background: var(--navy-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 32px 28px;
+    }
+    .who-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: var(--amber-dim); border: 1px solid var(--amber-border);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px; color: var(--amber);
+    }
+    .who-card h3 {
+      font-size: 1rem; font-weight: 700; color: var(--text-primary);
+      margin-bottom: 10px; letter-spacing: -0.02em;
+    }
+    .who-card p { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.75; }
+
+    /* ── Audience path chooser (hero) ─────────────────────────────────────── */
+    .path-chooser { margin-top: 8px; max-width: 640px; }
+    .path-q {
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 16px;
+    }
+    .path-options { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .path-card {
+      display: flex; align-items: center; gap: 14px; text-align: left;
+      background: var(--navy-card); border: 1px solid var(--border-mid);
+      border-radius: 12px; padding: 18px; cursor: pointer;
+      font-family: 'Inter', sans-serif; color: var(--text-primary);
+      transition: border-color 0.18s, transform 0.15s, background 0.18s;
+    }
+    .path-card:hover, .path-card:focus-visible {
+      border-color: var(--amber); transform: translateY(-2px);
+      background: var(--navy-elevated); outline: none;
+    }
+    .path-card-icon {
+      width: 42px; height: 42px; flex-shrink: 0; border-radius: 10px;
+      background: var(--amber-dim); border: 1px solid var(--amber-border);
+      display: flex; align-items: center; justify-content: center; color: var(--amber);
+    }
+    .path-card-text { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+    .path-card-title { font-size: 0.95rem; font-weight: 700; letter-spacing: -0.01em; }
+    .path-card-sub { font-size: 0.78rem; color: var(--text-secondary); }
+    .path-card-arrow {
+      color: var(--text-muted); font-size: 1.15rem; line-height: 1;
+      transition: color 0.15s, transform 0.15s;
+    }
+    .path-card:hover .path-card-arrow, .path-card:focus-visible .path-card-arrow {
+      color: var(--amber); transform: translateX(3px);
+    }
+    .path-secondary {
+      display: flex; align-items: center; gap: 14px; margin-top: 22px;
+      font-size: 0.85rem; color: var(--text-muted); flex-wrap: wrap;
+    }
+    .btn-ghost-sm {
+      color: var(--text-secondary); text-decoration: none; font-weight: 600;
+      border: 1px solid var(--border-mid); padding: 7px 16px; border-radius: 8px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost-sm:hover { color: var(--text-primary); border-color: var(--text-muted); }
+    .path-skip { color: var(--text-secondary); text-decoration: none; }
+    .path-skip:hover { color: var(--text-primary); text-decoration: underline; }
+
+    /* ── Tailored audience tracks ─────────────────────────────────────────── */
+    .track {
+      scroll-margin-top: 64px; background: var(--navy-surface);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 84px 0;
+    }
+    .track[hidden] { display: none; }
+    .track-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 12px;
+    }
+    .track-title {
+      font-size: clamp(1.8rem, 3.4vw, 2.5rem); font-weight: 800;
+      letter-spacing: -0.03em; line-height: 1.12; color: var(--text-primary);
+      margin-bottom: 16px; max-width: 760px;
+    }
+    .track-sub {
+      font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7;
+      max-width: 640px; margin-bottom: 28px;
+    }
+    .track-actions {
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 52px;
+    }
+    .track-switch, .track-alllink {
+      background: none; border: none; font-family: 'Inter', sans-serif;
+      font-size: 0.9rem; font-weight: 600; color: var(--text-secondary);
+      cursor: pointer; text-decoration: none; padding: 0;
+    }
+    .track-switch:hover, .track-alllink:hover { color: var(--text-primary); text-decoration: underline; }
+    .track-sep { color: var(--text-muted); }
+
+    .track-feats {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 56px;
+    }
+    .track-feat {
+      display: flex; gap: 16px; align-items: flex-start;
+      background: var(--navy-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 22px;
+    }
+    .track-feat-icon {
+      width: 40px; height: 40px; flex-shrink: 0; border-radius: 9px;
+      background: var(--amber-dim); border: 1px solid var(--amber-border);
+      display: flex; align-items: center; justify-content: center; color: var(--amber);
+    }
+    .track-feat h3 {
+      font-size: 0.95rem; font-weight: 700; color: var(--text-primary);
+      margin-bottom: 6px; letter-spacing: -0.01em;
+    }
+    .track-feat p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; }
+    .track-shots-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 18px;
+    }
+
+    /* ── Eight Pillars ───────────────────────────────────────────────────── */
+    #features { background: var(--navy); }
+    .pillars-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+      margin-top: 56px;
+    }
+    .pillar-card {
+      background: var(--navy-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 24px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .pillar-card:hover { border-color: var(--border-mid); transform: translateY(-2px); }
+    .pillar-icon {
+      width: 40px; height: 40px; border-radius: 9px;
+      background: var(--amber-dim); border: 1px solid var(--amber-border);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px; color: var(--amber);
+    }
+    .pillar-card h3 {
+      font-size: 0.875rem; font-weight: 700; color: var(--text-primary);
+      margin-bottom: 8px; letter-spacing: -0.01em;
+    }
+    .pillar-card p { font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.7; }
+
+    /* ── Screenshots ─────────────────────────────────────────────────────── */
+    #screens { background: var(--navy-surface); }
+    .screens-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+      margin-top: 16px;
+    }
+    .screen-frame {
+      background: var(--navy-card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .screen-frame:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 36px rgba(0,0,0,0.45);
+    }
+    .screen-frame-hero {
+      box-shadow: 0 8px 48px rgba(0,0,0,0.5), 0 0 0 1px var(--border);
+    }
+    .screen-frame-hero:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 60px rgba(0,0,0,0.55), 0 0 0 1px var(--border-mid);
+    }
+    .screen-bar {
+      background: var(--navy-elevated); padding: 9px 14px;
+      display: flex; align-items: center; gap: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .screen-bar-hero {
+      padding: 10px 16px;
+    }
+    .screen-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--border-mid);
+    }
+    .screen-img-wrap {
+      aspect-ratio: 16/10; background: var(--navy-elevated);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .screen-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block;
+    }
+    .screen-placeholder {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 10px; color: var(--text-muted); font-size: 12px;
+    }
+    .screen-caption {
+      padding: 11px 16px; font-size: 12px; font-weight: 600;
+      color: var(--text-secondary); border-top: 1px solid var(--border);
+    }
+
+    /* Clickable screenshot wrap */
+    .screen-img-wrap { cursor: zoom-in; position: relative; }
+    .screen-img-wrap::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0);
+      transition: background 0.2s;
+      pointer-events: none;
+    }
+    .screen-img-wrap:hover::after { background: rgba(0,0,0,0.08); }
+    .screen-zoom-hint {
+      position: absolute; bottom: 10px; right: 10px;
+      background: rgba(0,0,0,0.55); backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 6px;
+      padding: 4px 8px; font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.7);
+      display: flex; align-items: center; gap: 4px;
+      opacity: 0; transition: opacity 0.15s; pointer-events: none;
+    }
+    .screen-img-wrap:hover .screen-zoom-hint { opacity: 1; }
+
+    /* Lightbox */
+    #lb {
+      display: none; position: fixed; inset: 0; z-index: 9000;
+      background: rgba(4, 10, 20, 0.92);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    #lb.open { display: flex; }
+    #lb-inner {
+      position: relative; max-width: min(1300px, 95vw);
+      animation: lb-in 0.18s ease;
+    }
+    @keyframes lb-in {
+      from { opacity: 0; transform: scale(0.96); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    #lb-img {
+      display: block; width: 100%; height: auto;
+      border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+    }
+    #lb-caption {
+      text-align: center; margin-top: 14px;
+      font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.55);
+    }
+    #lb-close {
+      position: absolute; top: -14px; right: -14px;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.18);
+      color: #fff; font-size: 16px; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background 0.15s;
+    }
+    #lb-close:hover { background: rgba(255,255,255,0.22); }
+
+    /* ── How it works ────────────────────────────────────────────────────── */
+    #how { background: var(--navy); }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 56px; }
+    .step {
+      padding: 36px 32px; position: relative;
+    }
+    .step:not(:last-child)::after {
+      content: ''; position: absolute; right: 0; top: 36px; bottom: 36px;
+      width: 1px; background: var(--border);
+    }
+    .step-num {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 18px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .step-num::before {
+      content: attr(data-n);
+      width: 24px; height: 24px; border-radius: 6px;
+      background: var(--amber-dim); border: 1px solid var(--amber-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800; color: var(--amber);
+    }
+    .step h3 { font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 10px; }
+    .step p { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.75; }
+    .steps-wrap {
+      background: var(--navy-card); border: 1px solid var(--border); border-radius: var(--radius);
+    }
+
+    /* ── Differentiators ─────────────────────────────────────────────────── */
+    #diff { background: var(--navy-surface); }
+    .diff-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 56px;
+    }
+    .diff-card {
+      background: var(--navy-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 28px;
+      display: flex; gap: 20px; align-items: flex-start;
+    }
+    .diff-icon {
+      width: 40px; height: 40px; border-radius: 9px; flex-shrink: 0;
+      background: var(--amber-dim); border: 1px solid var(--amber-border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--amber); margin-top: 2px;
+    }
+    .diff-card h3 { font-size: 0.9375rem; font-weight: 700; color: var(--text-primary); margin-bottom: 7px; }
+    .diff-card p { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.75; }
+
+    /* ── Final CTA ───────────────────────────────────────────────────────── */
+    #cta {
+      background: linear-gradient(135deg, #0F2040 0%, #142040 100%);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      text-align: center; padding: 112px 24px;
+    }
+    #cta h2 { max-width: 600px; margin: 0 auto 36px; }
+    #cta .cta-note { margin-top: 20px; font-size: 13px; color: var(--text-muted); }
+
+    /* ── Footer ──────────────────────────────────────────────────────────── */
+    footer {
+      background: var(--navy); border-top: 1px solid var(--border);
+      padding: 40px 0;
+    }
+    .footer-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-links a, .footer-copy {
+      font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text-secondary); }
+    .footer-social { display: flex; gap: 14px; align-items: center; }
+    .footer-social a { color: var(--text-muted); display: inline-flex; transition: color 0.2s; }
+    .footer-social a:hover { color: var(--amber-light); }
+
+    /* ── Scroll animations ───────────────────────────────────────────────── */
+    .fade-up {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+    .fade-up-d1 { transition-delay: 0.08s; }
+    .fade-up-d2 { transition-delay: 0.16s; }
+    .fade-up-d3 { transition-delay: 0.24s; }
+    .fade-up-d4 { transition-delay: 0.32s; }
+
+    /* ── Responsive ──────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+      .who-grid { grid-template-columns: 1fr; gap: 16px; }
+      .steps { grid-template-columns: 1fr; }
+      .step:not(:last-child)::after { display: none; }
+      .step { border-bottom: 1px solid var(--border); }
+      .step:last-child { border-bottom: none; }
+    }
+    @media (max-width: 680px) {
+      section { padding: 64px 0; }
+      .why-grid { grid-template-columns: 1fr; }
+      .path-options { grid-template-columns: 1fr; }
+      .track-feats { grid-template-columns: 1fr; }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .screens-grid { grid-template-columns: 1fr; }
+      .diff-grid { grid-template-columns: 1fr; }
+      .hero-ornament { opacity: 0.25; right: -120px; }
+      .nav-right .nav-link { display: none; }
+      .step { padding: 28px 20px; }
+    }
+    @media (max-width: 480px) {
+      h1 { font-size: 2.2rem; }
+      h2 { font-size: 1.7rem; }
+    }
+    /* ── How to start (getting-started tutorial) ── */
+    .howto { padding: 88px 0; border-top: 1px solid var(--border); }
+    .howto-steps { display: flex; flex-direction: column; gap: 60px; margin-top: 52px; }
+    .howto-step { display: flex; align-items: center; gap: 52px; }
+    .howto-step:nth-child(even) { flex-direction: row-reverse; }
+    .howto-text { flex: 1; min-width: 0; }
+    .howto-shot { flex: 1.15; min-width: 0; width: 100%; }
+    .howto-num {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: var(--amber-dim); border: 1px solid var(--amber-border);
+      color: var(--amber-light); font-weight: 700; font-size: 1.25rem;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
+    }
+    .howto-text h3 { font-size: 1.5rem; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.01em; }
+    .howto-text p { color: var(--text-secondary); line-height: 1.65; font-size: 1.05rem; }
+    .howto-cta { text-align: center; margin-top: 76px; padding: 44px 24px; background: var(--navy-card); border: 1px solid var(--border); border-radius: var(--radius); }
+    .howto-cta h3 { font-size: 1.6rem; color: var(--text-primary); margin-bottom: 8px; }
+    .howto-cta p { color: var(--text-secondary); margin-bottom: 22px; }
+    @media (max-width: 768px) {
+      .howto { padding: 60px 0; }
+      .howto-step, .howto-step:nth-child(even) { flex-direction: column; gap: 22px; align-items: stretch; }
+      .howto-text { order: 1; } .howto-shot { order: 2; }
+      .howto-num { margin-bottom: 14px; }
+      .howto-steps { gap: 48px; }
+      .howto-text h3 { font-size: 1.3rem; }
+    }
+  </style>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "17c756de20b44d2ea51de05502e4ab75"}'></script><!-- End Cloudflare Web Analytics -->
+
+<!-- ════ Meta (Facebook/Instagram) Pixel ════
+     Powers retargeting: every visitor here can be shown ads on FB/IG later.
+     TO ACTIVATE: replace 1319421116295927 below with your Pixel ID
+     (Meta Events Manager → Data Sources → your pixel → the ~15-digit number).
+     Until then it stays dormant and does nothing. -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+window.PF_PIXEL_ID = '1319421116295927';
+window.PF_PIXEL_ON = !!(window.PF_PIXEL_ID && window.PF_PIXEL_ID.indexOf('__') === -1);
+if (window.PF_PIXEL_ON) { fbq('init', window.PF_PIXEL_ID); fbq('track', 'PageView'); }
+// Track clicks on every "Get started / Open PartFive" link as a soft conversion signal.
+document.addEventListener('click', function(e){
+  var a = e.target && e.target.closest && e.target.closest('a[href^="https://app.partfive.app"]');
+  if (a && window.PF_PIXEL_ON) { try { fbq('trackCustom', 'GetStartedClick'); } catch(_){} }
+}, true);
+</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1319421116295927&ev=PageView&noscript=1"/></noscript>
+<!-- ════ End Meta Pixel ════ -->
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════ NAV ══════════ -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#" aria-label="PartFive">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 72" width="169" height="50" aria-hidden="true">
+        <text x="4" y="52" font-family="Inter, -apple-system, sans-serif" font-size="40" font-weight="700" fill="#F1F5F9" letter-spacing="-1">PartFive</text>
+        <g transform="translate(159.5 3.2) scale(0.48)">
+          <g transform="translate(2 60) rotate(-30) scale(0.92)">
+            <path d="M117.97,40 L4.03,4 L40,40 Z" fill="#3B5C86"/>
+            <path d="M117.97,40 L40,40 L4.03,76 Z" fill="#22405F"/>
+          </g>
+          <g transform="translate(45 79) rotate(-30) scale(0.58)">
+            <path d="M117.97,40 L4.03,4 L40,40 Z" fill="#F09A1E"/>
+            <path d="M117.97,40 L40,40 L4.03,76 Z" fill="#BF5E12"/>
+          </g>
+        </g>
+      </svg>
+    </a>
+    <div class="nav-right">
+      <a class="nav-link" href="#features">Features</a>
+      <a class="nav-link" href="#who">Who it's for</a>
+      <a class="nav-link" href="#how-to-start">How to start</a>
+      <!-- Pricing temporarily hidden
+      <a class="nav-link" href="pricing.html">Pricing</a>
+      -->
+      <a class="btn-nav" href="https://app.partfive.app">Get started →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════ HERO ══════════ -->
+<section id="hero">
+  <!-- Geometric instrument-face ornament -->
+  <svg class="hero-ornament" viewBox="0 0 360 360" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle cx="180" cy="180" r="170" stroke="#1E3252" stroke-width="1.5"/>
+    <circle cx="180" cy="180" r="128" stroke="#1E3252" stroke-width="0.75"/>
+    <circle cx="180" cy="180" r="80" stroke="#1A2E50" stroke-width="0.5"/>
+    <!-- crosshair -->
+    <line x1="10" y1="180" x2="350" y2="180" stroke="#1E3252" stroke-width="0.5"/>
+    <line x1="180" y1="10" x2="180" y2="350" stroke="#1E3252" stroke-width="0.5"/>
+    <!-- cardinal ticks (major) -->
+    <line x1="180" y1="10" x2="180" y2="32" stroke="#253D62" stroke-width="2"/>
+    <line x1="350" y1="180" x2="328" y2="180" stroke="#253D62" stroke-width="2"/>
+    <line x1="180" y1="350" x2="180" y2="328" stroke="#253D62" stroke-width="2"/>
+    <line x1="10" y1="180" x2="32" y2="180" stroke="#253D62" stroke-width="2"/>
+    <!-- intercardinal ticks (minor) -->
+    <line x1="265" y1="33" x2="257" y2="46" stroke="#1E3252" stroke-width="1.25"/>
+    <line x1="327" y1="95" x2="313" y2="103" stroke="#1E3252" stroke-width="1.25"/>
+    <line x1="327" y1="265" x2="313" y2="257" stroke="#1E3252" stroke-width="1.25"/>
+    <line x1="265" y1="327" x2="257" y2="313" stroke="#1E3252" stroke-width="1.25"/>
+    <line x1="95" y1="327" x2="103" y2="313" stroke="#1E3252" stroke-width="1.25"/>
+    <line x1="33" y1="265" x2="47" y2="257" stroke="#1E3252" stroke-width="1.25"/>
+    <line x1="33" y1="95" x2="47" y2="103" stroke="#1E3252" stroke-width="1.25"/>
+    <line x1="95" y1="33" x2="103" y2="46" stroke="#1E3252" stroke-width="1.25"/>
+    <!-- amber arc: NNE heading band -->
+    <path d="M 180 10 A 170 170 0 0 1 310 71" stroke="#d97706" stroke-width="2" fill="none" opacity="0.45"/>
+    <!-- heading needle -->
+    <line x1="180" y1="180" x2="310" y2="71" stroke="#d97706" stroke-width="1.25" opacity="0.40"/>
+    <!-- center -->
+    <circle cx="180" cy="180" r="5" fill="#253D62"/>
+    <circle cx="180" cy="180" r="2" fill="#d97706" opacity="0.6"/>
+    <!-- cardinal labels -->
+    <text x="172" y="8" fill="#253D62" font-family="Inter, sans-serif" font-size="11" font-weight="700">N</text>
+    <text x="354" y="184" fill="#253D62" font-family="Inter, sans-serif" font-size="11" font-weight="700">E</text>
+    <text x="172" y="360" fill="#253D62" font-family="Inter, sans-serif" font-size="11" font-weight="700">S</text>
+    <text x="2" y="184" fill="#253D62" font-family="Inter, sans-serif" font-size="11" font-weight="700">W</text>
+    <!-- Heading readout box -->
+    <rect x="155" y="46" width="50" height="20" rx="4" fill="#142040" stroke="#253D62" stroke-width="0.75"/>
+    <text x="180" y="60" fill="#d97706" font-family="Inter, sans-serif" font-size="10" font-weight="700" text-anchor="middle">050°</text>
+  </svg>
+
+  <div class="container">
+    <div class="hero-content">
+      <div class="store-cta fade-up" style="margin-bottom:28px">
+        <a class="appstore-badge" href="https://apps.apple.com/us/app/partfive/id6787193149" target="_blank" rel="noopener">
+          <img src="img/download-on-the-app-store.svg" alt="Download PartFive on the App Store" width="162" height="54">
+        </a>
+        <span class="store-cta-note">Out now for iPhone and iPad</span>
+      </div>
+      <h1 class="fade-up fade-up-d1">
+        Flight training &amp; safety,<br><span>end to end.</span>
+      </h1>
+      <p class="hero-sub fade-up fade-up-d2">
+        Flight training and safety management for flight schools and individual instructors — built by an aviation safety professional, in a real flight training operation.
+      </p>
+
+      <div class="path-chooser fade-up fade-up-d3" role="group" aria-label="Choose how you use PartFive">
+        <div class="path-q">How do you want to use PartFive?</div>
+        <div class="path-options">
+          <button class="path-card" type="button" data-aud="ic">
+            <span class="path-card-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+              </svg>
+            </span>
+            <span class="path-card-text">
+              <span class="path-card-title">As an Independent CFI</span>
+              <span class="path-card-sub">Solo or small operation, Part 61</span>
+            </span>
+            <span class="path-card-arrow" aria-hidden="true">→</span>
+          </button>
+          <button class="path-card" type="button" data-aud="school">
+            <span class="path-card-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+            </span>
+            <span class="path-card-text">
+              <span class="path-card-title">As a Flight School</span>
+              <span class="path-card-sub">Training organization — Part 141 or Part 61</span>
+            </span>
+            <span class="path-card-arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+        <div class="path-secondary">
+          <a class="btn-ghost-sm" href="https://app.partfive.app">Get started</a>
+          <span>or <a class="path-skip" href="#how-to-start">see how to start ↓</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ TAILORED TRACK · IC ════════ -->
+<section id="track-ic" class="track" hidden aria-label="PartFive for independent CFIs">
+  <div class="container">
+    <div class="track-eyebrow">For independent CFIs</div>
+    <h2 class="track-title">Run your whole instructing operation — solo.</h2>
+    <p class="track-sub">Every student's progress, every endorsement, every flight — the same discipline the big schools have, in a tool built for one CFI. No org overhead, no features you'll never use.</p>
+    <div class="track-actions">
+      <a class="btn-primary" href="https://app.partfive.app/?start=cfi">Start as an Independent CFI →</a>
+      <button class="track-switch" type="button" data-go="school">I'm a flight school instead →</button>
+      <span class="track-sep">·</span>
+      <button class="track-alllink" type="button" data-go="all">See the full overview</button>
+    </div>
+
+    <div class="track-feats">
+      <div class="track-feat">
+        <div class="track-feat-icon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div>
+          <h3>Your students, end to end</h3>
+          <p>Roster, lesson progress, stage checks, and a sign-off queue — for the students you actually instruct. No school-wide noise.</p>
+        </div>
+      </div>
+      <div class="track-feat">
+        <div class="track-feat-icon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg>
+        </div>
+        <div>
+          <h3>Endorsements done right</h3>
+          <p>All 30 AC 61-65K templates, frozen snapshots, revocation lifecycle, and a personal-logbook reminder per §61.51 — so nothing slips.</p>
+        </div>
+      </div>
+      <div class="track-feat">
+        <div class="track-feat-icon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a10 10 0 0 1 7.39 16.74"/><path d="M12 2a10 10 0 0 0-7.39 16.74"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><line x1="12" y1="10.5" x2="16.5" y2="6"/></svg>
+        </div>
+        <div>
+          <h3>Pre-flight risk, every time</h3>
+          <p>PAVE-based risk assessment with your sign-off and endorsement gating — so no student flies before you've reviewed it.</p>
+        </div>
+      </div>
+      <div class="track-feat">
+        <div class="track-feat-icon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div>
+          <h3>Your logbook &amp; schedule</h3>
+          <p>Personal flight log and calendar in one place — instruction given logged as you sign off, exportable any time. The operational record without the spreadsheet.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="track-shots-label">Inside the app</div>
+    <div class="screen-frame screen-frame-hero" style="margin-bottom:16px">
+      <div class="screen-bar screen-bar-hero">
+        <div style="display:flex;gap:6px;align-items:center">
+          <span class="screen-dot" style="background:#EF4444"></span>
+          <span class="screen-dot" style="background:#F59E0B"></span>
+          <span class="screen-dot" style="background:#22C55E"></span>
+        </div>
+        <div style="flex:1;display:flex;justify-content:center"><span style="font-size:11px;color:var(--text-muted);font-weight:500">Independent CFI Dashboard</span></div>
+        <div style="width:54px"></div>
+      </div>
+      <div class="screen-img-wrap" style="aspect-ratio:1400/900" data-caption="Independent CFI Dashboard — today's schedule, pending sign-offs, endorsement-expiry reminders, base weather">
+        <img src="mockups/ic-dashboard.png" alt="PartFive Independent CFI dashboard — schedule, sign-offs, endorsement reminders" loading="lazy">
+        <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+      </div>
+      <div class="screen-caption" style="display:flex;align-items:center;justify-content:space-between">
+        <span>Independent CFI Dashboard — schedule, sign-offs, endorsement reminders, base weather</span>
+        <span style="font-size:11px;color:var(--text-muted)">Independent CFI view</span>
+      </div>
+    </div>
+
+    <div class="screens-grid">
+      <div class="screen-frame">
+        <div class="screen-bar"><span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span></div>
+        <div class="screen-img-wrap" data-caption="My Students — the students you instruct: lesson progress, endorsement status, pre-flight reviews">
+          <img src="mockups/ic-students.png" alt="PartFive Independent CFI student roster" loading="lazy">
+          <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+        </div>
+        <div class="screen-caption">My Students — progress &amp; endorsement status</div>
+      </div>
+      <div class="screen-frame">
+        <div class="screen-bar"><span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span></div>
+        <div class="screen-img-wrap" data-caption="My Flight Log — personal logbook with running totals and §61.51 instruction-given tracking">
+          <img src="mockups/ic-flight-log.png" alt="PartFive Independent CFI personal flight log" loading="lazy">
+          <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+        </div>
+        <div class="screen-caption">My Flight Log — personal §61.51 logbook</div>
+      </div>
+      <div class="screen-frame">
+        <div class="screen-bar"><span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span></div>
+        <div class="screen-img-wrap" data-caption="Pre-flight Risk Assessment — PAVE model, real METAR, CFI sign-off workflow">
+          <img src="mockups/preflight.png" alt="PartFive Pre-flight Risk Assessment PAVE model" loading="lazy">
+          <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+        </div>
+        <div class="screen-caption">Pre-flight Risk Assessment</div>
+      </div>
+      <div class="screen-frame">
+        <div class="screen-bar"><span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span></div>
+        <div class="screen-img-wrap" data-caption="Issue Endorsement — AC 61-65K verbatim text, frozen digital snapshot">
+          <img src="mockups/endorsement-issue.png" alt="PartFive Endorsement Issue AC 61-65K" loading="lazy">
+          <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+        </div>
+        <div class="screen-caption">Issue Endorsement — AC 61-65K templates</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ TAILORED TRACK · SCHOOL ════════ -->
+<section id="track-school" class="track" hidden aria-label="PartFive for flight schools">
+  <div class="container">
+    <div class="track-eyebrow">For flight schools &amp; training organizations</div>
+    <h2 class="track-title">Run a compliant training program — at scale.</h2>
+    <p class="track-sub">Full SMS lifecycle, role-based authority, curriculum from intake to graduation, and audit-ready records for every regulated action. Whether you hold a Part 141 certificate or train under Part 61, the discipline of a structured program — in one platform.</p>
+    <p class="track-sub" style="margin-top:-8px"><strong style="color:var(--amber)">Early access.</strong> The school environment is in active development and we are onboarding organizations one at a time, with us alongside you. Tell us about your operation and we will find you a slot.</p>
+    <div class="track-actions">
+      <a class="btn-primary" href="mailto:hello@partfive.app?subject=PartFive%20for%20our%20flight%20school&body=Tell%20us%20about%20your%20operation%20—%20school%20name,%20Part%20141%20or%2061,%20roughly%20how%20many%20instructors%20and%20students%20—%20and%20we%27ll%20be%20in%20touch.">Talk to us about your school →</a>
+      <button class="track-switch" type="button" data-go="ic">I'm an independent CFI instead →</button>
+      <span class="track-sep">·</span>
+      <button class="track-alllink" type="button" data-go="all">See the full overview</button>
+    </div>
+
+    <div class="track-feats">
+      <div class="track-feat">
+        <div class="track-feat-icon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        </div>
+        <div>
+          <h3>Full SMS lifecycle</h3>
+          <p>AI-assisted SMS manual across all four ICAO Annex 19 pillars, an SOP library with versioning and acknowledgements, and reports with investigation and corrective-action workflows.</p>
+        </div>
+      </div>
+      <div class="track-feat">
+        <div class="track-feat-icon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div>
+          <h3>Roles &amp; authority</h3>
+          <p>Safety Officer, Admin, Chief &amp; Assistant Chief CFI (per FAR 141.36), CFI, Dispatcher, and Student — RLS-enforced isolation and an audit trail on every regulated action.</p>
+        </div>
+      </div>
+      <div class="track-feat">
+        <div class="track-feat-icon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <div>
+          <h3>Curriculum at scale</h3>
+          <p>AI-assisted, AC 61-65K-mapped syllabi from Private Pilot through CFI, stage checks, and an end-of-course workflow through graduation.</p>
+        </div>
+      </div>
+      <div class="track-feat">
+        <div class="track-feat-icon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg>
+        </div>
+        <div>
+          <h3>Audit-ready records</h3>
+          <p>Every endorsement, sign-off, flight, and stage check signed, dated, and exportable. When your FSDO calls, it's already in order.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="track-shots-label">Inside the app</div>
+    <div class="screen-frame screen-frame-hero" style="margin-bottom:16px">
+      <div class="screen-bar screen-bar-hero">
+        <div style="display:flex;gap:6px;align-items:center">
+          <span class="screen-dot" style="background:#EF4444"></span>
+          <span class="screen-dot" style="background:#F59E0B"></span>
+          <span class="screen-dot" style="background:#22C55E"></span>
+        </div>
+        <div style="flex:1;display:flex;justify-content:center"><span style="font-size:11px;color:var(--text-muted);font-weight:500">Safety Dashboard</span></div>
+        <div style="width:54px"></div>
+      </div>
+      <div class="screen-img-wrap" style="aspect-ratio:1400/900" data-caption="Safety Dashboard — SMS overview, open reports, safety score, active bulletins">
+        <img src="mockups/safety-dashboard.png" alt="PartFive Safety Dashboard — real-time SMS overview for Safety Officers" loading="lazy">
+        <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+      </div>
+      <div class="screen-caption" style="display:flex;align-items:center;justify-content:space-between">
+        <span>Safety Dashboard — SMS overview, open reports, safety score, active bulletins</span>
+        <span style="font-size:11px;color:var(--text-muted)">Safety Officer view</span>
+      </div>
+    </div>
+
+    <div class="screens-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="screen-frame">
+        <div class="screen-bar"><span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span></div>
+        <div class="screen-img-wrap" data-caption="SMS Manual Builder — AI-assisted ICAO Annex 19 section authoring">
+          <img src="mockups/sms-manual-builder.png" alt="PartFive SMS Manual Builder with AI assist" loading="lazy">
+          <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+        </div>
+        <div class="screen-caption">SMS Manual Builder <span style="color:var(--amber);font-size:10px;font-weight:700;margin-left:4px">✦ AI</span></div>
+      </div>
+      <div class="screen-frame">
+        <div class="screen-bar"><span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span></div>
+        <div class="screen-img-wrap" data-caption="SOP Library — versioning, acknowledgement tracking, AI-generated drafts">
+          <img src="mockups/sop-management.png" alt="PartFive SOP Library versioning and acknowledgement" loading="lazy">
+          <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+        </div>
+        <div class="screen-caption">SOP Library — versioning &amp; acknowledgements</div>
+      </div>
+      <div class="screen-frame">
+        <div class="screen-bar"><span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span></div>
+        <div class="screen-img-wrap" data-caption="AI Syllabus Builder — Private Pilot through CFI, AC 61-65K endorsement checkpoints pre-mapped">
+          <img src="mockups/ai-syllabus-builder.png" alt="PartFive AI Syllabus Builder FAA-aligned" loading="lazy">
+          <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+        </div>
+        <div class="screen-caption">AI Syllabus Builder <span style="color:var(--amber);font-size:10px;font-weight:700;margin-left:4px">✦ AI</span></div>
+      </div>
+      <div class="screen-frame">
+        <div class="screen-bar"><span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span></div>
+        <div class="screen-img-wrap" data-caption="CFI Student Roster — lesson progress, endorsement status, PFA review queue">
+          <img src="mockups/cfi-roster.png" alt="PartFive CFI Student Roster" loading="lazy">
+          <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+        </div>
+        <div class="screen-caption">CFI Student Roster</div>
+      </div>
+      <div class="screen-frame">
+        <div class="screen-bar"><span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span></div>
+        <div class="screen-img-wrap" data-caption="Issue Endorsement — AC 61-65K verbatim text, frozen digital snapshot">
+          <img src="mockups/endorsement-issue.png" alt="PartFive Endorsement Issue AC 61-65K" loading="lazy">
+          <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+        </div>
+        <div class="screen-caption">Issue Endorsement — AC 61-65K templates</div>
+      </div>
+      <div class="screen-frame">
+        <div class="screen-bar"><span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span></div>
+        <div class="screen-img-wrap" data-caption="Pre-flight Risk Assessment — PAVE model, real METAR, CFI sign-off workflow">
+          <img src="mockups/preflight.png" alt="PartFive Pre-flight Risk Assessment PAVE model" loading="lazy">
+          <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+        </div>
+        <div class="screen-caption">Pre-flight Risk Assessment</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════ WHY PARTFIVE ════ -->
+<section id="why">
+  <div class="container">
+    <div class="section-label fade-up">About</div>
+    <h2 class="fade-up fade-up-d1">Purpose-built for aviation</h2>
+    <div class="why-grid">
+      <div class="why-card fade-up">
+        <div class="why-accent-bar"></div>
+        <h3>Why "PartFive"</h3>
+        <p>The name comes from 14 CFR Part 5 — the FAA's framework for Safety Management Systems. Today, Part 5 is formally required only for the largest aviation operators. But ICAO recommends SMS for every training organization, insurance carriers increasingly favor it, and the regulatory direction is clear: SMS is the future of every aviation operation.</p>
+        <p>PartFive exists to make that future accessible now. Part 5-aligned safety management — for the smaller operators, flight training organizations, and independent instructors who aren't required to do it, but should, and increasingly want to.</p>
+      </div>
+      <div class="why-card fade-up fade-up-d1">
+        <div class="why-accent-bar"></div>
+        <h3>Our mission</h3>
+        <p>PartFive was built by a working aviation safety professional, in a real flight training operation, doing real safety work — not by a software company guessing what aviation needs. The goal: raise the floor of safety management across the operators who don't have access to enterprise-grade tools, and make doing the right thing easier than not doing it.</p>
+        <p>For flight training organizations, that means audit-ready SOPs, manageable SMS workflows, and a single record of truth. For independent instructors, that means keeping track of every student's progress, every endorsement, and the safety trends in your own operation — the same discipline the big organizations have, in a tool built for one CFI. Every feature in PartFive comes from a real operational need. Every regulatory reference is from work actually being done in the field.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ════════════════════════════════════════════════ WHO IT'S FOR ════════ -->
+<section id="who">
+  <div class="container">
+    <div class="section-label fade-up">Who it's for</div>
+    <h2 class="fade-up fade-up-d1">Built for every level of aviation operations</h2>
+    <p class="section-sub fade-up fade-up-d2">From Part 141 and Part 61 schools to solo CFIs — one platform, scaled to fit.</p>
+    <div class="who-grid">
+      <div class="who-card fade-up">
+        <div class="who-icon">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <h3>Flight Training Organizations</h3>
+        <p>Part 141 and Part 61 schools, collegiate aviation programs, flight academies, and any organization running a training program at scale. Full SMS lifecycle, syllabus management, student rosters, endorsement workflows, and audit-ready records — from intake to graduation.</p>
+      </div>
+      <div class="who-card fade-up fade-up-d1">
+        <div class="who-icon">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <h3>Independent Instructors and Small Operators</h3>
+        <p>Part 61 CFIs running solo or small operations, flight clubs, and small aviation businesses. Lightweight tools without enterprise overhead: every student's progress, every endorsement, and the safety trends in your own operation — the same discipline the big organizations have.</p>
+      </div>
+      <div class="who-card fade-up fade-up-d2">
+        <div class="who-icon">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h3>Aviation Safety Professionals</h3>
+        <p>Safety officers, chief instructors, directors of safety, and anyone responsible for SMS, compliance, and audit-ready records. The tools to manage hazard reporting, corrective actions, bulletins, and safety meetings — the right way, every time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ════════════════════════════════════════════════ EIGHT PILLARS ═══════ -->
+<section id="features">
+  <div class="container">
+    <div class="section-label fade-up">Platform capabilities</div>
+    <h2 class="fade-up fade-up-d1">Everything your operation needs</h2>
+    <p class="section-sub fade-up fade-up-d2">Eight integrated modules — designed around how aviation organizations actually work.</p>
+    <div class="pillars-grid">
+
+      <div class="pillar-card fade-up">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+        </div>
+        <h3>Safety Management</h3>
+        <p>AI-assisted SMS manual authoring across all four ICAO Annex 19 pillars. SOP library with versioning and acknowledgement tracking. Safety reports with full investigation and corrective action workflows, safety meetings, and bulletins.</p>
+      </div>
+
+      <div class="pillar-card fade-up fade-up-d1">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+        </div>
+        <h3>Curriculum &amp; Training</h3>
+        <p>AI-assisted FAA-compliant syllabus generation — Private Pilot through CFI, Part 61 and Part 141. Lesson plans with AC 61-65K endorsement checkpoints pre-mapped, stage checks, and end-of-course workflow through graduation.</p>
+      </div>
+
+      <div class="pillar-card fade-up fade-up-d2">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2a10 10 0 0 1 7.39 16.74"/>
+            <path d="M12 2a10 10 0 0 0-7.39 16.74"/>
+            <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+            <line x1="12" y1="10.5" x2="16.5" y2="6"/>
+          </svg>
+        </div>
+        <h3>Pre-flight Risk Assessment</h3>
+        <p>PAVE-based risk model with altitude scoring, CFI sign-off workflow, and regulatory endorsement gating — so no student flies without the right review.</p>
+      </div>
+
+      <div class="pillar-card fade-up fade-up-d3">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/>
+          </svg>
+        </div>
+        <h3>Endorsements</h3>
+        <p>All 30 FAA endorsement templates from AC 61-65K, frozen snapshots, revocation lifecycle, and personal-logbook reminder per §61.51.</p>
+      </div>
+
+      <div class="pillar-card fade-up">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+        </div>
+        <h3>Flight Operations</h3>
+        <p>Scheduling, flight log, stage checks, standardization flights, and companion-pilot tracking — the operational record your auditors will ask for.</p>
+      </div>
+
+      <div class="pillar-card fade-up fade-up-d1">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <h3>Student Lifecycle</h3>
+        <p>Roster, progress tracking, graduation certificates, and student→CFI promotion with full audit trail — from enrollment through career advancement.</p>
+      </div>
+
+      <div class="pillar-card fade-up fade-up-d2">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </div>
+        <h3>Fleet Management</h3>
+        <p>Aircraft tracking with airworthiness inspections, annual and 100-hour due dates, ELT battery, registration expiration, and base location.</p>
+      </div>
+
+      <div class="pillar-card fade-up fade-up-d3">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="11" width="18" height="11" rx="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+        <h3>Roles &amp; Authority</h3>
+        <p>Safety Officer, Admin, Chief CFI, Assistant Chief CFI (per FAR 141.36), CFI, Independent CFI, Student. RLS-enforced data isolation. Audit trail on every regulated action.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ════════════════════════════════════════════════ SCREENSHOTS ══════════ -->
+<section id="screens">
+  <div class="container">
+    <div class="section-label fade-up">In the app</div>
+    <h2 class="fade-up fade-up-d1">See it in action</h2>
+    <p class="section-sub fade-up fade-up-d2">Core screens across safety, compliance, and training — from the AI-assisted SMS manual builder to the pre-flight risk assessment every student completes before flying solo.</p>
+
+    <!-- Hero screenshot: Safety Dashboard full-width -->
+    <div class="screen-frame screen-frame-hero fade-up" style="margin-bottom:20px">
+      <div class="screen-bar screen-bar-hero">
+        <div style="display:flex;gap:6px;align-items:center">
+          <span class="screen-dot" style="background:#EF4444"></span>
+          <span class="screen-dot" style="background:#F59E0B"></span>
+          <span class="screen-dot" style="background:#22C55E"></span>
+        </div>
+        <div style="flex:1;display:flex;justify-content:center">
+          <span style="font-size:11px;color:var(--text-muted);font-weight:500;letter-spacing:0.01em">Safety Dashboard</span>
+        </div>
+        <div style="width:54px"></div>
+      </div>
+      <div class="screen-img-wrap" style="aspect-ratio:1400/900" data-caption="Safety Dashboard — SMS overview, open reports, safety score, active bulletins">
+        <img src="mockups/safety-dashboard.png" alt="PartFive Safety Dashboard — real-time SMS overview for Safety Officers" loading="lazy">
+        <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+      </div>
+      <div class="screen-caption" style="display:flex;align-items:center;justify-content:space-between">
+        <span>Safety Dashboard — SMS overview, open reports, safety score, active bulletins</span>
+        <span style="font-size:11px;color:var(--text-muted)">Safety Officer view</span>
+      </div>
+    </div>
+
+    <div class="screens-grid" style="grid-template-columns:repeat(3,1fr)">
+
+      <div class="screen-frame fade-up">
+        <div class="screen-bar"><span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span></div>
+        <div class="screen-img-wrap" data-caption="SMS Manual Builder — AI-assisted ICAO Annex 19 section authoring">
+          <img src="mockups/sms-manual-builder.png" alt="PartFive SMS Manual Builder with AI assist" loading="lazy">
+          <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+        </div>
+        <div class="screen-caption">SMS Manual Builder <span style="color:var(--amber);font-size:10px;font-weight:700;margin-left:4px">✦ AI</span></div>
+      </div>
+
+      <div class="screen-frame fade-up fade-up-d1">
+        <div class="screen-bar"><span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span></div>
+        <div class="screen-img-wrap" data-caption="SOP Library — versioning, acknowledgement tracking, AI-generated drafts">
+          <img src="mockups/sop-management.png" alt="PartFive SOP Library versioning and acknowledgement" loading="lazy">
+          <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+        </div>
+        <div class="screen-caption">SOP Library — versioning &amp; acknowledgements</div>
+      </div>
+
+      <div class="screen-frame fade-up fade-up-d2">
+        <div class="screen-bar"><span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span></div>
+        <div class="screen-img-wrap" data-caption="AI Syllabus Builder — Private Pilot through CFI, AC 61-65K endorsement checkpoints pre-mapped">
+          <img src="mockups/ai-syllabus-builder.png" alt="PartFive AI Syllabus Builder FAA-aligned" loading="lazy">
+          <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+        </div>
+        <div class="screen-caption">AI Syllabus Builder <span style="color:var(--amber);font-size:10px;font-weight:700;margin-left:4px">✦ AI</span></div>
+      </div>
+
+      <div class="screen-frame fade-up">
+        <div class="screen-bar"><span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span></div>
+        <div class="screen-img-wrap" data-caption="Pre-flight Risk Assessment — PAVE model, real METAR, CFI sign-off workflow">
+          <img src="mockups/preflight.png" alt="PartFive Pre-flight Risk Assessment PAVE model" loading="lazy">
+          <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+        </div>
+        <div class="screen-caption">Pre-flight Risk Assessment</div>
+      </div>
+
+      <div class="screen-frame fade-up fade-up-d1">
+        <div class="screen-bar"><span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span></div>
+        <div class="screen-img-wrap" data-caption="Issue Endorsement — AC 61-65K verbatim text, frozen digital snapshot">
+          <img src="mockups/endorsement-issue.png" alt="PartFive Endorsement Issue AC 61-65K" loading="lazy">
+          <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+        </div>
+        <div class="screen-caption">Issue Endorsement — AC 61-65K templates</div>
+      </div>
+
+      <div class="screen-frame fade-up fade-up-d2">
+        <div class="screen-bar"><span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span></div>
+        <div class="screen-img-wrap" data-caption="CFI Student Roster — lesson progress, endorsement status, PFA review queue">
+          <img src="mockups/cfi-roster.png" alt="PartFive CFI Student Roster" loading="lazy">
+          <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+        </div>
+        <div class="screen-caption">CFI Student Roster</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ══════════════════════════════════════════════ HOW IT WORKS ══════════ -->
+<section id="how">
+  <div class="container">
+    <div class="section-label fade-up">Getting started</div>
+    <h2 class="fade-up fade-up-d1">Up and running in minutes</h2>
+    <p class="section-sub fade-up fade-up-d2">No enterprise onboarding. No six-month implementation. Just a real tool for real operations.</p>
+    <div class="steps-wrap fade-up">
+      <div class="steps">
+        <div class="step">
+          <div class="step-num" data-n="1">Step one</div>
+          <h3>Set up your organization</h3>
+          <p>Create your organization in minutes. Choose between flight training organization or independent instructor — the right tools appear for your operation type automatically.</p>
+        </div>
+        <div class="step">
+          <div class="step-num" data-n="2">Step two</div>
+          <h3>Roll out to your people</h3>
+          <p>Invite CFIs and students via access codes. Bring your existing syllabus or use FAA-aligned templates. Roles and permissions are set automatically — no manual configuration.</p>
+        </div>
+        <div class="step">
+          <div class="step-num" data-n="3">Step three</div>
+          <h3>Operate with audit-ready records</h3>
+          <p>Every safety report, endorsement, flight, and stage check is tracked, signed, and exportable. When your FSDO calls, everything is already in order.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════════════ DIFFERENTIATORS ══════════ -->
+<section id="diff">
+  <div class="container">
+    <div class="section-label fade-up">Why PartFive</div>
+    <h2 class="fade-up fade-up-d1">Built differently</h2>
+    <p class="section-sub fade-up fade-up-d2">Not another general-purpose compliance tool adapted for aviation. Built from day one for this specific work.</p>
+    <div class="diff-grid">
+
+      <div class="diff-card fade-up">
+        <div class="diff-icon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Built in the field</h3>
+          <p>Designed by aviation safety professionals doing the work daily, in a real flight training operation — not by a software company guessing what aviation needs.</p>
+        </div>
+      </div>
+
+      <div class="diff-card fade-up fade-up-d1">
+        <div class="diff-icon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <polyline points="9 15 11 17 15 13"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Regulatorily aligned</h3>
+          <p>FAR 141.36, FAR 141.63, AC 61-65K, FAR 91.211, FAR 91.207, and more — cited where they apply, with the right discipline built into the workflow, not bolted on as an afterthought.</p>
+        </div>
+      </div>
+
+      <div class="diff-card fade-up">
+        <div class="diff-icon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Audit trail on everything</h3>
+          <p>Every regulated action — endorsements, sign-offs, promotions, revocations — is signed, dated, and immutable. The record is always there when you need it.</p>
+        </div>
+      </div>
+
+      <div class="diff-card fade-up fade-up-d1">
+        <div class="diff-icon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="5" y="2" width="14" height="20" rx="3"/>
+            <path d="M12 18h.01"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Mobile-ready</h3>
+          <p>On the web and on iPhone and iPad. Designed to be picked up on the flight line, not just at a desk — the right information, in the right context, wherever the work happens.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════ HOW TO START (Independent CFI) ════ -->
+<section id="how-to-start" class="howto">
+  <div class="container">
+    <div class="section-label fade-up" style="text-align:center">Getting started</div>
+    <h2 class="fade-up fade-up-d1" style="text-align:center">Up and running in a few simple steps</h2>
+    <p class="section-sub fade-up fade-up-d2" style="text-align:center;max-width:660px;margin:0 auto">From sign-up to your first scheduled lesson — here's exactly how PartFive works for independent CFIs. Tap any screen to enlarge.</p>
+
+    <div class="howto-steps">
+
+      <!-- Step 1 -->
+      <div class="howto-step fade-up">
+        <div class="howto-text">
+          <div class="howto-num">1</div>
+          <h3>Create your free account</h3>
+          <p>Sign up as an independent CFI — no school, no setup. Your dashboard is ready in seconds, with your students, schedule, sign-offs and base weather all in one place.</p>
+        </div>
+        <div class="howto-shot">
+          <div class="screen-frame">
+            <div class="screen-bar"><span class="screen-dot" style="background:#EF4444"></span><span class="screen-dot" style="background:#F59E0B"></span><span class="screen-dot" style="background:#22C55E"></span></div>
+            <div class="screen-img-wrap" data-caption="Your independent CFI dashboard — students, schedule, sign-offs and safety at a glance">
+              <img src="howto/1-account.png" alt="PartFive independent CFI dashboard" loading="lazy">
+              <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="howto-step fade-up">
+        <div class="howto-text">
+          <div class="howto-num">2</div>
+          <h3>Invite your students</h3>
+          <p>Share a code or send a branded email invite. Your students join, enter the code, and they're connected to you — usually in under a minute.</p>
+        </div>
+        <div class="howto-shot">
+          <div class="screen-frame">
+            <div class="screen-bar"><span class="screen-dot" style="background:#EF4444"></span><span class="screen-dot" style="background:#F59E0B"></span><span class="screen-dot" style="background:#22C55E"></span></div>
+            <div class="screen-img-wrap" data-caption="Invite students by code or email — they join your roster instantly">
+              <img src="howto/2-invite.png" alt="PartFive invite students by code or email" loading="lazy">
+              <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="howto-step fade-up">
+        <div class="howto-text">
+          <div class="howto-num">3</div>
+          <h3>Build &amp; assign a syllabus</h3>
+          <p>Start from a ready-made FAA Part 61/141 syllabus — every lesson, maneuver and completion standard already structured — or upload your own. Assign it to a student and progress tracks automatically.</p>
+        </div>
+        <div class="howto-shot">
+          <div class="screen-frame">
+            <div class="screen-bar"><span class="screen-dot" style="background:#EF4444"></span><span class="screen-dot" style="background:#F59E0B"></span><span class="screen-dot" style="background:#22C55E"></span></div>
+            <div class="screen-img-wrap" data-caption="Create a syllabus from an FAA template, or upload your own">
+              <img src="howto/3-syllabus.png" alt="PartFive syllabus from FAA template" loading="lazy">
+              <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="howto-step fade-up">
+        <div class="howto-text">
+          <div class="howto-num">4</div>
+          <h3>Schedule your lessons</h3>
+          <p>Book one-off or recurring lessons on a shared calendar. Your students see every booking instantly, and changes sync everywhere — no double texts, no confusion.</p>
+        </div>
+        <div class="howto-shot">
+          <div class="screen-frame">
+            <div class="screen-bar"><span class="screen-dot" style="background:#EF4444"></span><span class="screen-dot" style="background:#F59E0B"></span><span class="screen-dot" style="background:#22C55E"></span></div>
+            <div class="screen-img-wrap" data-caption="Schedule one-off or recurring lessons on a shared calendar">
+              <img src="howto/4-schedule.png" alt="PartFive lesson scheduling calendar" loading="lazy">
+              <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="howto-step fade-up">
+        <div class="howto-text">
+          <div class="howto-num">5</div>
+          <h3>Pre-flight checks &amp; sign-offs</h3>
+          <p>Every flight starts with a PAVE pre-flight risk assessment. You review and approve each one — and every decision is time-stamped and saved to the student's record.</p>
+        </div>
+        <div class="howto-shot">
+          <div class="screen-frame">
+            <div class="screen-bar"><span class="screen-dot" style="background:#EF4444"></span><span class="screen-dot" style="background:#F59E0B"></span><span class="screen-dot" style="background:#22C55E"></span></div>
+            <div class="screen-img-wrap" data-caption="PAVE-based pre-flight risk assessment with CFI sign-off">
+              <img src="howto/5-preflight.png" alt="PartFive pre-flight PAVE risk assessment" loading="lazy">
+              <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 6 -->
+      <div class="howto-step fade-up">
+        <div class="howto-text">
+          <div class="howto-num">6</div>
+          <h3>Track progress &amp; share records</h3>
+          <p>Watch each student's progress lesson by lesson, issue endorsements, and export a clean, professional training-record PDF whenever you need one.</p>
+        </div>
+        <div class="howto-shot">
+          <div class="screen-frame">
+            <div class="screen-bar"><span class="screen-dot" style="background:#EF4444"></span><span class="screen-dot" style="background:#F59E0B"></span><span class="screen-dot" style="background:#22C55E"></span></div>
+            <div class="screen-img-wrap" data-caption="Track each student's progress, endorsements and records">
+              <img src="howto/6-progress.png" alt="PartFive student training progress" loading="lazy">
+              <span class="screen-zoom-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Expand</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="howto-cta fade-up">
+      <h3>That's it — you're ready to fly.</h3>
+      <p>Set up your students and your first lesson in minutes. No credit card to start.</p>
+      <a class="btn-primary" href="https://app.partfive.app" style="font-size:1.05rem;padding:16px 36px">Get started free →</a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════════════════ FINAL CTA ════════════ -->
+<section id="cta">
+  <div class="container">
+    <div class="section-label fade-up" style="text-align:center">Get started</div>
+    <h2 class="fade-up fade-up-d1">Ready to bring Part 5-aligned safety management to your operation?</h2>
+    <div class="fade-up fade-up-d2" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <a class="btn-primary" href="https://app.partfive.app" style="font-size:1.05rem;padding:16px 36px">Get started →</a>
+      <a class="appstore-badge" href="https://apps.apple.com/us/app/partfive/id6787193149" target="_blank" rel="noopener">
+        <img src="img/download-on-the-app-store.svg" alt="Download PartFive on the App Store" width="162" height="54">
+      </a>
+      <!-- Pricing temporarily hidden
+      <a class="btn-ghost" href="pricing.html" style="font-size:1.05rem;padding:15px 32px">See pricing →</a>
+      -->
+    </div>
+    <p class="cta-note fade-up fade-up-d3">30-day free trial, no credit card required · then $4.99/month or $49.99/year · built by aviation safety professionals for aviators.</p>
+    <p class="cta-note fade-up fade-up-d4" style="margin-top:8px;font-size:12px">By continuing, you agree to our <a href="terms.html" style="color:#4E6383;text-decoration:underline">Terms of Service</a> and <a href="privacy.html" style="color:#4E6383;text-decoration:underline">Privacy Policy</a>.</p>
+
+    <!-- Email lead-capture (for visitors not ready to sign up) -->
+    <div class="fade-up" style="max-width:460px;margin:42px auto 0;padding:24px;background:var(--navy-card);border:1px solid var(--border);border-radius:var(--radius);text-align:left">
+      <div style="font-size:15px;font-weight:700;color:#F1F5F9;margin-bottom:6px">Not ready to dive in? Get the free Quickstart.</div>
+      <div style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;line-height:1.55">We'll email you the 5-step guide to running your training on PartFive. No spam — unsubscribe anytime.</div>
+      <form id="lead-form" onsubmit="return pfLeadSubmit(event)" novalidate>
+        <!-- Honeypot: hidden from people and screen readers; bots fill it and get silently dropped. -->
+        <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
+          <label for="lead-website">Website</label>
+          <input id="lead-website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <input id="lead-email" type="email" required autocomplete="email" placeholder="you@email.com" style="flex:1;min-width:180px;background:#0B1829;border:1px solid var(--border-mid);border-radius:10px;padding:13px 14px;color:#F1F5F9;font-size:15px;font-family:inherit;outline:none">
+          <button type="submit" id="lead-submit" style="background:var(--amber);border:none;color:#0B1829;border-radius:10px;padding:13px 22px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap">Send it →</button>
+        </div>
+        <label style="display:flex;align-items:flex-start;gap:8px;margin-top:12px;font-size:12px;color:var(--text-muted);line-height:1.5;cursor:pointer">
+          <input id="lead-consent" type="checkbox" required style="margin-top:2px;flex-shrink:0;accent-color:var(--amber);width:15px;height:15px">
+          <span>I agree to receive emails from PartFive about getting started. I can unsubscribe anytime.</span>
+        </label>
+        <div id="lead-msg" role="status" style="margin-top:12px;font-size:13px;display:none"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+function pfLeadSubmit(e){
+  e.preventDefault();
+  var emailEl = document.getElementById('lead-email');
+  var consentEl = document.getElementById('lead-consent');
+  var btn = document.getElementById('lead-submit');
+  var msg = document.getElementById('lead-msg');
+  var email = (emailEl.value || '').trim();
+  function show(text, color){ msg.style.display='block'; msg.style.color=color; msg.textContent=text; }
+  if (!email || email.indexOf('@') < 1) { show('Please enter a valid email.', '#F59E0B'); return false; }
+  if (!consentEl.checked) { show('Please tick the consent box.', '#F59E0B'); return false; }
+  btn.disabled = true; btn.textContent = 'Sending…'; btn.style.opacity = '0.7';
+  fetch('https://sjqjljnsdyahsrxymeso.supabase.co/functions/v1/capture-lead', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ email: email, consent: true, source: 'landing_cta', referrer: document.referrer || location.href, website: (document.getElementById('lead-website') || {}).value || '' })
+  })
+  .then(function(r){ return r.json().catch(function(){ return {}; }); })
+  .then(function(d){
+    if (d && d.ok) {
+      if (window.PF_PIXEL_ON) { try { fbq('track', 'Lead'); } catch(_){} }
+      document.getElementById('lead-form').reset();
+      show('✓ Check your inbox — the Quickstart is on its way.', '#34D399');
+      btn.textContent = 'Sent ✓';
+    } else {
+      show((d && d.error) || 'Something went wrong — please try again.', '#F59E0B');
+      // d.error already carries the rate-limit wording when the server returns 429.
+      btn.disabled = false; btn.textContent = 'Send it →'; btn.style.opacity = '1';
+    }
+  })
+  .catch(function(){
+    show('Network error — please try again.', '#F59E0B');
+    btn.disabled = false; btn.textContent = 'Send it →'; btn.style.opacity = '1';
+  });
+  return false;
+}
+</script>
+
+<!-- ═══════════════════════════════════════════════════ FOOTER ══════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="#" class="nav-logo" aria-label="PartFive">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 72" width="126" height="37" aria-hidden="true">
+          <text x="4" y="52" font-family="Inter, -apple-system, sans-serif" font-size="40" font-weight="700" fill="#475569" letter-spacing="-1">PartFive</text>
+          <g transform="translate(159.5 3.2) scale(0.48)" opacity="0.85">
+            <g transform="translate(2 60) rotate(-30) scale(0.92)">
+              <path d="M117.97,40 L4.03,4 L40,40 Z" fill="#3B5C86"/>
+              <path d="M117.97,40 L40,40 L4.03,76 Z" fill="#22405F"/>
+            </g>
+            <g transform="translate(45 79) rotate(-30) scale(0.58)">
+              <path d="M117.97,40 L4.03,4 L40,40 Z" fill="#F09A1E"/>
+              <path d="M117.97,40 L40,40 L4.03,76 Z" fill="#BF5E12"/>
+            </g>
+          </g>
+        </svg>
+      </a>
+      <div class="footer-links">
+        <a href="#why">About</a>
+        <a href="#how-to-start">How to start</a>
+        <!-- Pricing temporarily hidden: <a href="pricing.html">Pricing</a> -->
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="mailto:hello@partfive.app">Contact</a>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/profile.php?id=61590689037350" target="_blank" rel="noopener" aria-label="PartFive on Facebook">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.52 1.5-3.91 3.78-3.91 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.44 2.9h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94Z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/partfive_app/" target="_blank" rel="noopener" aria-label="PartFive on Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+      </div>
+      <span class="footer-copy">© 2026 PartFive LLC. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Lightbox -->
+<div id="lb" role="dialog" aria-modal="true" aria-label="Screenshot expanded view">
+  <div id="lb-inner">
+    <button id="lb-close" aria-label="Close">✕</button>
+    <img id="lb-img" src="" alt="">
+    <div id="lb-caption"></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  // Fade-up scroll animation
+  var els = document.querySelectorAll('.fade-up');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(function(el) { el.classList.add('visible'); });
+  } else {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(function(el) { obs.observe(el); });
+    setTimeout(function() {
+      document.querySelectorAll('#hero .fade-up').forEach(function(el) { el.classList.add('visible'); });
+    }, 80);
+  }
+
+  // Lightbox
+  var lb     = document.getElementById('lb');
+  var lbImg  = document.getElementById('lb-img');
+  var lbCap  = document.getElementById('lb-caption');
+  var lbClose = document.getElementById('lb-close');
+
+  function openLb(src, alt, caption) {
+    lbImg.src = src;
+    lbImg.alt = alt;
+    lbCap.textContent = caption || '';
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLb() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.screen-img-wrap').forEach(function(wrap) {
+    wrap.addEventListener('click', function() {
+      var img = wrap.querySelector('img');
+      if (!img) return;
+      openLb(img.src, img.alt, wrap.dataset.caption || '');
+    });
+  });
+
+  lbClose.addEventListener('click', closeLb);
+  lb.addEventListener('click', function(e) { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLb(); });
+
+  // ── Audience path chooser → tailored tracks ────────────────────────────
+  var tracks = { ic: document.getElementById('track-ic'), school: document.getElementById('track-school') };
+
+  function showTrack(aud, doScroll) {
+    if (!tracks[aud]) return;
+    Object.keys(tracks).forEach(function(k) { if (tracks[k]) tracks[k].hidden = (k !== aud); });
+    document.body.setAttribute('data-aud', aud);
+    if (doScroll) {
+      // let the now-visible section lay out before scrolling to it
+      requestAnimationFrame(function() {
+        tracks[aud].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  }
+
+  function showOverview() {
+    Object.keys(tracks).forEach(function(k) { if (tracks[k]) tracks[k].hidden = true; });
+    document.body.removeAttribute('data-aud');
+    var why = document.getElementById('why');
+    if (why) why.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  document.querySelectorAll('.path-card').forEach(function(btn) {
+    btn.addEventListener('click', function() { showTrack(btn.getAttribute('data-aud'), true); });
+  });
+
+  document.querySelectorAll('.track-switch, .track-alllink').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var go = btn.getAttribute('data-go');
+      if (go === 'all') showOverview();
+      else showTrack(go, true);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

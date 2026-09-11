@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pre-flight Assessment — PartFive Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', -apple-system, sans-serif; background: #0F172A; color: #F8FAFC; display: flex; height: 100vh; overflow: hidden; -webkit-font-smoothing: antialiased; }
+
+    .sidebar { width: 232px; flex-shrink: 0; background: #0B1629; border-right: 1px solid #1E293B; display: flex; flex-direction: column; }
+    .sidebar-logo { padding: 20px 16px 18px; border-bottom: 1px solid #1E293B; }
+    .sidebar-section { padding: 16px 8px 4px; }
+    .sidebar-section-label { font-size: 10px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.09em; padding: 0 8px; margin-bottom: 4px; }
+    .sidebar-item { display: flex; align-items: center; gap: 9px; padding: 9px 10px; border-radius: 8px; font-size: 13px; font-weight: 500; color: #64748B; margin-bottom: 1px; }
+    .sidebar-item.active { background: rgba(14,165,233,0.10); color: #0EA5E9; font-weight: 600; }
+    .sidebar-item svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .topbar { display: flex; align-items: center; justify-content: flex-end; gap: 12px; padding: 10px 28px; border-bottom: 1px solid #1E293B; background: #0F172A; }
+    .topbar-user { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: #94A3B8; }
+    .avatar { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #6366F1, #0EA5E9); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #fff; }
+    .page-header { background: #0F172A; padding: 18px 28px; border-bottom: 1px solid #1E293B; }
+    .page-title { font-size: 20px; font-weight: 700; color: #F8FAFC; }
+    .page-sub { font-size: 12px; color: #64748B; margin-top: 2px; }
+    .content { flex: 1; overflow-y: auto; padding: 20px 28px; }
+
+    .pfa-layout { display: grid; grid-template-columns: 1fr 300px; gap: 16px; }
+    .card { background: #1E293B; border: 1px solid #334155; border-radius: 12px; overflow: hidden; margin-bottom: 14px; }
+    .card-header { padding: 14px 18px; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between; }
+    .card-title { font-size: 13px; font-weight: 700; color: #CBD5E1; display: flex; align-items: center; gap: 8px; }
+    .card-body { padding: 16px 18px; }
+
+    .pave-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #0EA5E9; margin-bottom: 10px; }
+
+    .field-row { margin-bottom: 14px; }
+    .field-label { font-size: 11px; font-weight: 600; color: #94A3B8; margin-bottom: 5px; }
+    .field-val { background: #0F172A; border: 1px solid #334155; border-radius: 8px; padding: 9px 12px; font-size: 13px; color: #E2E8F0; }
+    .field-val.filled { border-color: #334155; }
+    .field-val.metar { font-family: 'DM Mono', monospace, sans-serif; font-size: 11px; color: #94A3B8; line-height: 1.5; }
+
+    .risk-bar { height: 6px; background: #334155; border-radius: 3px; overflow: hidden; margin-top: 6px; }
+    .risk-fill { height: 100%; border-radius: 3px; }
+
+    .radio-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+    .radio-chip { padding: 6px 12px; border-radius: 7px; border: 1px solid #334155; font-size: 12px; font-weight: 600; color: #94A3B8; cursor: pointer; }
+    .radio-chip.sel { background: rgba(14,165,233,0.12); border-color: #0EA5E9; color: #0EA5E9; }
+    .radio-chip.sel-amber { background: rgba(245,158,11,0.12); border-color: #F59E0B; color: #F59E0B; }
+    .radio-chip.sel-red { background: rgba(239,68,68,0.12); border-color: #EF4444; color: #EF4444; }
+
+    .score-card { background: #1E293B; border: 1px solid #334155; border-radius: 12px; padding: 20px; margin-bottom: 14px; text-align: center; }
+    .score-num { font-size: 52px; font-weight: 800; letter-spacing: -0.04em; color: #F59E0B; }
+    .score-label { font-size: 13px; font-weight: 700; color: #F59E0B; margin-top: 4px; }
+    .score-sub { font-size: 11px; color: #64748B; margin-top: 6px; line-height: 1.5; }
+
+    .section-score-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(51,65,85,0.5); }
+    .section-score-row:last-child { border-bottom: none; }
+    .ss-label { font-size: 12px; font-weight: 600; color: #94A3B8; }
+    .ss-val { font-size: 12px; font-weight: 700; }
+
+    .btn-submit { width: 100%; background: #0EA5E9; color: #fff; border: none; border-radius: 10px; padding: 13px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-top: 6px; }
+    .btn-save { width: 100%; background: transparent; color: #64748B; border: 1px solid #334155; border-radius: 10px; padding: 11px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-top: 8px; }
+
+    .status-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; background: rgba(245,158,11,0.12); color: #F59E0B; border: 1px solid rgba(245,158,11,0.25); }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #F59E0B; }
+
+    .checklist-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid rgba(51,65,85,0.4); font-size: 12px; color: #94A3B8; }
+    .checklist-row:last-child { border-bottom: none; }
+    .check-icon { width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; }
+    .check-done { background: rgba(34,197,94,0.15); color: #22C55E; }
+    .check-pending { background: rgba(51,65,85,0.5); color: #475569; }
+  </style>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "17c756de20b44d2ea51de05502e4ab75"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <svg viewBox="0 0 180 52" xmlns="http://www.w3.org/2000/svg" width="110" height="32">
+      <text x="2" y="40" font-family="DM Sans, sans-serif" font-size="32" font-weight="700" fill="#F8FAFC" letter-spacing="-0.5">PartFive</text>
+      <circle cx="155" cy="37" r="4" fill="#d97706"/>
+      <g transform="translate(158 25) rotate(-45)"><path d="M -7,-2.5 L 7,0 L -7,2.5 L -1.5,0 Z" fill="#d97706"/></g>
+    </svg>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">My Training</div>
+    <div class="sidebar-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+      My Progress
+    </div>
+    <div class="sidebar-item active">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Pre-flight Assessment
+    </div>
+    <div class="sidebar-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      My Schedule
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-user">
+      <div class="avatar">JH</div>
+      Jordan Hayes · Student
+    </div>
+  </div>
+  <div class="page-header">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div class="page-title">Pre-flight Risk Assessment</div>
+        <div class="page-sub">Lesson 6 — Stalls and Slow Flight · N423SK Cessna 172S</div>
+      </div>
+      <div class="status-pill"><div class="status-dot"></div> In progress</div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="pfa-layout">
+      <div>
+
+        <!-- P — Pilot -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span style="background:rgba(14,165,233,0.12);color:#0EA5E9;font-size:11px;font-weight:800;padding:2px 7px;border-radius:5px">P</span>
+              Pilot
+            </div>
+            <span style="font-size:11px;color:#22C55E;font-weight:700">+4 pts</span>
+          </div>
+          <div class="card-body">
+            <div class="field-row">
+              <div class="field-label">Currency — last 90 days</div>
+              <div class="radio-row">
+                <div class="radio-chip sel">Current (&gt;3 takeoff/land)</div>
+                <div class="radio-chip">Marginal (1–2)</div>
+                <div class="radio-chip">Not current</div>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field-label">Rest / fatigue</div>
+              <div class="radio-row">
+                <div class="radio-chip sel">Well rested (&gt;8h)</div>
+                <div class="radio-chip">Adequate (6–8h)</div>
+                <div class="radio-chip">Fatigued</div>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field-label">Recency with this maneuver</div>
+              <div class="radio-row">
+                <div class="radio-chip sel-amber">First time</div>
+                <div class="radio-chip">Practiced recently</div>
+                <div class="radio-chip">Proficient</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- A — Aircraft -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span style="background:rgba(14,165,233,0.12);color:#0EA5E9;font-size:11px;font-weight:800;padding:2px 7px;border-radius:5px">A</span>
+              Aircraft
+            </div>
+            <span style="font-size:11px;color:#22C55E;font-weight:700">+2 pts</span>
+          </div>
+          <div class="card-body">
+            <div class="field-row">
+              <div class="field-label">Aircraft airworthiness</div>
+              <div class="radio-row">
+                <div class="radio-chip sel">Airworthy — annual current</div>
+                <div class="radio-chip">MEL item deferred</div>
+                <div class="radio-chip">Squawk open</div>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field-label">Pilot familiarity with aircraft</div>
+              <div class="radio-row">
+                <div class="radio-chip sel">Familiar (5+ hours)</div>
+                <div class="radio-chip">Some experience</div>
+                <div class="radio-chip">Unfamiliar</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- V — EnVironment -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span style="background:rgba(14,165,233,0.12);color:#0EA5E9;font-size:11px;font-weight:800;padding:2px 7px;border-radius:5px">V</span>
+              enVironment (Weather)
+            </div>
+            <span style="font-size:11px;color:#F59E0B;font-weight:700">+12 pts</span>
+          </div>
+          <div class="card-body">
+            <div class="field-row">
+              <div class="field-label">Current METAR — KSWY</div>
+              <div class="field-val metar">KSWY 211553Z 24012G18KT 10SM FEW040 SCT080 18/04 A3006 RMK AO2 SLP178</div>
+            </div>
+            <div class="field-row">
+              <div class="field-label">Wind conditions</div>
+              <div class="radio-row">
+                <div class="radio-chip">Calm (&lt;10 kt)</div>
+                <div class="radio-chip sel-amber">Moderate (10–18 kt gust)</div>
+                <div class="radio-chip">Strong / crosswind</div>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field-label">Ceiling / Visibility</div>
+              <div class="radio-row">
+                <div class="radio-chip sel">VFR (&gt;3000 AGL, &gt;5SM)</div>
+                <div class="radio-chip">Marginal VFR</div>
+                <div class="radio-chip">IFR conditions</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- E — External pressures (partially filled) -->
+        <div class="card" style="opacity:0.7">
+          <div class="card-header">
+            <div class="card-title">
+              <span style="background:rgba(51,65,85,0.5);color:#64748B;font-size:11px;font-weight:800;padding:2px 7px;border-radius:5px">E</span>
+              External Pressures
+            </div>
+            <span style="font-size:11px;color:#64748B;font-weight:700">Incomplete</span>
+          </div>
+          <div class="card-body">
+            <div class="field-row">
+              <div class="field-label">Schedule pressure</div>
+              <div class="radio-row">
+                <div class="radio-chip">No pressure</div>
+                <div class="radio-chip">Some pressure</div>
+                <div class="radio-chip">High pressure</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right column: score + actions -->
+      <div>
+        <div class="score-card">
+          <div style="font-size:11px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">Current Risk Score</div>
+          <div class="score-num">42</div>
+          <div class="score-label">⚠ Medium Risk</div>
+          <div class="score-sub">Complete the External Pressures section to finalize your score before submission.</div>
+          <div style="margin-top:14px">
+            <div class="risk-bar"><div class="risk-fill" style="width:42%;background:#F59E0B"></div></div>
+            <div style="display:flex;justify-content:space-between;margin-top:5px;font-size:10px;color:#475569">
+              <span>0 Low</span><span>50 Med</span><span>100 High</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:14px">
+          <div class="card-header">
+            <div class="card-title">Score Breakdown</div>
+          </div>
+          <div class="card-body">
+            <div class="section-score-row">
+              <span class="ss-label">Pilot</span>
+              <span class="ss-val" style="color:#22C55E">+4</span>
+            </div>
+            <div class="section-score-row">
+              <span class="ss-label">Aircraft</span>
+              <span class="ss-val" style="color:#22C55E">+2</span>
+            </div>
+            <div class="section-score-row">
+              <span class="ss-label">enVironment</span>
+              <span class="ss-val" style="color:#F59E0B">+12</span>
+            </div>
+            <div class="section-score-row">
+              <span class="ss-label">External Pressures</span>
+              <span class="ss-val" style="color:#64748B">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:14px">
+          <div class="card-header"><div class="card-title">Required Endorsements</div></div>
+          <div class="card-body">
+            <div class="checklist-row">
+              <div class="check-icon check-done">✓</div>
+              Solo flight (§61.87)
+            </div>
+            <div class="checklist-row">
+              <div class="check-icon check-done">✓</div>
+              Aircraft make and model
+            </div>
+            <div class="checklist-row">
+              <div class="check-icon check-pending">○</div>
+              <span style="color:#64748B">Solo cross-country (pending)</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-submit">Submit for CFI Review →</button>
+        <button class="btn-save">Save draft</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

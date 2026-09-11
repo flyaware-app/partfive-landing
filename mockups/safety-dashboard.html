@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safety Dashboard — PartFive Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', -apple-system, sans-serif; background: #0F172A; color: #F8FAFC; display: flex; height: 100vh; overflow: hidden; -webkit-font-smoothing: antialiased; }
+
+    /* Sidebar */
+    .sidebar { width: 232px; flex-shrink: 0; background: #0B1629; border-right: 1px solid #1E293B; display: flex; flex-direction: column; }
+    .sidebar-logo { padding: 20px 16px 18px; border-bottom: 1px solid #1E293B; }
+    .sidebar-logo svg { width: 110px; height: auto; }
+    .sidebar-org { padding: 12px 16px; border-bottom: 1px solid #1E293B; }
+    .sidebar-org-name { font-size: 11px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.07em; }
+    .sidebar-org-val { font-size: 13px; font-weight: 600; color: #CBD5E1; margin-top: 2px; }
+    .sidebar-section { padding: 16px 8px 4px; }
+    .sidebar-section-label { font-size: 10px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.09em; padding: 0 8px; margin-bottom: 4px; }
+    .sidebar-item { display: flex; align-items: center; gap: 9px; padding: 9px 10px; border-radius: 8px; font-size: 13px; font-weight: 500; color: #64748B; margin-bottom: 1px; cursor: pointer; transition: background 0.15s; }
+    .sidebar-item:hover { background: rgba(255,255,255,0.04); color: #94A3B8; }
+    .sidebar-item.active { background: rgba(14,165,233,0.10); color: #0EA5E9; font-weight: 600; }
+    .sidebar-item svg { width: 15px; height: 15px; flex-shrink: 0; }
+    .sidebar-badge { margin-left: auto; background: #EF4444; color: #fff; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 10px; }
+
+    /* Main content */
+    .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .page-header { background: #0F172A; padding: 20px 28px; border-bottom: 1px solid #1E293B; flex-shrink: 0; }
+    .page-title { font-size: 20px; font-weight: 700; color: #F8FAFC; }
+    .page-sub { font-size: 12px; color: #64748B; margin-top: 2px; }
+    .content { flex: 1; overflow-y: auto; padding: 24px 28px; }
+
+    /* Stats row */
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+    .stat-card { background: #1E293B; border: 1px solid #334155; border-radius: 12px; padding: 20px 20px 18px; }
+    .stat-label { font-size: 11px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+    .stat-val { font-size: 28px; font-weight: 800; color: #F8FAFC; letter-spacing: -0.03em; }
+    .stat-sub { font-size: 11px; color: #64748B; margin-top: 4px; }
+    .stat-red .stat-val { color: #EF4444; }
+    .stat-amber .stat-val { color: #F59E0B; }
+    .stat-green .stat-val { color: #22C55E; }
+    .stat-blue .stat-val { color: #0EA5E9; }
+
+    /* Two-col layout */
+    .two-col { display: grid; grid-template-columns: 1fr 340px; gap: 16px; }
+
+    /* Card */
+    .card { background: #1E293B; border: 1px solid #334155; border-radius: 12px; overflow: hidden; }
+    .card-header { padding: 16px 18px; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between; }
+    .card-title { font-size: 13px; font-weight: 700; color: #CBD5E1; }
+    .card-action { font-size: 11px; color: #0EA5E9; cursor: pointer; }
+
+    /* Reports table */
+    .report-row { display: flex; align-items: center; gap: 12px; padding: 13px 18px; border-bottom: 1px solid rgba(51,65,85,0.5); }
+    .report-row:last-child { border-bottom: none; }
+    .report-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .report-info { flex: 1; min-width: 0; }
+    .report-title { font-size: 13px; font-weight: 600; color: #E2E8F0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .report-meta { font-size: 11px; color: #64748B; margin-top: 2px; }
+    .badge { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
+    .badge-open { background: rgba(239,68,68,0.15); color: #EF4444; }
+    .badge-review { background: rgba(245,158,11,0.15); color: #F59E0B; }
+    .badge-closed { background: rgba(34,197,94,0.12); color: #22C55E; }
+    .badge-info { background: rgba(14,165,233,0.12); color: #0EA5E9; }
+
+    /* Bulletins list */
+    .bulletin-item { padding: 14px 18px; border-bottom: 1px solid rgba(51,65,85,0.5); }
+    .bulletin-item:last-child { border-bottom: none; }
+    .bulletin-title { font-size: 13px; font-weight: 600; color: #E2E8F0; margin-bottom: 4px; }
+    .bulletin-meta { font-size: 11px; color: #64748B; display: flex; gap: 10px; align-items: center; }
+    .bul-tag { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 5px; background: rgba(14,165,233,0.12); color: #0EA5E9; }
+
+    /* Score gauge */
+    .gauge-wrap { padding: 20px 18px; display: flex; align-items: center; gap: 18px; }
+    .gauge { width: 64px; height: 64px; border-radius: 50%; background: conic-gradient(#22C55E 0% 78%, #334155 78% 100%); display: flex; align-items: center; justify-content: center; position: relative; flex-shrink: 0; }
+    .gauge-inner { width: 46px; height: 46px; border-radius: 50%; background: #1E293B; display: flex; align-items: center; justify-content: center; }
+    .gauge-score { font-size: 14px; font-weight: 800; color: #22C55E; }
+    .gauge-info .gauge-label { font-size: 12px; font-weight: 700; color: #94A3B8; }
+    .gauge-info .gauge-sub { font-size: 11px; color: #64748B; margin-top: 3px; }
+
+    /* Meeting next */
+    .meeting-row { padding: 14px 18px; border-top: 1px solid #334155; display: flex; align-items: center; justify-content: space-between; }
+    .meeting-label { font-size: 12px; font-weight: 600; color: #94A3B8; }
+    .meeting-date { font-size: 12px; font-weight: 700; color: #0EA5E9; }
+
+    /* Top bar user */
+    .topbar { display: flex; align-items: center; justify-content: flex-end; gap: 12px; padding: 10px 28px; border-bottom: 1px solid #1E293B; background: #0F172A; }
+    .topbar-user { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: #94A3B8; }
+    .avatar { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #0EA5E9, #6366F1); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #fff; }
+  </style>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "17c756de20b44d2ea51de05502e4ab75"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <svg viewBox="0 0 180 52" xmlns="http://www.w3.org/2000/svg">
+      <text x="2" y="40" font-family="DM Sans, sans-serif" font-size="32" font-weight="700" fill="#F8FAFC" letter-spacing="-0.5">PartFive</text>
+      <circle cx="155" cy="37" r="4" fill="#d97706"/>
+      <g transform="translate(158 25) rotate(-45)"><path d="M -7,-2.5 L 7,0 L -7,2.5 L -1.5,0 Z" fill="#d97706"/></g>
+    </svg>
+  </div>
+  <div class="sidebar-org">
+    <div class="sidebar-org-name">Organization</div>
+    <div class="sidebar-org-val">Skyway Aviation</div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Main</div>
+    <div class="sidebar-item active">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </div>
+    <div class="sidebar-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+      My Base
+    </div>
+    <div class="sidebar-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+      File Report
+      <span class="sidebar-badge" style="margin-left:auto">3</span>
+    </div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Safety</div>
+    <div class="sidebar-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      SMS Manual
+    </div>
+    <div class="sidebar-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Meetings &amp; Bulletins
+    </div>
+    <div class="sidebar-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+      Safety Bulletins
+    </div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Operations</div>
+    <div class="sidebar-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      All Students
+    </div>
+    <div class="sidebar-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      Curriculum
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-user">
+      <div class="avatar">SM</div>
+      Sarah Mitchell · Safety Officer
+    </div>
+  </div>
+  <div class="page-header">
+    <div class="page-title">Dashboard</div>
+    <div class="page-sub">Skyway Aviation — Safety Management Overview</div>
+  </div>
+  <div class="content">
+
+    <div class="stats-row">
+      <div class="stat-card stat-red">
+        <div class="stat-label">Open Reports</div>
+        <div class="stat-val">3</div>
+        <div class="stat-sub">↑ 1 this week</div>
+      </div>
+      <div class="stat-card stat-amber">
+        <div class="stat-label">Open Investigations</div>
+        <div class="stat-val">1</div>
+        <div class="stat-sub">Requires action</div>
+      </div>
+      <div class="stat-card stat-blue">
+        <div class="stat-label">Active Bulletins</div>
+        <div class="stat-val">2</div>
+        <div class="stat-sub">All CFIs notified</div>
+      </div>
+      <div class="stat-card stat-green">
+        <div class="stat-label">Active Students</div>
+        <div class="stat-val">14</div>
+        <div class="stat-sub">3 on track for graduation</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Recent Safety Reports</div>
+          <div class="card-action">View all →</div>
+        </div>
+        <div class="report-row">
+          <div class="report-dot" style="background:#EF4444"></div>
+          <div class="report-info">
+            <div class="report-title">Runway incursion — partial stop-sign obscured by construction fencing</div>
+            <div class="report-meta">Filed by J. Hayes · May 20, 2026</div>
+          </div>
+          <span class="badge badge-open">Open</span>
+        </div>
+        <div class="report-row">
+          <div class="report-dot" style="background:#F59E0B"></div>
+          <div class="report-info">
+            <div class="report-title">Bird strike on final — N423SK, Lesson 9 dual</div>
+            <div class="report-meta">Filed by S. Mitchell · May 18, 2026</div>
+          </div>
+          <span class="badge badge-review">Under review</span>
+        </div>
+        <div class="report-row">
+          <div class="report-dot" style="background:#F59E0B"></div>
+          <div class="report-info">
+            <div class="report-title">Fuel cap unsecured pre-departure — discovered by student during preflight</div>
+            <div class="report-meta">Filed by L. Foster · May 16, 2026</div>
+          </div>
+          <span class="badge badge-review">Under review</span>
+        </div>
+        <div class="report-row">
+          <div class="report-dot" style="background:#0EA5E9"></div>
+          <div class="report-info">
+            <div class="report-title">ATC instruction unclear — read-back mismatch during departure</div>
+            <div class="report-meta">Filed by M. Webb · May 12, 2026</div>
+          </div>
+          <span class="badge badge-info">Investigation open</span>
+        </div>
+        <div class="report-row">
+          <div class="report-dot" style="background:#22C55E"></div>
+          <div class="report-info">
+            <div class="report-title">Taxiway lighting outage KSWY — NOTAM issued, no incident</div>
+            <div class="report-meta">Filed by S. Mitchell · May 8, 2026</div>
+          </div>
+          <span class="badge badge-closed">Closed</span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">SMS Safety Score</div>
+          </div>
+          <div class="gauge-wrap">
+            <div class="gauge">
+              <div class="gauge-inner"><span class="gauge-score">78</span></div>
+            </div>
+            <div class="gauge-info">
+              <div class="gauge-label">Good — above baseline</div>
+              <div class="gauge-sub">4 corrective actions open</div>
+              <div class="gauge-sub">Last assessment: May 19</div>
+            </div>
+          </div>
+          <div class="meeting-row">
+            <div class="meeting-label">Next safety meeting</div>
+            <div class="meeting-date">May 28, 2026</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Active Safety Bulletins</div>
+            <div class="card-action">View all →</div>
+          </div>
+          <div class="bulletin-item">
+            <div class="bulletin-title">KSWY runway 13/31 rehab — pattern operations</div>
+            <div class="bulletin-meta">
+              <span class="bul-tag">Operational</span>
+              May 17, 2026
+            </div>
+          </div>
+          <div class="bulletin-item">
+            <div class="bulletin-title">Spring bird strike season — pre-departure procedures reminder</div>
+            <div class="bulletin-meta">
+              <span class="bul-tag">Safety</span>
+              May 14, 2026
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
