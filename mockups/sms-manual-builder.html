@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMS Manual Builder — PartFive Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', -apple-system, sans-serif; background: #0F172A; color: #F8FAFC; display: flex; height: 100vh; overflow: hidden; -webkit-font-smoothing: antialiased; }
+
+    .sidebar { width: 232px; flex-shrink: 0; background: #0B1629; border-right: 1px solid #1E293B; display: flex; flex-direction: column; }
+    .sidebar-logo { padding: 20px 16px 18px; border-bottom: 1px solid #1E293B; }
+    .sidebar-org { padding: 12px 16px; border-bottom: 1px solid #1E293B; }
+    .sidebar-org-name { font-size: 10px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.08em; }
+    .sidebar-org-val { font-size: 12px; font-weight: 600; color: #94A3B8; margin-top: 2px; }
+    .sidebar-section { padding: 14px 8px 4px; }
+    .sidebar-section-label { font-size: 10px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.09em; padding: 0 8px; margin-bottom: 4px; }
+    .sidebar-item { display: flex; align-items: center; gap: 9px; padding: 9px 10px; border-radius: 8px; font-size: 13px; font-weight: 500; color: #64748B; margin-bottom: 1px; }
+    .sidebar-item.active { background: rgba(14,165,233,0.10); color: #0EA5E9; font-weight: 600; }
+    .sidebar-item svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .topbar { display: flex; align-items: center; justify-content: flex-end; gap: 12px; padding: 10px 28px; border-bottom: 1px solid #1E293B; background: #0B1629; }
+    .topbar-user { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: #94A3B8; }
+    .avatar { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #0EA5E9, #6366F1); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .page-header { background: #0B1629; padding: 18px 28px; border-bottom: 1px solid #1E293B; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    .page-title { font-size: 20px; font-weight: 700; color: #F8FAFC; }
+    .page-sub { font-size: 12px; color: #64748B; margin-top: 2px; }
+
+    .workspace { flex: 1; display: flex; overflow: hidden; }
+
+    /* Left: section nav */
+    .section-nav { width: 220px; flex-shrink: 0; border-right: 1px solid #1E293B; background: #0F172A; overflow-y: auto; padding: 16px 8px; }
+    .sec-nav-label { font-size: 10px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.09em; padding: 0 8px; margin-bottom: 8px; margin-top: 8px; }
+    .sec-nav-item { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 8px; font-size: 12px; font-weight: 500; color: #64748B; margin-bottom: 2px; cursor: pointer; }
+    .sec-nav-item:hover { background: rgba(255,255,255,0.03); color: #94A3B8; }
+    .sec-nav-item.active { background: rgba(14,165,233,0.08); color: #0EA5E9; font-weight: 600; }
+    .sec-nav-item .sec-num { width: 20px; height: 20px; border-radius: 5px; background: rgba(51,65,85,0.5); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+    .sec-nav-item.active .sec-num { background: rgba(14,165,233,0.2); color: #38BDF8; }
+    .sec-nav-divider { height: 1px; background: #1E293B; margin: 8px 8px; }
+
+    /* Center: editor */
+    .editor-area { flex: 1; overflow-y: auto; padding: 24px 28px; }
+    .section-header { margin-bottom: 20px; }
+    .section-tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.2); border-radius: 6px; padding: 3px 10px; font-size: 11px; font-weight: 700; color: #38BDF8; margin-bottom: 10px; }
+    .section-title-input { font-size: 20px; font-weight: 700; color: #F8FAFC; background: none; border: none; width: 100%; outline: none; }
+    .section-subtitle { font-size: 12px; color: #475569; margin-top: 4px; }
+
+    /* AI assist banner */
+    .ai-banner { background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(14,165,233,0.08)); border: 1px solid rgba(99,102,241,0.25); border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; display: flex; align-items: flex-start; gap: 14px; }
+    .ai-icon { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, #6366F1, #0EA5E9); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .ai-banner-title { font-size: 13px; font-weight: 700; color: #A5B4FC; margin-bottom: 4px; }
+    .ai-banner-body { font-size: 12px; color: #7C87A0; line-height: 1.6; }
+    .ai-preview { background: rgba(15,23,42,0.6); border: 1px solid rgba(99,102,241,0.2); border-radius: 8px; padding: 12px 14px; margin-top: 10px; font-size: 12px; color: #CBD5E1; line-height: 1.7; font-family: 'DM Mono', monospace; }
+    .ai-actions { display: flex; gap: 8px; margin-top: 12px; }
+    .ai-btn-accept { background: #6366F1; border: none; border-radius: 7px; padding: 7px 14px; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    .ai-btn-edit { background: none; border: 1px solid rgba(99,102,241,0.3); border-radius: 7px; padding: 7px 12px; color: #818CF8; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    .ai-btn-regen { background: none; border: 1px solid #334155; border-radius: 7px; padding: 7px 12px; color: #64748B; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+
+    /* Content blocks */
+    .content-block { background: #1E293B; border: 1px solid #334155; border-radius: 10px; padding: 16px 18px; margin-bottom: 14px; }
+    .block-label { font-size: 10px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+    .block-text { font-size: 13px; color: #CBD5E1; line-height: 1.75; }
+    .block-text strong { color: #E2E8F0; font-weight: 600; }
+    .block-edit-btn { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; font-size: 11px; color: #475569; cursor: pointer; }
+    .block-edit-btn:hover { color: #94A3B8; }
+
+    /* Right: version + signoff panel */
+    .right-panel { width: 260px; flex-shrink: 0; border-left: 1px solid #1E293B; background: #0F172A; overflow-y: auto; padding: 16px; }
+    .panel-section { margin-bottom: 20px; }
+    .panel-section-title { font-size: 11px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.09em; margin-bottom: 10px; }
+
+    .version-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-radius: 8px; margin-bottom: 4px; }
+    .version-row.current { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.15); }
+    .version-row.draft { background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.15); }
+    .version-row.archived { opacity: 0.5; }
+    .ver-label { font-size: 12px; font-weight: 700; color: #E2E8F0; }
+    .ver-date { font-size: 10px; color: #64748B; margin-top: 1px; }
+    .ver-badge { font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 4px; }
+    .vb-published { background: rgba(34,197,94,0.15); color: #22C55E; }
+    .vb-draft { background: rgba(245,158,11,0.15); color: #F59E0B; }
+    .vb-archived { background: rgba(51,65,85,0.5); color: #475569; }
+
+    .signoff-row { background: #1E293B; border: 1px solid #334155; border-radius: 9px; padding: 10px 12px; margin-bottom: 8px; }
+    .so-name { font-size: 12px; font-weight: 600; color: #E2E8F0; margin-bottom: 2px; }
+    .so-role { font-size: 10px; color: #475569; margin-bottom: 6px; }
+    .so-status { display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; }
+    .so-pending { color: #F59E0B; }
+    .so-signed { color: #22C55E; }
+    .so-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .so-dot-pending { background: #F59E0B; }
+    .so-dot-signed { background: #22C55E; }
+
+    .progress-section { background: #1E293B; border: 1px solid #334155; border-radius: 10px; padding: 12px; margin-bottom: 8px; }
+    .prog-title { font-size: 11px; font-weight: 700; color: #94A3B8; margin-bottom: 8px; }
+    .prog-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+    .prog-label { font-size: 11px; color: #64748B; }
+    .prog-val { font-size: 11px; font-weight: 700; }
+    .prog-bar { height: 4px; background: #334155; border-radius: 2px; overflow: hidden; margin-bottom: 4px; }
+    .prog-fill { height: 100%; border-radius: 2px; background: #0EA5E9; }
+
+    .btn-publish { width: 100%; background: #22C55E; border: none; border-radius: 9px; padding: 11px; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    .btn-save-draft { width: 100%; background: none; border: 1px solid #334155; border-radius: 9px; padding: 9px; color: #64748B; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-top: 8px; }
+  </style>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "17c756de20b44d2ea51de05502e4ab75"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <svg viewBox="0 0 180 52" xmlns="http://www.w3.org/2000/svg" width="110" height="32">
+      <text x="2" y="40" font-family="DM Sans, sans-serif" font-size="32" font-weight="700" fill="#F8FAFC" letter-spacing="-0.5">PartFive</text>
+      <circle cx="155" cy="37" r="4" fill="#d97706"/>
+      <g transform="translate(158 25) rotate(-45)"><path d="M -7,-2.5 L 7,0 L -7,2.5 L -1.5,0 Z" fill="#d97706"/></g>
+    </svg>
+  </div>
+  <div class="sidebar-org">
+    <div class="sidebar-org-name">Organization</div>
+    <div class="sidebar-org-val">Skyway Aviation</div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Main</div>
+    <div class="sidebar-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Safety</div>
+    <div class="sidebar-item active">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+      SMS Manual
+    </div>
+    <div class="sidebar-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Meetings &amp; Bulletins
+    </div>
+    <div class="sidebar-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+      Safety Bulletins
+    </div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Operations</div>
+    <div class="sidebar-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      SOPs
+    </div>
+    <div class="sidebar-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      Curriculum
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-user">
+      <div class="avatar">SM</div>
+      Sarah Mitchell · Safety Officer
+    </div>
+  </div>
+  <div class="page-header">
+    <div>
+      <div class="page-title">SMS Manual Builder</div>
+      <div class="page-sub">Skyway Aviation · v1.1 draft in progress</div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <span style="font-size:11px;background:rgba(245,158,11,0.12);color:#F59E0B;border:1px solid rgba(245,158,11,0.25);padding:4px 10px;border-radius:6px;font-weight:700">Draft — not published</span>
+      <button style="background:#0EA5E9;border:none;border-radius:8px;padding:8px 16px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">Publish v1.1 →</button>
+    </div>
+  </div>
+
+  <div class="workspace">
+
+    <!-- Section nav -->
+    <div class="section-nav">
+      <div class="sec-nav-label">ICAO Annex 19 Structure</div>
+      <div class="sec-nav-item active">
+        <div class="sec-num">1</div>
+        Safety Policy &amp; Objectives
+      </div>
+      <div class="sec-nav-item">
+        <div class="sec-num">2</div>
+        Safety Risk Management
+      </div>
+      <div class="sec-nav-item">
+        <div class="sec-num">3</div>
+        Safety Assurance
+      </div>
+      <div class="sec-nav-item">
+        <div class="sec-num">4</div>
+        Safety Promotion
+      </div>
+      <div class="sec-nav-divider"></div>
+      <div class="sec-nav-label">Appendices</div>
+      <div class="sec-nav-item">
+        <div class="sec-num" style="font-size:9px">A</div>
+        Hazard Register
+      </div>
+      <div class="sec-nav-item">
+        <div class="sec-num" style="font-size:9px">B</div>
+        Risk Matrix
+      </div>
+      <div class="sec-nav-item">
+        <div class="sec-num" style="font-size:9px">C</div>
+        Emergency Response
+      </div>
+    </div>
+
+    <!-- Editor -->
+    <div class="editor-area">
+
+      <div class="section-header">
+        <div class="section-tag">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Section 1 · ICAO Component 1
+        </div>
+        <div class="section-title-input">Safety Policy &amp; Objectives</div>
+        <div class="section-subtitle">Establishes the organization's commitment to safety, defines responsibilities, and sets measurable safety performance targets.</div>
+      </div>
+
+      <!-- AI assist panel -->
+      <div class="ai-banner">
+        <div class="ai-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg>
+        </div>
+        <div style="flex:1">
+          <div class="ai-banner-title">AI: Suggested content for Section 1.2 — Accountable Executive Statement</div>
+          <div class="ai-banner-body">Generated from your organization profile · Aligned with ICAO Annex 19 §3.1 and AC 120-92B</div>
+          <div class="ai-preview">"Skyway Aviation is committed to developing and maintaining a Safety Management System that meets or exceeds the standards set forth in 14 CFR Part 5 and ICAO Annex 19. As Accountable Executive, I accept full responsibility for the implementation and performance of this SMS. Safety is a core value — not a priority that competes with operational efficiency, but a condition of all operations..."</div>
+          <div class="ai-actions">
+            <button class="ai-btn-accept">Accept &amp; insert →</button>
+            <button class="ai-btn-edit">Edit first</button>
+            <button class="ai-btn-regen">Regenerate</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Existing section content -->
+      <div class="content-block">
+        <div class="block-label">1.1 — Safety Policy Statement</div>
+        <div class="block-text">
+          <strong>Skyway Aviation</strong> is committed to achieving the highest practicable level of safety in all flight training operations. This commitment is reflected in our systematic approach to hazard identification, risk assessment, and corrective action — and in the allocation of organizational resources necessary to support effective safety management.
+          <br><br>
+          All personnel are responsible for maintaining awareness of safety hazards within their area of operation, reporting hazards and incidents through established channels, and participating actively in safety improvement initiatives.
+        </div>
+        <div class="block-edit-btn">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg>
+          Edit section
+        </div>
+      </div>
+
+      <div class="content-block">
+        <div class="block-label">1.3 — Safety Performance Targets</div>
+        <div class="block-text">
+          Safety performance is measured against the following indicators, reviewed quarterly by the Safety Officer and reported to the Accountable Executive:
+          <br><br>
+          · <strong>SPT-1:</strong> Zero runway incursions attributable to Skyway Aviation personnel<br>
+          · <strong>SPT-2:</strong> 100% completion of required safety training within 30 days of assignment<br>
+          · <strong>SPT-3:</strong> All open hazard reports resolved or formally accepted within 60 days<br>
+          · <strong>SPT-4:</strong> Pre-flight Risk Assessment completion rate ≥ 95% for solo student flights
+        </div>
+        <div class="block-edit-btn">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg>
+          Edit section
+        </div>
+      </div>
+
+      <div class="content-block" style="border-style:dashed;opacity:0.6">
+        <div class="block-label">1.4 — Management Commitment (draft)</div>
+        <div class="block-text" style="color:#475569">This subsection is empty. Use AI Assist to generate content, or start typing…</div>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button style="background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.25);border-radius:6px;padding:6px 12px;color:#818CF8;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">
+            ✦ AI: Generate subsection
+          </button>
+          <button style="background:none;border:1px solid #334155;border-radius:6px;padding:6px 12px;color:#64748B;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">
+            Write manually
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right panel: version history + sign-offs -->
+    <div class="right-panel">
+
+      <div class="panel-section">
+        <div class="panel-section-title">Version History</div>
+        <div class="version-row draft">
+          <div>
+            <div class="ver-label">v1.1</div>
+            <div class="ver-date">In progress · May 21, 2026</div>
+          </div>
+          <span class="ver-badge vb-draft">Draft</span>
+        </div>
+        <div class="version-row current">
+          <div>
+            <div class="ver-label">v1.0</div>
+            <div class="ver-date">Published Mar 14, 2026</div>
+          </div>
+          <span class="ver-badge vb-published">Live</span>
+        </div>
+        <div class="version-row archived">
+          <div>
+            <div class="ver-label">v0.9</div>
+            <div class="ver-date">Archived Jan 2, 2026</div>
+          </div>
+          <span class="ver-badge vb-archived">Archived</span>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="panel-section-title">Publication Signoffs</div>
+        <div class="signoff-row">
+          <div class="so-name">Robert Anderson</div>
+          <div class="so-role">Chief Flight Instructor</div>
+          <div class="so-status so-pending">
+            <div class="so-dot so-dot-pending"></div>
+            Signature pending
+          </div>
+        </div>
+        <div class="signoff-row">
+          <div class="so-name">Daniel Pierce</div>
+          <div class="so-role">Accountable Executive</div>
+          <div class="so-status so-pending">
+            <div class="so-dot so-dot-pending"></div>
+            Signature pending
+          </div>
+        </div>
+        <div class="signoff-row">
+          <div class="so-name">Sarah Mitchell</div>
+          <div class="so-role">Safety Officer (author)</div>
+          <div class="so-status so-signed">
+            <div class="so-dot so-dot-signed"></div>
+            Signed May 21, 2026
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="progress-section">
+          <div class="prog-title">Section completion</div>
+          <div class="prog-row">
+            <span class="prog-label">Safety Policy</span>
+            <span class="prog-val" style="color:#F59E0B">75%</span>
+          </div>
+          <div class="prog-bar"><div class="prog-fill" style="width:75%;background:#F59E0B"></div></div>
+          <div class="prog-row">
+            <span class="prog-label">Risk Management</span>
+            <span class="prog-val" style="color:#22C55E">100%</span>
+          </div>
+          <div class="prog-bar"><div class="prog-fill" style="width:100%;background:#22C55E"></div></div>
+          <div class="prog-row">
+            <span class="prog-label">Safety Assurance</span>
+            <span class="prog-val" style="color:#0EA5E9">60%</span>
+          </div>
+          <div class="prog-bar"><div class="prog-fill" style="width:60%;background:#0EA5E9"></div></div>
+          <div class="prog-row">
+            <span class="prog-label">Safety Promotion</span>
+            <span class="prog-val" style="color:#64748B">40%</span>
+          </div>
+          <div class="prog-bar"><div class="prog-fill" style="width:40%;background:#334155"></div></div>
+        </div>
+      </div>
+
+      <button class="btn-publish">Request signatures →</button>
+      <button class="btn-save-draft">Save draft</button>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
