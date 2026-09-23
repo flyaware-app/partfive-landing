@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Syllabus Builder — PartFive Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', -apple-system, sans-serif; background: #0F172A; color: #F8FAFC; display: flex; height: 100vh; overflow: hidden; -webkit-font-smoothing: antialiased; }
+
+    .sidebar { width: 232px; flex-shrink: 0; background: #0B1629; border-right: 1px solid #1E293B; display: flex; flex-direction: column; }
+    .sidebar-logo { padding: 20px 16px 18px; border-bottom: 1px solid #1E293B; }
+    .sidebar-org { padding: 12px 16px; border-bottom: 1px solid #1E293B; }
+    .sidebar-org-name { font-size: 10px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.08em; }
+    .sidebar-org-val { font-size: 12px; font-weight: 600; color: #94A3B8; margin-top: 2px; }
+    .sidebar-section { padding: 14px 8px 4px; }
+    .sidebar-section-label { font-size: 10px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.09em; padding: 0 8px; margin-bottom: 4px; }
+    .sidebar-item { display: flex; align-items: center; gap: 9px; padding: 9px 10px; border-radius: 8px; font-size: 13px; font-weight: 500; color: #64748B; margin-bottom: 1px; }
+    .sidebar-item.active { background: rgba(14,165,233,0.10); color: #0EA5E9; font-weight: 600; }
+    .sidebar-item svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .topbar { display: flex; align-items: center; justify-content: flex-end; gap: 12px; padding: 10px 28px; border-bottom: 1px solid #1E293B; background: #0B1629; }
+    .topbar-user { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: #94A3B8; }
+    .avatar { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #0EA5E9, #6366F1); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .page-header { background: #0B1629; padding: 18px 28px; border-bottom: 1px solid #1E293B; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    .page-title { font-size: 20px; font-weight: 700; color: #F8FAFC; }
+    .page-sub { font-size: 12px; color: #64748B; margin-top: 2px; }
+
+    .workspace { flex: 1; display: flex; overflow: hidden; }
+
+    /* Left: generate form */
+    .gen-panel { width: 300px; flex-shrink: 0; border-right: 1px solid #1E293B; background: #0F172A; overflow-y: auto; padding: 20px 16px; }
+    .gen-panel-title { font-size: 14px; font-weight: 700; color: #E2E8F0; margin-bottom: 4px; }
+    .gen-panel-sub { font-size: 11px; color: #64748B; margin-bottom: 18px; line-height: 1.5; }
+
+    .ai-badge { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(14,165,233,0.1)); border: 1px solid rgba(99,102,241,0.25); border-radius: 7px; padding: 4px 10px; font-size: 11px; font-weight: 700; color: #A5B4FC; margin-bottom: 14px; }
+
+    .form-field { margin-bottom: 14px; }
+    .form-label { font-size: 11px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; }
+    .form-select { width: 100%; background: #1E293B; border: 1px solid #334155; border-radius: 9px; padding: 9px 12px; font-size: 13px; color: #E2E8F0; font-family: 'DM Sans', sans-serif; appearance: none; }
+    .form-select.filled { border-color: rgba(14,165,233,0.4); color: #F8FAFC; }
+
+    .compliance-badge { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); border-radius: 9px; padding: 10px 12px; margin-bottom: 14px; }
+    .cb-title { font-size: 11px; font-weight: 700; color: #22C55E; margin-bottom: 4px; }
+    .cb-body { font-size: 11px; color: #64748B; line-height: 1.5; }
+    .cb-body span { color: #4ADE80; font-weight: 600; }
+
+    .endorsement-note { background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.2); border-radius: 9px; padding: 10px 12px; margin-bottom: 18px; }
+    .en-title { font-size: 11px; font-weight: 700; color: #818CF8; margin-bottom: 4px; }
+    .en-body { font-size: 11px; color: #64748B; line-height: 1.5; }
+
+    .btn-generate { width: 100%; background: linear-gradient(135deg, #6366F1, #0EA5E9); border: none; border-radius: 10px; padding: 13px; color: #fff; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+
+    /* Right: generated syllabus */
+    .syllabus-area { flex: 1; overflow-y: auto; padding: 20px 24px; }
+    .syllabus-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 18px; }
+    .syl-title { font-size: 18px; font-weight: 700; color: #F8FAFC; }
+    .syl-meta { font-size: 12px; color: #475569; margin-top: 4px; }
+    .syl-actions { display: flex; gap: 8px; }
+    .btn-accept-all { background: #22C55E; border: none; border-radius: 8px; padding: 9px 16px; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    .btn-edit-syl { background: none; border: 1px solid #334155; border-radius: 8px; padding: 9px 14px; color: #94A3B8; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+
+    .ai-generating-note { background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(14,165,233,0.05)); border: 1px solid rgba(99,102,241,0.18); border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; display: flex; align-items: center; gap: 12px; }
+    .gen-note-text { font-size: 12px; color: #818CF8; flex: 1; line-height: 1.5; }
+    .gen-note-pill { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.2); border-radius: 6px; padding: 3px 9px; font-size: 10px; font-weight: 700; color: #22C55E; white-space: nowrap; }
+
+    .lesson-card { background: #1E293B; border: 1px solid #334155; border-radius: 10px; margin-bottom: 8px; overflow: hidden; }
+    .lesson-row { display: flex; align-items: center; gap: 12px; padding: 11px 14px; }
+    .lesson-num { width: 28px; height: 28px; border-radius: 7px; background: rgba(14,165,233,0.12); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #38BDF8; flex-shrink: 0; }
+    .lesson-info { flex: 1; min-width: 0; }
+    .lesson-title { font-size: 13px; font-weight: 600; color: #E2E8F0; }
+    .lesson-detail { font-size: 11px; color: #475569; margin-top: 2px; }
+    .lesson-tag { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+    .lt-dual { background: rgba(14,165,233,0.12); color: #38BDF8; }
+    .lt-solo { background: rgba(34,197,94,0.12); color: #22C55E; }
+    .lt-ground { background: rgba(99,102,241,0.12); color: #818CF8; }
+    .lt-stage { background: rgba(245,158,11,0.12); color: #F59E0B; }
+    .lesson-endorse { display: flex; align-items: center; gap: 4px; font-size: 10px; color: #6366F1; margin-left: 4px; white-space: nowrap; }
+
+    .stage-divider { display: flex; align-items: center; gap: 10px; margin: 14px 0 10px; }
+    .stage-line { flex: 1; height: 1px; background: #1E3252; }
+    .stage-label { font-size: 10px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.09em; white-space: nowrap; }
+  </style>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "17c756de20b44d2ea51de05502e4ab75"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <svg viewBox="0 0 180 52" xmlns="http://www.w3.org/2000/svg" width="110" height="32">
+      <text x="2" y="40" font-family="DM Sans, sans-serif" font-size="32" font-weight="700" fill="#F8FAFC" letter-spacing="-0.5">PartFive</text>
+      <circle cx="155" cy="37" r="4" fill="#d97706"/>
+      <g transform="translate(158 25) rotate(-45)"><path d="M -7,-2.5 L 7,0 L -7,2.5 L -1.5,0 Z" fill="#d97706"/></g>
+    </svg>
+  </div>
+  <div class="sidebar-org">
+    <div class="sidebar-org-name">Organization</div>
+    <div class="sidebar-org-val">Skyway Aviation</div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Main</div>
+    <div class="sidebar-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Operations</div>
+    <div class="sidebar-item active">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      Curriculum
+    </div>
+    <div class="sidebar-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+      All Students
+    </div>
+    <div class="sidebar-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg>
+      Endorsements
+    </div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Safety</div>
+    <div class="sidebar-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      SMS Manual
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-user">
+      <div class="avatar">RA</div>
+      Robert Anderson · Chief CFI
+    </div>
+  </div>
+  <div class="page-header">
+    <div>
+      <div class="page-title">AI Syllabus Builder</div>
+      <div class="page-sub">Generate FAA-aligned training syllabi from your operation profile</div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span style="font-size:11px;background:rgba(99,102,241,0.12);color:#A5B4FC;border:1px solid rgba(99,102,241,0.2);padding:4px 10px;border-radius:6px;font-weight:700">✦ AI-generated draft</span>
+      <button style="background:#22C55E;border:none;border-radius:8px;padding:8px 16px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">Save to Curriculum →</button>
+    </div>
+  </div>
+
+  <div class="workspace">
+
+    <!-- Left: generate form -->
+    <div class="gen-panel">
+      <div class="ai-badge">✦ AI-assisted generation</div>
+      <div class="gen-panel-title">Generate Syllabus</div>
+      <div class="gen-panel-sub">PartFive generates a complete, lesson-by-lesson syllabus structured around FAA requirements and AC 61-65K endorsement checkpoints.</div>
+
+      <div class="form-field">
+        <div class="form-label">Certificate Type</div>
+        <select class="form-select filled">
+          <option selected>Private Pilot Certificate</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <div class="form-label">Regulatory Basis</div>
+        <select class="form-select filled">
+          <option selected>Part 141 — Approved Course</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <div class="form-label">Primary Aircraft</div>
+        <select class="form-select filled">
+          <option selected>Cessna 172S — Single Engine Land</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <div class="form-label">Organization</div>
+        <select class="form-select filled">
+          <option selected>Skyway Aviation</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <div class="form-label">Flight Simulator / ATD</div>
+        <select class="form-select">
+          <option>None — all flight hours in aircraft</option>
+        </select>
+      </div>
+
+      <div class="compliance-badge">
+        <div class="cb-title">FAA Compliance scope</div>
+        <div class="cb-body">Aligned with <span>AC 61-65K</span> endorsement requirements · <span>Part 61 Subpart E</span> aeronautical experience · <span>14 CFR §141.55</span> approved course outline</div>
+      </div>
+
+      <div class="endorsement-note">
+        <div class="en-title">✦ AI is also drafting endorsement language</div>
+        <div class="en-body">Endorsement text for each applicable milestone will be pre-filled from AC 61-65K templates and attached to the relevant lesson.</div>
+      </div>
+
+      <button class="btn-generate">✦ Regenerate syllabus</button>
+    </div>
+
+    <!-- Right: generated syllabus -->
+    <div class="syllabus-area">
+      <div class="syllabus-header">
+        <div>
+          <div class="syl-title">Private Pilot — Part 141 Approved Course</div>
+          <div class="syl-meta">Cessna 172S · Skyway Aviation · Generated May 21, 2026 · 20 lessons · ~40 flight hours</div>
+        </div>
+        <div class="syl-actions">
+          <button class="btn-accept-all">Accept all →</button>
+          <button class="btn-edit-syl">Edit lessons</button>
+        </div>
+      </div>
+
+      <div class="ai-generating-note">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#818CF8" stroke-width="1.75"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg>
+        <div class="gen-note-text">All lessons are AI-generated drafts based on AC 61-65K and Part 61 Subpart E. Endorsement checkpoints are pre-mapped. Review and adjust before assigning to students.</div>
+        <div class="gen-note-pill">Compliance verified</div>
+      </div>
+
+      <!-- Stage 1 -->
+      <div class="stage-divider">
+        <div class="stage-line"></div>
+        <div class="stage-label">Stage 1 — Fundamentals of Flight (Lessons 1–7)</div>
+        <div class="stage-line"></div>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-row">
+          <div class="lesson-num">1</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Aircraft Familiarization &amp; Cockpit Orientation</div>
+            <div class="lesson-detail">Ground: 1.0h · Aircraft systems, checklists, cockpit flow · No flight required</div>
+          </div>
+          <span class="lesson-tag lt-ground">Ground</span>
+        </div>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-row">
+          <div class="lesson-num">2</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Preflight Inspection &amp; Engine Start</div>
+            <div class="lesson-detail">Dual: 1.0h · §91.103 preflight requirements · Aircraft walkaround, runup</div>
+          </div>
+          <span class="lesson-tag lt-dual">Dual</span>
+        </div>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-row">
+          <div class="lesson-num">3</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Basic Aircraft Control — Straight &amp; Level</div>
+            <div class="lesson-detail">Dual: 1.5h · Attitude flying, four fundamentals, clearing turns</div>
+          </div>
+          <span class="lesson-tag lt-dual">Dual</span>
+        </div>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-row">
+          <div class="lesson-num">4</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Turns, Climbs &amp; Descents</div>
+            <div class="lesson-detail">Dual: 1.5h · Coordinated flight, traffic pattern altitude management</div>
+          </div>
+          <span class="lesson-tag lt-dual">Dual</span>
+        </div>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-row">
+          <div class="lesson-num">5</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Traffic Pattern Operations &amp; Touch-and-Goes</div>
+            <div class="lesson-detail">Dual: 2.0h · Normal takeoffs and landings, go-arounds, radio work</div>
+          </div>
+          <span class="lesson-tag lt-dual">Dual</span>
+        </div>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-row">
+          <div class="lesson-num">6</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Stalls &amp; Slow Flight</div>
+            <div class="lesson-detail">Dual: 1.5h · Power-on/off stalls, slow flight, incipient spin awareness</div>
+          </div>
+          <span class="lesson-tag lt-dual">Dual</span>
+        </div>
+      </div>
+
+      <div class="lesson-card" style="border-color:rgba(245,158,11,0.3)">
+        <div class="lesson-row">
+          <div class="lesson-num" style="background:rgba(245,158,11,0.12);color:#F59E0B">7</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Pre-solo Check &amp; First Solo Flight</div>
+            <div class="lesson-detail">Dual + Solo: 2.0h · CFI endorsement required · §61.87 student pilot currency check</div>
+          </div>
+          <span class="lesson-tag lt-stage">Stage 1 Check</span>
+          <div class="lesson-endorse">
+            <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg>
+            Endorsement: §61.87
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 2 -->
+      <div class="stage-divider">
+        <div class="stage-line"></div>
+        <div class="stage-label">Stage 2 — Solo &amp; Cross-Country (Lessons 8–14)</div>
+        <div class="stage-line"></div>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-row">
+          <div class="lesson-num">8</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Solo Practice — Traffic Pattern Consolidation</div>
+            <div class="lesson-detail">Solo: 1.5h · Minimum 3 full-stop landings required per §61.87(d)</div>
+          </div>
+          <span class="lesson-tag lt-solo">Solo</span>
+        </div>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-row">
+          <div class="lesson-num">9</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Navigation — Pilotage &amp; Dead Reckoning</div>
+            <div class="lesson-detail">Dual: 2.0h · Chart reading, VOR navigation, fuel planning</div>
+          </div>
+          <span class="lesson-tag lt-dual">Dual</span>
+        </div>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-row">
+          <div class="lesson-num">10</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Dual Cross-Country — Local Area</div>
+            <div class="lesson-detail">Dual: 2.5h · First XC flight &gt;50 NM, towered and non-towered airports</div>
+          </div>
+          <span class="lesson-tag lt-dual">Dual</span>
+        </div>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-row">
+          <div class="lesson-num">11</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Night Operations</div>
+            <div class="lesson-detail">Dual: 3.0h · Night takeoffs and landings, night XC ≥100 NM · §61.109(a)(2)</div>
+          </div>
+          <span class="lesson-tag lt-dual">Dual</span>
+        </div>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-row">
+          <div class="lesson-num">12</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Solo Cross-Country — Dual Prep &amp; Authorization</div>
+            <div class="lesson-detail">Dual + Solo: 3.0h · §61.93 endorsement review · route planning sign-off</div>
+          </div>
+          <span class="lesson-tag lt-stage">Stage 2 Check</span>
+          <div class="lesson-endorse">
+            <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg>
+            Endorsement: §61.93
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 3 -->
+      <div class="stage-divider">
+        <div class="stage-line"></div>
+        <div class="stage-label">Stage 3 — Checkride Preparation (Lessons 13–20)</div>
+        <div class="stage-line"></div>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-row">
+          <div class="lesson-num">13</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Emergency Procedures &amp; Systems Knowledge</div>
+            <div class="lesson-detail">Dual: 2.0h · Engine-out procedures, forced landings, simulated emergencies</div>
+          </div>
+          <span class="lesson-tag lt-dual">Dual</span>
+        </div>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-row">
+          <div class="lesson-num">14</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Short &amp; Soft Field Operations</div>
+            <div class="lesson-detail">Dual: 1.5h · Soft-field takeoff and landing, short-field precision</div>
+          </div>
+          <span class="lesson-tag lt-dual">Dual</span>
+        </div>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-row">
+          <div class="lesson-num">15</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Ground Reference Maneuvers</div>
+            <div class="lesson-detail">Dual: 1.5h · S-turns, turns around a point, rectangular course</div>
+          </div>
+          <span class="lesson-tag lt-dual">Dual</span>
+        </div>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-row">
+          <div class="lesson-num">16</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Instrument Flight Fundamentals (Hood)</div>
+            <div class="lesson-detail">Dual: 3.0h · 3h simulated instrument — attitude instrument flying, unusual attitudes</div>
+          </div>
+          <span class="lesson-tag lt-dual">Dual</span>
+        </div>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-row">
+          <div class="lesson-num">17</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Long Solo Cross-Country (≥150 NM)</div>
+            <div class="lesson-detail">Solo: 3.5h · §61.109(a)(5) requirement · 3 full-stop landings at 3 different airports</div>
+          </div>
+          <span class="lesson-tag lt-solo">Solo</span>
+        </div>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-row">
+          <div class="lesson-num">18</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Checkride Maneuvers Review — Part I</div>
+            <div class="lesson-detail">Dual: 2.0h · ACS standards review · stalls, steep turns, emergency descents</div>
+          </div>
+          <span class="lesson-tag lt-dual">Dual</span>
+        </div>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-row">
+          <div class="lesson-num">19</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Checkride Maneuvers Review — Part II</div>
+            <div class="lesson-detail">Dual: 2.0h · Navigation, landings, systems oral — ACS standards verification</div>
+          </div>
+          <span class="lesson-tag lt-dual">Dual</span>
+        </div>
+      </div>
+
+      <div class="lesson-card" style="border-color:rgba(34,197,94,0.3)">
+        <div class="lesson-row">
+          <div class="lesson-num" style="background:rgba(34,197,94,0.12);color:#22C55E">20</div>
+          <div class="lesson-info">
+            <div class="lesson-title">End-of-Course Stage Check &amp; Checkride Authorization</div>
+            <div class="lesson-detail">Dual: 2.0h · Chief CFI stage check · §61.39 endorsement for practical test</div>
+          </div>
+          <span class="lesson-tag" style="background:rgba(34,197,94,0.12);color:#22C55E">Final Check</span>
+          <div class="lesson-endorse">
+            <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg>
+            Endorsement: §61.39
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
